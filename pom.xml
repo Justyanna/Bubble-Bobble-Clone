@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>edu.uwb.edu.ii.boby</groupId>
+    <groupId>edu.uwb.ii.booble_bubble</groupId>
     <artifactId>ExecutableFX</artifactId>
     <version>1.0-SNAPSHOT</version>
     <properties>
@@ -49,7 +49,7 @@
                             <shadedArtifactAttached>true</shadedArtifactAttached>
                             <transformers>
                                 <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                    <mainClass>edu.uwb.ii.boby.Launcher</mainClass>
+                                    <mainClass>edu.uwb.ii.bubble_bobble.Launcher</mainClass>
                                 </transformer>
                             </transformers>
                         </configuration>

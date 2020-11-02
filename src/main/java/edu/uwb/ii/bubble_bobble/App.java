@@ -1,4 +1,4 @@
-package edu.uwb.ii.boby;
+package edu.uwb.ii.bubble_bobble;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -17,17 +17,17 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        scene = new Scene(loadFXML("primary"));
+        scene = new Scene(loadFXML("menu"));
         stage.setScene(scene);
         stage.show();
     }
 
-    static void setRoot(String fxml) throws IOException {
+    public static void setRoot(String fxml) throws IOException {
         scene.setRoot(loadFXML(fxml));
     }
 
     private static Parent loadFXML(String fxml) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(edu.uwb.ii.boby.App.class.getResource(fxml + ".fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(edu.uwb.ii.bubble_bobble.App.class.getResource(fxml + ".fxml"));
         return fxmlLoader.load();
     }
 
