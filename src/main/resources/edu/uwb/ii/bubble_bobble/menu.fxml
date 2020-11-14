@@ -8,19 +8,19 @@
         <VBox alignment="CENTER" prefHeight="198.0" prefWidth="171.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
 
-                <Button mnemonicParsing="false" onAction="#switchToSecondary" prefHeight="50.0" prefWidth="300.0" styleClass="button" text="Play game">
+                <Button mnemonicParsing="false" onAction="#switchToGame" prefHeight="50.0" prefWidth="300.0" styleClass="button" text="Play game">
                     <VBox.margin>
                         <Insets bottom="10.0" />
                     </VBox.margin>
                 </Button>
 
-                <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="300.0" text="Leaderboards" styleClass="button">
+                <Button mnemonicParsing="false" onAction="#switchToLeaderboardAbout" prefHeight="50.0" prefWidth="300.0" text="Leaderboards" styleClass="button">
                     <VBox.margin>
                         <Insets bottom="10.0" />
                     </VBox.margin>
                 </Button>
 
-                <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="300.0" text="Options" styleClass="button">
+                <Button mnemonicParsing="false" onAction="#switchToOptions" prefHeight="50.0" prefWidth="300.0" text="Options" styleClass="button">
                     <VBox.margin>
                         <Insets bottom="10.0" />
                     </VBox.margin>

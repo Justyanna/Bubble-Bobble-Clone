@@ -8,7 +8,17 @@ import java.io.IOException;
 public class MenuSceneController {
 
     @FXML
-    private void switchToSecondary() throws IOException {
+    private void switchToGame() throws IOException {
         App.setRoot("game");
+    }
+
+    @FXML
+    private void switchToOptions() throws IOException {
+        App.setRoot("options");
+    }
+
+    @FXML
+    private void switchToLeaderboardAbout() throws IOException {
+        App.setRoot("leaderboard_about");
     }
 }
