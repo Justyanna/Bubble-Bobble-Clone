@@ -1,14 +1,19 @@
 package edu.uwb.ii.bubble_bobble;
 
+import edu.uwb.ii.bubble_bobble.utils.EncryptionProvider;
+import edu.uwb.ii.bubble_bobble.utils.exceptions.EncryptionException;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.input.KeyCombination;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.IOException;
+import java.util.ResourceBundle;
 
 /**
  * Bubble bobble clone
@@ -18,7 +23,7 @@ public class App extends Application {
     private static Scene scene;
 
     @Override
-    public void start(Stage stage) throws IOException {
+    public void start(Stage stage) throws IOException, EncryptionException {
         scene = new Scene(loadFXML("menu"));
         stage.setScene(scene);
 
@@ -30,6 +35,7 @@ public class App extends Application {
         stage.setWidth(bounds.getWidth());
         stage.setHeight(bounds.getHeight());
         stage.setFullScreen(true);
+        stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
 
         stage.show();
     }
