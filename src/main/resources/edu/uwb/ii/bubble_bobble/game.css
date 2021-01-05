@@ -1,0 +1,12 @@
+.root {
+    -fx-background-color: goldenrod;
+}
+
+.game-window {
+    -fx-background-color: black;
+}
+
+.board {
+    -fx-width: 100;
+    -fx-height: 100;
+}
