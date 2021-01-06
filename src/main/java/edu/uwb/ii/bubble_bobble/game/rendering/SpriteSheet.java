@@ -1,4 +1,4 @@
-package edu.uwb.ii.bubble_bobble.rendering;
+package edu.uwb.ii.bubble_bobble.game.rendering;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
