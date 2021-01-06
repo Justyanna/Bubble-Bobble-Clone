@@ -1,7 +1,6 @@
 package edu.uwb.ii.bubble_bobble;
 
 import edu.uwb.ii.bubble_bobble.game.Inputs;
-import edu.uwb.ii.bubble_bobble.utils.exceptions.EncryptionException;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
@@ -24,7 +23,8 @@ import java.util.logging.Logger;
  */
 public class App extends Application {
 
-    private final static Logger LOGGER = Logger.getLogger(App.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(App.class.getName());
+    private static final String FONT_PATH = "fonts/Barcade Brawl.ttf";
     private static Scene scene;
     private static boolean in_game;
     private static Inputs inputs;
@@ -46,7 +46,7 @@ public class App extends Application {
 
     private static void loadFont() {
         try {
-            InputStream inputStream = App.class.getClassLoader().getResourceAsStream("fonts/Barcade Brawl.ttf");
+            InputStream inputStream = App.class.getClassLoader().getResourceAsStream(FONT_PATH);
             Font.loadFont(inputStream, 20);
         } catch (NullPointerException e) {
             LOGGER.warning("Cannot find font file");
@@ -98,7 +98,7 @@ public class App extends Application {
     }
 
     @Override
-    public void start(Stage stage) throws IOException, EncryptionException {
+    public void start(Stage stage) throws IOException {
 
         inputs = new Inputs();
         in_game = false;
