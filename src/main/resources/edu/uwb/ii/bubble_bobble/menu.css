@@ -6,6 +6,7 @@
    -fx-font-size: 28px;
    -fx-background-color: black;
    -fx-text-fill: "#31ff0d";
+   -fx-font-family: "Barcade Brawl";
 }
 
 .button:hover{

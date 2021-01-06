@@ -1,8 +1,6 @@
 package edu.uwb.ii.bubble_bobble;
 
 import edu.uwb.ii.bubble_bobble.game.Inputs;
-import edu.uwb.ii.bubble_bobble.scenes.game.GameSceneController;
-import edu.uwb.ii.bubble_bobble.utils.EncryptionProvider;
 import edu.uwb.ii.bubble_bobble.utils.exceptions.EncryptionException;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -12,18 +10,20 @@ import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.text.Font;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
-import java.io.File;
 import java.io.IOException;
-import java.util.ResourceBundle;
+import java.io.InputStream;
+import java.util.logging.Logger;
 
 /**
  * Bubble bobble clone
  */
 public class App extends Application {
 
+    private final static Logger LOGGER = Logger.getLogger(App.class.getName());
     private static Scene scene;
     private static boolean in_game;
     private static Inputs inputs;
@@ -41,6 +41,8 @@ public class App extends Application {
         scene = new Scene(loadFXML("menu"));
         stage.setScene(scene);
 
+        loadFont();
+
         Screen screen = Screen.getPrimary();
         Rectangle2D bounds = screen.getVisualBounds();
 
@@ -53,13 +55,9 @@ public class App extends Application {
 
         stage.show();
 
-        scene.addEventHandler(KeyEvent.KEY_PRESSED, (key) -> {
-            handleKeyDown(key);
-        });
+        scene.addEventHandler(KeyEvent.KEY_PRESSED, App::handleKeyDown);
 
-        scene.addEventHandler(KeyEvent.KEY_RELEASED, (key) -> {
-            handleKeyUp(key);
-        });
+        scene.addEventHandler(KeyEvent.KEY_RELEASED, App::handleKeyUp);
 
     }
 
@@ -71,6 +69,15 @@ public class App extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(edu.uwb.ii.bubble_bobble.App.class.getResource(fxml + ".fxml"));
         in_game = fxml.equals("game");
         return fxmlLoader.load();
+    }
+
+    private static void loadFont() {
+        try {
+            InputStream inputStream = App.class.getClassLoader().getResourceAsStream("fonts/Barcade Brawl.ttf");
+            Font.loadFont(inputStream, 20);
+        } catch (NullPointerException e) {
+            LOGGER.warning("Cannot find font file");
+        }
     }
 
     public static void handleKeyDown(KeyEvent key) {
