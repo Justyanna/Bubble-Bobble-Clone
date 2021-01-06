@@ -28,4 +28,8 @@ public class MenuSceneController {
     void closeApplication(ActionEvent actionEvent) {
         Platform.exit();
     }
+
+    public void switchToAboutUs(ActionEvent actionEvent) throws IOException {
+        App.setRoot("about_us");
+    }
 }
