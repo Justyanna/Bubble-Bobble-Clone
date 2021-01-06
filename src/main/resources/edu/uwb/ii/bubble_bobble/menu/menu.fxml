@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.*?>
-<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <AnchorPane xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="edu.uwb.ii.bubble_bobble.scenes.menu.MenuSceneController" stylesheets="@./menu/menu.css"
@@ -23,6 +23,12 @@
                 </Button>
 
                 <Button mnemonicParsing="false" onAction="#switchToOptions" prefHeight="50.0" prefWidth="400.0" text="Options" styleClass="button">
+                    <VBox.margin>
+                        <Insets bottom="10.0" />
+                    </VBox.margin>
+                </Button>
+
+                <Button fx:id="aboutUsButton" onAction="#switchToAboutUs"  mnemonicParsing="false" prefHeight="50.0" prefWidth="400.0" text="About us" styleClass="button">
                     <VBox.margin>
                         <Insets bottom="10.0" />
                     </VBox.margin>

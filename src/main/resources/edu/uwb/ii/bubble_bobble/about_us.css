@@ -1,0 +1,31 @@
+.button{
+   -fx-font-size: 28px;
+   -fx-background-color: black;
+   -fx-text-fill: "#31ff0d";
+   -fx-font-family: "Barcade Brawl";
+}
+
+.button:hover{
+      -fx-font-size: 36px;
+}
+
+.text-area .content {
+    -fx-background-color: text-area-background;
+    -fx-border-style: none;
+}
+
+.text-area{
+    -fx-font-size: 20px;
+    text-area-background: black;
+    -fx-border-style: none;
+    -fx-text-fill: "#31ff0d";
+    -fx-font-family: "Barcade Brawl";
+}
+
+.text-area .text {
+     -fx-line-spacing: 10px;
+}
+
+.anchor{
+    -fx-background-color: black;
+}
