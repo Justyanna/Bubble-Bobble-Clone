@@ -15,10 +15,12 @@ abstract public class Entity {
 
     protected int _direction;
     protected double _speed;
+    protected double _jump_height;
     protected boolean _grounded;
 
     protected double _x;
     protected double _y;
+    protected double _jump;
 
     private boolean _spawned;
 
@@ -31,6 +33,8 @@ abstract public class Entity {
 
         _direction = 1;
         _speed = 0;
+        _jump_height = 5.5;
+        _jump = 0;
         _grounded = false;
 
         _spawned = false;
@@ -57,7 +61,7 @@ abstract public class Entity {
         if (!_spawned) return;
 
         int x = (int) (scale * _x) + (_direction < 0 ? scale * _width : 0);
-        int y = (int) (scale * _y);
+        int y = (int) (scale * (_y + 1 - _height));
         int w = _direction * scale * _width;
         int h = scale * _height;
 
@@ -67,7 +71,38 @@ abstract public class Entity {
 
     public final void move(boolean [][] map) {
 
-        movementRules(map);
+        double [] delta = movementRules(map);
+
+        int w = map.length;
+        int h = map[0].length;
+        double dx = delta[0];
+        double dy = delta[1];
+
+        _x += dx;
+        _y += dy;
+
+        int x = ((int) _x + w) % w;
+        int y = ((int) _y + h) % h;
+
+        int wx = (x + (1 + _direction) / 2 * _width) % w;
+
+        boolean wall_ahead = map[wx][y] && !map[(wx  - _direction + w) % w][y]
+                || _y % 1 >= dy && map[wx][(y + 1) % h] && !map[(wx  - _direction + w) % w][(y + 1) % h];
+
+        if(wall_ahead)
+            _x = Math.floor(_x + (1 - _direction) / 2);
+
+        x = ((int) _x + w) % w;
+
+        boolean wall_below = map[x][(y + 1) % h] || _x % 1 > 0.0 && map[(x + _width) % w][(y + 1) % h];
+
+        if(wall_below && _y % 1 <= dy * 1.1) {
+            _y = Math.floor(_y);
+            _grounded = true;
+        }
+        else {
+            _grounded = false;
+        }
 
         if(this._x < -1) this._x = map.length;
         if(this._x > map.length) this._x = -1;
@@ -76,6 +111,6 @@ abstract public class Entity {
 
     }
 
-    abstract public void movementRules(boolean [][] map);
+    abstract public double [] movementRules(boolean [][] map);
 
 }

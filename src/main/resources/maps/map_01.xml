@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<map>
+    <walls>
+        <wall x="0" y="25"/>
+        <wall x="1" y="25"/>
+        <wall x="2" y="25"/>
+        <wall x="3" y="25"/>
+        <wall x="4" y="25"/>
+        <wall x="5" y="25"/>
+        <wall x="6" y="25"/>
+        <wall x="7" y="25"/>
+        <wall x="8" y="25"/>
+        <wall x="9" y="25"/>
+        <wall x="22" y="25"/>
+        <wall x="23" y="25"/>
+        <wall x="24" y="25"/>
+        <wall x="25" y="25"/>
+        <wall x="26" y="25"/>
+        <wall x="27" y="25"/>
+        <wall x="28" y="25"/>
+        <wall x="29" y="25"/>
+        <wall x="30" y="25"/>
+        <wall x="31" y="25"/>
+    </walls>
+    <players>
+        <player x="2" y="24" facing="1"/>
+    </players>
+    <enemies>
+        <walker x="29" y="24" facing="-1"/>
+    </enemies>
+    <rules/>
+</map>

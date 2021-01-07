@@ -39,7 +39,7 @@ public class App extends Application {
 
     private static Parent loadFXML(String fxml) throws IOException {
         FXMLLoader fxmlLoader =
-                new FXMLLoader(edu.uwb.ii.bubble_bobble.App.class.getResource(fxml + File.separator + fxml + ".fxml"));
+                new FXMLLoader(edu.uwb.ii.bubble_bobble.App.class.getResource(fxml + "/" + fxml + ".fxml"));
         in_game = fxml.equals("game");
         return fxmlLoader.load();
     }

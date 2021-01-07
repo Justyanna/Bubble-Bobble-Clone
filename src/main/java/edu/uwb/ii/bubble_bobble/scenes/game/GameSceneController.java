@@ -13,8 +13,13 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import org.w3c.dom.Document;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 
 public class GameSceneController {
@@ -74,24 +79,42 @@ public class GameSceneController {
 
     private void setupGame() {
 
+        loadLevel("map_01");
+
         map = new boolean[cols][rows];
         walls = new ArrayList<>();
 
         for(int i = 0; i < rows; i++) {
             for(int j = 0; j < cols; j++) {
                 if(i == 0 || i == rows - 1 || j == 0 || j == cols - 1) {
-                    if(j == 9 || j == 10 || j == 11) continue;
-                    map[j][i] = true;
-                    walls.add((Wall) Wall.tiny().spawn(j, i));
+                    if(j == 14 || j == 15 || j == 16 || j == 17) continue;
+                    buildWall(j, i);
                 }
             }
         }
+
+        for(int i = 5; i < 24; i += 5) {
+            for(int j = 0; j < 5; j++) {
+                buildWall(3 + j, i);
+                buildWall(24 + j, i);
+            }
+        }
+
+        for(int i = 10; i < 22; i++)
+            buildWall(i, 12);
 
         enemies = new ArrayList<>();
 
         enemies.add(new Walker(15, 24));
 
         player = new Player(16, 13, App.getInputs());
+
+    }
+
+    private void buildWall(int x, int y) {
+
+        map[x][y] = true;
+        walls.add((Wall) Wall.tiny().spawn(x, y));
 
     }
 
@@ -111,6 +134,24 @@ public class GameSceneController {
             e.draw(gc, cell_size);
 
         player.draw(gc, cell_size);
+
+    }
+
+    private void loadLevel(String name) {
+
+        try {
+            URL url = GameSceneController.class.getClassLoader().getResource("maps/" + name + ".xml");
+            System.out.println(url);
+            File fXmlFile = new File(url.toString());
+            DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+            Document doc = dBuilder.parse(fXmlFile);
+            doc.getDocumentElement().normalize();
+
+            System.out.println(doc.getDocumentElement().getNodeName());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
 

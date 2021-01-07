@@ -11,7 +11,7 @@ abstract public class Enemy extends Entity {
 
         super(gfx, Animations.TMP_ENEMY, w, h);
 
-        _speed = speed;
+        _speed = speed / 60.0;
 
         spawn(x, y);
 

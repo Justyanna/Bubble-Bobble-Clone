@@ -14,44 +14,47 @@ public class Player extends Entity {
 
     public Player(int x, int y, Inputs controls) {
 
-        super(ResourceManager.get().placeholder, Animations.TMP_PLAYER, 1, 1);
+        super(ResourceManager.get().placeholder, Animations.TMP_PLAYER, 2, 2);
 
         _controls = controls;
 
         _spawn_x = x;
         _spawn_y = y;
-        _speed = 7.0;
+
+        _speed = 7.0 / 60.0;
 
         spawn(x, y);
 
     }
 
     @Override
-    public void movementRules(boolean [][] map) {
+    public double[] movementRules(boolean[][] map) {
 
-        int w = map.length;
-        int h = map[0].length;
-        int x = ((int) _x + w) %  w;
-        int y = ((int) _y + 1) % h;
+        double dx = 0, dy = 6.0 / 60.0;
 
-        if(this._controls.left) {
+        if (_jump > 0) {
+            double jh = 8.0 / 60.0;
+            dy = _jump * _jump_height < jh ? -_jump * _jump_height * 1.1 : -jh;
+            _jump -= jh / _jump_height;
+            if (!_controls.jump)
+                _jump *= 0.1;
+        }
+
+        if (_controls.left) {
             _direction = -1;
-            if(!map[x % w][(y + h - 1) % h])
-                this._x -= _speed / 60.0;
+            dx -= _speed;
         }
 
-        if(this._controls.right) {
+        if (_controls.right) {
             _direction = 1;
-            if(!map[(x + 1) % w][(y + h - 1) % h])
-                this._x += _speed / 60.0;
+            dx += _speed;
         }
 
-        if(!map[x][y] && !map[(x+1) % w][y]) {
-            this._y += 4 / 60.0;
+        if (_grounded && _controls.jump) {
+            _jump = 1.0;
         }
-        else {
-            this._y = y - 1;
-        }
+
+        return new double[]{dx, dy};
 
     }
 }
