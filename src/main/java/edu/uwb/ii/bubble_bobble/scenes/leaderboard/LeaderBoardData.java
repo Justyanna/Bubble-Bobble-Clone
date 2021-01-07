@@ -1,4 +1,4 @@
-package edu.uwb.ii.bubble_bobble.scenes.leaderboard_about;
+package edu.uwb.ii.bubble_bobble.scenes.leaderboard;
 
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;

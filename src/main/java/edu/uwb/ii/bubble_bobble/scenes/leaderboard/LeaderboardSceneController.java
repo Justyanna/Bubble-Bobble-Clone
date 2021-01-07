@@ -1,4 +1,4 @@
-package edu.uwb.ii.bubble_bobble.scenes.leaderboard_about;
+package edu.uwb.ii.bubble_bobble.scenes.leaderboard;
 
 import edu.uwb.ii.bubble_bobble.App;
 import edu.uwb.ii.bubble_bobble.utils.EncryptionProvider;

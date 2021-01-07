@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<BorderPane fx:id="root" styleClass="root" stylesheets="@./editor/editor.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.uwb.ii.bubble_bobble.scenes.editor.EditorSceneController">
+    <top>
+        <HBox alignment="CENTER_RIGHT" styleClass="header">
+            <children>
+                <Button fx:id="secondaryButton" onAction="#switchToOptions" styleClass="options__button" prefHeight="50" text="Go to options" />
+            </children>
+            <padding>
+                <Insets topRightBottomLeft="5" />
+            </padding>
+         <BorderPane.margin>
+            <Insets bottom="50.0" />
+         </BorderPane.margin>
+        </HBox>
+    </top>
+    <left>
+        <StackPane fx:id="boardWindow" maxHeight="910" maxWidth="1600" styleClass="board-window">
+             <BorderPane.margin>
+                <Insets left="70.0" />
+             </BorderPane.margin>
+        </StackPane>
+    </left>
+   <center>
+      <VBox prefHeight="500.0" prefWidth="400.0" BorderPane.alignment="CENTER_LEFT">
+          <children>
+              <ToggleButton mnemonicParsing="false" prefHeight="50.0" prefWidth="150.0" styleClass="button" text="Wall">
+                  <VBox.margin>
+                      <Insets bottom="10.0" />
+                  </VBox.margin>
+              </ToggleButton>
+              <ToggleButton mnemonicParsing="false" prefHeight="50.0" prefWidth="150.0" styleClass="button" text="Player">
+                  <VBox.margin>
+                      <Insets bottom="10.0" />
+                  </VBox.margin>
+              </ToggleButton>
+              <ToggleButton mnemonicParsing="false" prefHeight="50.0" prefWidth="150.0" styleClass="button" text="Enemies">
+                  <VBox.margin>
+                      <Insets bottom="10.0" />
+                  </VBox.margin>
+              </ToggleButton>
+              <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="150.0" styleClass="button" text="Reset">
+                  <VBox.margin>
+                      <Insets bottom="10.0" />
+                  </VBox.margin>
+              </Button>
+          </children>
+          <BorderPane.margin>
+            <Insets left="50.0" />
+         </BorderPane.margin></VBox>
+   </center>
+</BorderPane>
