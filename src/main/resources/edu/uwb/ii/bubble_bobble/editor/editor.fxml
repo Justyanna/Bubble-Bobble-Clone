@@ -3,7 +3,7 @@
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<BorderPane fx:id="root" styleClass="root" stylesheets="@./editor/editor.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.uwb.ii.bubble_bobble.scenes.editor.EditorSceneController">
+<BorderPane fx:id="root" styleClass="root" stylesheets="@./editor.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.uwb.ii.bubble_bobble.scenes.editor.EditorSceneController">
     <top>
         <HBox alignment="CENTER_RIGHT" styleClass="header">
             <children>

@@ -6,7 +6,7 @@
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="edu.uwb.ii.bubble_bobble.scenes.options.OptionsSceneController"
-            prefHeight="400.0" prefWidth="600.0" stylesheets="@./options/options.css">
+            prefHeight="400.0" prefWidth="600.0" stylesheets="@./options.css">
     <children>
         <VBox alignment="CENTER" prefHeight="198.0" prefWidth="171.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
