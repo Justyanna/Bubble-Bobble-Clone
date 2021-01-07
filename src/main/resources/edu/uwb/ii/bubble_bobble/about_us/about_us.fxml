@@ -30,7 +30,7 @@
     <!--            </children>-->
     <!--        </VBox>-->
     <bottom>
-        <Button alignment="CENTER" onAction="#switchToMenu" prefHeight="70" styleClass="button" text="Go to menu"
+        <Button alignment="CENTER" onAction="#switchToMenu" prefHeight="70" styleClass="back-button" text="Go to menu"
                 BorderPane.alignment="CENTER">
             <BorderPane.margin>
                 <Insets bottom="25.0" top="25.0"/>

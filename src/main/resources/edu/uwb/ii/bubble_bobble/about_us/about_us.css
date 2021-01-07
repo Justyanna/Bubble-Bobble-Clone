@@ -1,11 +1,11 @@
-.button{
+.back-button{
    -fx-font-size: 28px;
    -fx-background-color: black;
    -fx-text-fill: "#31ff0d";
    -fx-font-family: "Barcade Brawl";
 }
 
-.button:hover{
+.back-button:hover{
       -fx-font-size: 36px;
 }
 
