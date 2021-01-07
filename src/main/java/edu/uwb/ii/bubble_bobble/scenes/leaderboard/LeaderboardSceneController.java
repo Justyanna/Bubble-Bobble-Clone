@@ -84,7 +84,7 @@ public class LeaderboardSceneController {
         try {
 
             File file = new File(getClass().getClassLoader().getResource(LEADERBOARD_PATH).getFile());
-            EncryptionProvider.decrypt(ENCRYPTION_KEY, file, file);
+//            EncryptionProvider.decrypt(ENCRYPTION_KEY, file, file);
             URL path = getClass().getClassLoader().getResource(LEADERBOARD_PATH);
 
             list = Files.readAllLines(Paths.get(path.toURI())).stream().map(line -> {
@@ -92,8 +92,8 @@ public class LeaderboardSceneController {
                 return new LeaderBoardData(details[0], details[1], details[2]);
             }).collect(Collectors.toList());
 
-            EncryptionProvider.encrypt(ENCRYPTION_KEY, file, file);
-        } catch (IOException | URISyntaxException | EncryptionException e) {
+//            EncryptionProvider.encrypt(ENCRYPTION_KEY, file, file);
+        } catch (IOException | URISyntaxException e) {
             LOGGER.warning("Cannot load leaderboard");
         }
 

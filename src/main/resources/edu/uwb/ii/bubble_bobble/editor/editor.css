@@ -1,0 +1,31 @@
+.root {
+    -fx-background-color: goldenrod;
+}
+
+.header{
+    -fx-background-color: red;
+}
+
+.board-window {
+    -fx-background-color: goldenrod;
+}
+
+
+.grid-button
+{
+    -fx-background-color: black;
+}
+
+.grid-button:hover
+{
+  -fx-border-color:"#ff0509";
+  -fx-border-width: 2;
+  -fx-background-color: "#949494";
+}
+
+.grid-button:selected
+{
+    -fx-background-color: white;
+}
+
+
