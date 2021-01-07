@@ -3,9 +3,11 @@ package edu.uwb.ii.bubble_bobble.scenes.editor;
 import edu.uwb.ii.bubble_bobble.App;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
+import javafx.stage.Screen;
 
 import java.io.IOException;
 
@@ -19,16 +21,20 @@ public class EditorSceneController {
     private GridPane grid;
 
     public void initialize() {
+        Screen screen = Screen.getPrimary();
+        Rectangle2D bounds = screen.getVisualBounds();
         grid = new GridPane();
-        grid.setPadding(new Insets(1, 1, 1, 1));
+        grid.setMaxWidth(0.8 * bounds.getWidth());
+        grid.setMaxHeight(0.65 * bounds.getWidth());
+        grid.setPadding(new Insets(5, 5, 5, 5));
         grid.setHgap(1);
         grid.setVgap(2);
 
         for (int r = 0; r < ROWS; r++) {
             for (int c = 0; c < COLUMNS; c++) {
                 ToggleButton button = new ToggleButton();
-                button.setPrefHeight(35);
-                button.setPrefWidth(50);
+                button.setPrefHeight(bounds.getHeight() / ROWS);
+                button.setPrefWidth(bounds.getWidth() / COLUMNS);
 
                 button.setOnMouseClicked(event -> {
                     Integer colIndex = GridPane.getColumnIndex(button);
@@ -59,9 +65,8 @@ public class EditorSceneController {
                         symmetricButton.setSelected(!symmetricButton.isSelected());
                         symmetricButton = (ToggleButton) grid.getChildren().get(ROW_CORNER * COLUMNS + COLUMNS_CORNER);
                         symmetricButton.setSelected(!symmetricButton.isSelected());
-                        symmetricButton = (ToggleButton) grid.getChildren().get(rowIndex*COLUMNS+colIndex);
+                        symmetricButton = (ToggleButton) grid.getChildren().get(rowIndex * COLUMNS + colIndex);
                         symmetricButton.setSelected(!symmetricButton.isSelected());
-
                     }
                 });
 
@@ -72,8 +77,6 @@ public class EditorSceneController {
 
         boardWindow.getChildren().add(grid);
     }
-
-
 
     public void switchToOptions(ActionEvent actionEvent) throws IOException {
         App.setRoot("options");

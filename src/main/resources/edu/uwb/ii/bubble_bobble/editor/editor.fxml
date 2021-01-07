@@ -3,22 +3,20 @@
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+
 <BorderPane fx:id="root" styleClass="root" stylesheets="@./editor.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.uwb.ii.bubble_bobble.scenes.editor.EditorSceneController">
     <top>
         <HBox alignment="CENTER_RIGHT" styleClass="header">
             <children>
-                <Button fx:id="secondaryButton" onAction="#switchToOptions" styleClass="options__button" prefHeight="50" text="Go to options" />
+                <Button fx:id="secondaryButton" onAction="#switchToOptions" prefHeight="50" styleClass="options__button" text="Go to options" />
             </children>
             <padding>
                 <Insets topRightBottomLeft="5" />
             </padding>
-         <BorderPane.margin>
-            <Insets bottom="50.0" />
-         </BorderPane.margin>
         </HBox>
     </top>
     <left>
-        <StackPane fx:id="boardWindow" maxHeight="910" maxWidth="1600" styleClass="board-window">
+        <StackPane fx:id="boardWindow" styleClass="board-window" BorderPane.alignment="TOP_LEFT">
              <BorderPane.margin>
                 <Insets left="70.0" />
              </BorderPane.margin>
@@ -49,7 +47,7 @@
               </Button>
           </children>
           <BorderPane.margin>
-            <Insets left="50.0" />
+            <Insets left="50.0" top="5.0" />
          </BorderPane.margin></VBox>
    </center>
 </BorderPane>

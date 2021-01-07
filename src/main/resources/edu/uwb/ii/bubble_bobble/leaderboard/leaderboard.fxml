@@ -3,12 +3,9 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<<<<<<< HEAD
+
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" styleClass="root" stylesheets="@./leaderboard.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.uwb.ii.bubble_bobble.scenes.leaderboard.LeaderboardSceneController">
-=======
-<AnchorPane prefHeight="400.0" prefWidth="600.0" styleClass="root" stylesheets="@./leaderboard/leaderboard.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.uwb.ii.bubble_bobble.scenes.leaderboard.LeaderboardSceneController">
->>>>>>> 13ed66d608890234b147789f12d74ddd270bac19
     <children>
         <VBox fx:id="vbox" alignment="CENTER" prefHeight="198.0" prefWidth="171.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             
