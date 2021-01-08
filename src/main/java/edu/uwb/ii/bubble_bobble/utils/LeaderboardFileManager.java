@@ -20,7 +20,7 @@ public class LeaderboardFileManager {
     private final String leaderboardPath;
 
     public LeaderboardFileManager() {
-        appPath = System.getProperty("user.home") + "/AppData/Local/Bubble Bobble Clone/leaderboard";
+        appPath = System.getProperty("user.home") + "/AppData/Local/Bubble Bobble Clone";
         leaderboardPath = appPath + "/leaderboard.txt";
     }
 

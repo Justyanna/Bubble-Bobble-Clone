@@ -17,7 +17,6 @@ import java.util.logging.Logger;
 public class LeaderboardSceneController {
 
     private static final Logger LOGGER = Logger.getLogger(LeaderboardSceneController.class.getName());
-
     @FXML
     TableView<LeaderBoardData> tableView;
     @FXML
@@ -38,7 +37,6 @@ public class LeaderboardSceneController {
     public void initialize() {
         leaderboardFileManager = new LeaderboardFileManager();
         prepareTableView();
-        leaderboardFileManager.saveScore("Ania","5000", "10.10.2020");
     }
 
     private TableView<LeaderBoardData> prepareTableView() {
