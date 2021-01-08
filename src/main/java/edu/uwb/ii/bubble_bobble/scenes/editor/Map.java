@@ -9,6 +9,7 @@ import java.util.Arrays;
 
 public class Map {
 
+    private static final String[] ids = EditorSceneController.ids;
     private Cell[][] body;
 
     Map() {
@@ -21,7 +22,7 @@ public class Map {
     }
 
     void toggle(int x, int y, String input) {
-        if (Arrays.stream(EditorSceneController.ids).anyMatch(id -> id == input)) {
+        if (Arrays.stream(ids).anyMatch(id -> id == input)) {
             body[x][y].toggle(input);
         }
     }
@@ -102,6 +103,10 @@ public class Map {
                         facing.setValue(String.valueOf(cell.getFacing()));
                         enemy.setAttributeNode(facing);
 
+                        Attr name = document.createAttribute("name");
+                        name.setValue(cell.getId());
+                        enemy.setAttributeNode(name);
+
                         enemies.appendChild(enemy);
                         break;
                     }
@@ -140,7 +145,10 @@ public class Map {
             int x = Integer.parseInt(enemy.getAttributes().getNamedItem("x").getTextContent());
             int y = Integer.parseInt(enemy.getAttributes().getNamedItem("y").getTextContent());
             int facing = Integer.parseInt(enemy.getAttributes().getNamedItem("facing").getTextContent());
-            body[x][y].setId("Enemy");
+            String name = enemy.getAttributes().getNamedItem("name").getTextContent();
+            if (Arrays.stream(ids).anyMatch(id -> id == name)) {
+                body[x][y].setId(name);
+            }
             body[x][y].setFacing(facing);
         }
     }

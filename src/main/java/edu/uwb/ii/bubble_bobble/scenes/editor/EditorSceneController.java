@@ -39,9 +39,9 @@ public class EditorSceneController {
     private static final int COLUMNS_CORNER = COLUMNS - 1;
     private static final String MAPS_PATH = System.getProperty("user.home") + "/AppData/Local/Bubble Bobble Clone/maps";
     private static final int PLAYER_LIMIT = 1;
-    private String currentSelected;
     @FXML
     VBox rightPanel;
+    private String currentSelected;
     private Map map;
     @FXML
     private StackPane boardWindow;
@@ -74,6 +74,7 @@ public class EditorSceneController {
             toggleButton.setPrefWidth(100);
             int finalI = i;
             toggleButton.setOnAction((event) -> handleIdToggleButtonClick(toggleButton, ids[finalI]));
+
             if (ids[i] == "Wall") {
                 toggleButton.setSelected(true);
                 currentSelected = ids[1];
@@ -102,6 +103,7 @@ public class EditorSceneController {
                 });
 
                 button.getStyleClass().add("grid-button-wall");
+
                 grid.add(button, c, r);
             }
         }
@@ -206,7 +208,7 @@ public class EditorSceneController {
             map.importFormDocument(doc);
             for (Cell[] cellRow : map.getBody()) {
                 for (Cell cell : cellRow) {
-                    if (cell.getId() != "Empty") {
+                    if (!cell.getId().equals("Empty")) {
                         ToggleButton button =
                                 (ToggleButton) grid.getChildren().get(cell.getY() * COLUMNS + cell.getX());
                         button.setSelected(true);
