@@ -70,3 +70,10 @@
       -fx-font-size: 36px;
 }
 
+.label
+{
+  -fx-font-size: 28px;
+  -fx-text-fill: "#31ff0d";
+  -fx-font-family: "Barcade Brawl";
+}
+
