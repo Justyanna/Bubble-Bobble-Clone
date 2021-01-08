@@ -21,9 +21,11 @@ public class Map {
         }
     }
 
-    void toggle(int x, int y, String input) {
+    String toggle(int x, int y, String input) {
         if (Arrays.stream(ids).anyMatch(id -> id == input)) {
-            body[x][y].toggle(input);
+            return body[x][y].toggle(input);
+        } else {
+            return "grid-button-empty";
         }
     }
 
@@ -117,7 +119,7 @@ public class Map {
         return document;
     }
 
-    public void importFormDocument(Document document) throws ParserConfigurationException {
+    public void importFormDocument(Document document) {
 
         Element root = document.getDocumentElement();
         NodeList walls = root.getElementsByTagName("Wall");

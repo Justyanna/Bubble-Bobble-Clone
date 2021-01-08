@@ -11,34 +11,41 @@
 }
 
 
-.grid-button-wall,
-.grid-button-player,
-.grid-button-enemy
+.grid-button-empty
 {
     -fx-background-color: black;
 }
 
-.grid-button-wall:hover,
-.grid-button-player:hover,
-.grid-button-enemy:hover
-{
-  -fx-border-color:"#ff0509";
-  -fx-border-width: 2;
-  -fx-background-color: "#949494";
-}
-
-.grid-button-wall:selected
+.grid-button-wall
 {
     -fx-background-color: white;
 }
 
-
-.grid-button-player:selected
+.grid-button-player-A
+{
+    -fx-background-color: blue;
+}
+.grid-button-player-B
 {
     -fx-background-color: blue;
 }
 
-.grid-button-enemy:selected
+.grid-button-knight-A
 {
     -fx-background-color: red;
+}
+
+.grid-button-knight-B
+{
+    -fx-background-color: red;
+}
+
+.grid-button-ninja-A
+{
+    -fx-background-color: green;
+}
+
+.grid-button-ninja-B
+{
+    -fx-background-color: green;
 }

@@ -14,7 +14,7 @@ public class Cell {
         this.id = id;
     }
 
-    void toggle(String input) {
+    String toggle(String input) {
         if (!id.equals(input)) {
             id = input;
             facing = 1;
@@ -23,6 +23,8 @@ public class Cell {
         } else {
             facing = -1;
         }
+        return id.equals("Wall") || id.equals("empty") ? id.toLowerCase() :
+                id.toLowerCase() + "-" + (facing > 0 ? "A" : "B");
     }
 
     int getX() {

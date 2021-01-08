@@ -1,7 +1,6 @@
 package edu.uwb.ii.bubble_bobble.scenes.editor;
 
 import edu.uwb.ii.bubble_bobble.App;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Rectangle2D;
@@ -27,18 +26,18 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Arrays;
 import java.util.logging.Logger;
 
 public class EditorSceneController {
 
-    static final String[] ids = {"Empty", "Wall", "Player", "Knight", "Ninja"};
+    static final String[] ids = {"empty", "Wall", "Player", "Knight", "Ninja"};
     private static final Logger LOGGER = Logger.getLogger(EditorSceneController.class.getName());
     private static final int ROWS = 26;
     private static final int ROW_CORNER = ROWS - 1;
     private static final int COLUMNS = 32;
     private static final int COLUMNS_CORNER = COLUMNS - 1;
     private static final String MAPS_PATH = System.getProperty("user.home") + "/AppData/Local/Bubble Bobble Clone/maps";
-    private static final int PLAYER_LIMIT = 1;
     @FXML
     VBox rightPanel;
     private String currentSelected;
@@ -73,12 +72,10 @@ public class EditorSceneController {
             toggleButton.setPrefHeight(30);
             toggleButton.setPrefWidth(100);
             int finalI = i;
-            toggleButton.setOnAction((event) -> handleIdToggleButtonClick(toggleButton, ids[finalI]));
+            toggleButton.setOnAction(event -> handleIdToggleButtonClick(toggleButton, ids[finalI]));
 
-            if (ids[i] == "Wall") {
-                toggleButton.setSelected(true);
-                currentSelected = ids[1];
-            }
+            currentSelected = ids[0];
+
             rightPanel.getChildren().add(toggleButton);
             rightPanel.setSpacing(10);
         }
@@ -98,12 +95,8 @@ public class EditorSceneController {
                 button.setPrefHeight(bounds.getHeight() / ROWS);
                 button.setPrefWidth(bounds.getWidth() / COLUMNS);
 
-                button.setOnMouseClicked(event -> {
-                    handleToggleButtonClick(button);
-                });
-
-                button.getStyleClass().add("grid-button-wall");
-
+                button.setOnMouseClicked(event -> handleToggleButtonClick(button));
+                button.getStyleClass().add("grid-button-empty");
                 grid.add(button, c, r);
             }
         }
@@ -114,61 +107,82 @@ public class EditorSceneController {
     private void handleToggleButtonClick(ToggleButton button) {
         Integer colIndex = GridPane.getColumnIndex(button);
         Integer rowIndex = GridPane.getRowIndex(button);
-        int rowSym;
-        int colSym;
-
-        ToggleButton symmetricButton;
-        if ((rowIndex == 0 || rowIndex == ROW_CORNER) && colIndex != 0 && colIndex != COLUMNS_CORNER) {
-            fillRowBorder(colIndex, rowIndex);
+        if (((rowIndex == 0 || rowIndex == ROW_CORNER) || (colIndex == 0 || colIndex == COLUMNS_CORNER))) {
+            handleWallCell(button, colIndex, rowIndex);
+        } else {
+            if (Arrays.stream(map.getBody())
+                    .allMatch(row -> Arrays.stream(row).noneMatch(x -> x.getId().equalsIgnoreCase(ids[2])))) {
+                toggleAndSetClass(button, colIndex, rowIndex);
+            } else {
+                if (button.getStyleClass().stream().anyMatch(x -> x.equals("grid-button-player-B")) ||
+                        button.getStyleClass().stream().anyMatch(x -> x.equals("grid-button-player-A"))) {
+                    toggleAndSetClass(button, colIndex, rowIndex);
+                }
+            }
         }
+    }
 
-        if ((colIndex == 0 || colIndex == COLUMNS_CORNER) && rowIndex != 0 && rowIndex != ROW_CORNER) {
-            fillColumnBorder(colIndex, rowIndex);
+    private void handleWallCell(ToggleButton button, Integer colIndex, Integer rowIndex) {
+        String cell;
+        if (currentSelected.equals(ids[1])) {
+            cell = toggleAndSetClass(button, colIndex, rowIndex);
+            if (ids[1].equalsIgnoreCase(cell)) {
+
+                if ((rowIndex == 0 || rowIndex == ROW_CORNER) && colIndex != 0 && colIndex != COLUMNS_CORNER) {
+                    fillRowBorder(colIndex, rowIndex);
+                }
+
+                if ((colIndex == 0 || colIndex == COLUMNS_CORNER) && rowIndex != 0 && rowIndex != ROW_CORNER) {
+                    fillColumnBorder(colIndex, rowIndex);
+                }
+
+                if ((rowIndex == 0 || rowIndex == ROW_CORNER) && (colIndex == 0 || colIndex == COLUMNS_CORNER)) {
+
+                    fillBoardCorners(colIndex, rowIndex);
+                }
+            }
         }
+    }
 
-        if ((rowIndex == 0 || rowIndex == ROW_CORNER) && (colIndex == 0 || colIndex == COLUMNS_CORNER)) {
-
-            fillBoardCorners(colIndex, rowIndex);
-        }
-
-        map.toggle(colIndex, rowIndex, currentSelected);
+    private String toggleAndSetClass(ToggleButton button, Integer colIndex, Integer rowIndex) {
+        String cell = map.toggle(colIndex, rowIndex, currentSelected);
+        button.getStyleClass().clear();
+        button.getStyleClass().add("grid-button-" + cell);
+        return cell;
     }
 
     private void fillRowBorder(Integer colIndex, Integer rowIndex) {
-        ToggleButton symmetricButton;
         int rowSym = Math.abs(rowIndex - ROWS) - 1;
-        symmetricButton = (ToggleButton) grid.getChildren().get(rowSym * COLUMNS + colIndex);
-        symmetricButton.setSelected(!symmetricButton.isSelected());
+        ToggleButton symmetricButton = (ToggleButton) grid.getChildren().get(rowSym * COLUMNS + colIndex);
+        toggleAndSetClass(symmetricButton, colIndex, rowSym);
     }
 
     private void fillColumnBorder(Integer colIndex, Integer rowIndex) {
-        int colSym;
-        ToggleButton symmetricButton;
-        colSym = Math.abs(colIndex - COLUMNS) - 1;
-        symmetricButton = (ToggleButton) grid.getChildren().get(rowIndex * COLUMNS + colSym);
-        symmetricButton.setSelected(!symmetricButton.isSelected());
+        int colSym = Math.abs(colIndex - COLUMNS) - 1;
+        ToggleButton symmetricButton = (ToggleButton) grid.getChildren().get(rowIndex * COLUMNS + colSym);
+        toggleAndSetClass(symmetricButton, colSym, rowIndex);
     }
 
     private void fillBoardCorners(Integer colIndex, Integer rowIndex) {
         ToggleButton symmetricButton;
         symmetricButton = (ToggleButton) grid.getChildren().get(0);
-        symmetricButton.setSelected(!symmetricButton.isSelected());
+        toggleAndSetClass(symmetricButton, 0, 0);
         symmetricButton = (ToggleButton) grid.getChildren().get(COLUMNS_CORNER);
-        symmetricButton.setSelected(!symmetricButton.isSelected());
+        toggleAndSetClass(symmetricButton, COLUMNS_CORNER, 0);
         symmetricButton = (ToggleButton) grid.getChildren().get(ROW_CORNER * COLUMNS);
-        symmetricButton.setSelected(!symmetricButton.isSelected());
+        toggleAndSetClass(symmetricButton, 0, ROW_CORNER);
         symmetricButton = (ToggleButton) grid.getChildren().get(ROW_CORNER * COLUMNS + COLUMNS_CORNER);
-        symmetricButton.setSelected(!symmetricButton.isSelected());
+        toggleAndSetClass(symmetricButton, COLUMNS_CORNER, ROW_CORNER);
         symmetricButton = (ToggleButton) grid.getChildren().get(rowIndex * COLUMNS + colIndex);
-        symmetricButton.setSelected(!symmetricButton.isSelected());
+        toggleAndSetClass(symmetricButton, colIndex, rowIndex);
     }
 
-    public void switchToOptions(ActionEvent actionEvent) throws IOException {
+    public void switchToOptions() throws IOException {
         App.setRoot("options");
     }
 
     @FXML
-    void saveMap(ActionEvent actionEvent) {
+    void saveMap() {
         tryCreateMapsDirectory();
 
         FileChooser fileChooser = new FileChooser();
@@ -190,7 +204,7 @@ public class EditorSceneController {
     }
 
     @FXML
-    void importMap(ActionEvent actionEvent) {
+    void importMap() {
 
         tryCreateMapsDirectory();
 
@@ -206,17 +220,20 @@ public class EditorSceneController {
             Document doc = dBuilder.parse(file);
             doc.getDocumentElement().normalize();
             map.importFormDocument(doc);
-            for (Cell[] cellRow : map.getBody()) {
-                for (Cell cell : cellRow) {
-                    if (!cell.getId().equals("Empty")) {
-                        ToggleButton button =
-                                (ToggleButton) grid.getChildren().get(cell.getY() * COLUMNS + cell.getX());
-                        button.setSelected(true);
-                    }
-                }
-            }
+            updateBoard();
         } catch (ParserConfigurationException | IOException | SAXException | IllegalArgumentException e) {
             e.printStackTrace();
+        }
+    }
+
+    private void updateBoard() {
+        for (Cell[] cellRow : map.getBody()) {
+            for (Cell cell : cellRow) {
+                if (!cell.getId().equals("Empty")) {
+                    ToggleButton button = (ToggleButton) grid.getChildren().get(cell.getY() * COLUMNS + cell.getX());
+                    button.setSelected(true);
+                }
+            }
         }
     }
 
@@ -229,8 +246,11 @@ public class EditorSceneController {
     }
 
     @FXML
-    void resetBoard(ActionEvent actionEvent) {
-        grid.getChildren().forEach(cell -> ((ToggleButton) cell).setSelected(false));
+    void resetBoard() {
+        grid.getChildren().forEach(cell -> {
+            cell.getStyleClass().clear();
+            cell.getStyleClass().add("grid-button-empty");
+        });
     }
 
     private void handleIdToggleButtonClick(ToggleButton button, String id) {
