@@ -30,7 +30,7 @@ public class Player extends Entity {
     @Override
     public double[] movementRules(boolean[][] map) {
 
-        double dx = 0, dy = 6.0 / 60.0;
+        double dx = 0, dy = 10.0 / 60.0;
 
         if (_jump > 0) {
             double jh = 8.0 / 60.0;

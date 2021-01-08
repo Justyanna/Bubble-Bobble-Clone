@@ -79,7 +79,7 @@ public class GameSceneController {
 
     private void setupGame() {
 
-        loadLevel("map_01");
+//        loadLevel("map_01");
 
         map = new boolean[cols][rows];
         walls = new ArrayList<>();
@@ -98,6 +98,8 @@ public class GameSceneController {
                 buildWall(3 + j, i);
                 buildWall(24 + j, i);
             }
+            buildWall(3, i + 1);
+            buildWall(28, i + 1);
         }
 
         for(int i = 10; i < 22; i++)

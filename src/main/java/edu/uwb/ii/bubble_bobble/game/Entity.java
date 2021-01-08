@@ -86,7 +86,7 @@ abstract public class Entity {
 
         int wx = (x + (1 + _direction) / 2 * _width) % w;
 
-        boolean wall_ahead = map[wx][y] && !map[(wx  - _direction + w) % w][y]
+        boolean wall_ahead = map[wx][y]  && !map[(wx  - _direction + w) % w][y]
                 || _y % 1 >= dy && map[wx][(y + 1) % h] && !map[(wx  - _direction + w) % w][(y + 1) % h];
 
         if(wall_ahead)
