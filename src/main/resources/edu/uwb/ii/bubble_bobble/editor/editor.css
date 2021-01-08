@@ -11,21 +11,34 @@
 }
 
 
-.grid-button
+.grid-button-wall,
+.grid-button-player,
+.grid-button-enemy
 {
     -fx-background-color: black;
 }
 
-.grid-button:hover
+.grid-button-wall:hover,
+.grid-button-player:hover,
+.grid-button-enemy:hover
 {
   -fx-border-color:"#ff0509";
   -fx-border-width: 2;
   -fx-background-color: "#949494";
 }
 
-.grid-button:selected
+.grid-button-wall:selected
 {
     -fx-background-color: white;
 }
 
 
+.grid-button-player:selected
+{
+    -fx-background-color: blue;
+}
+
+.grid-button-enemy:selected
+{
+    -fx-background-color: red;
+}

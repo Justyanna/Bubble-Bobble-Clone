@@ -6,6 +6,9 @@
 <BorderPane fx:id="root" styleClass="root" stylesheets="@./editor.css" xmlns="http://javafx.com/javafx/11.0.1"
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="edu.uwb.ii.bubble_bobble.scenes.editor.EditorSceneController">
+    <fx:define>
+        <ToggleGroup fx:id="modes"/>
+    </fx:define>
     <top>
         <BorderPane styleClass="header">
             <left>
@@ -47,23 +50,29 @@
     <center>
         <VBox prefHeight="500.0" prefWidth="400.0" BorderPane.alignment="CENTER_LEFT">
             <children>
-                <ToggleButton mnemonicParsing="false" prefHeight="50.0" prefWidth="150.0" styleClass="button"
+                <ToggleButton fx:id="wallToggleButton" onAction="#handleToggleWall" prefHeight="50.0" prefWidth="150.0"
+                              toggleGroup="$modes"
                               text="Wall">
                     <VBox.margin>
                         <Insets bottom="10.0"/>
                     </VBox.margin>
+
                 </ToggleButton>
-                <ToggleButton mnemonicParsing="false" prefHeight="50.0" prefWidth="150.0" styleClass="button"
+                <ToggleButton fx:id="playerToggleButton" onAction="#handleTogglePlayer"
+                              prefHeight="50.0" prefWidth="150.0" styleClass="button" toggleGroup="$modes"
                               text="Player">
                     <VBox.margin>
                         <Insets bottom="10.0"/>
                     </VBox.margin>
+
                 </ToggleButton>
-                <ToggleButton mnemonicParsing="false" prefHeight="50.0" prefWidth="150.0" styleClass="button"
+                <ToggleButton fx:id="enemiesToggleButton" onAction="#handleToggleWEnemies"
+                              prefHeight="50.0" prefWidth="150.0" styleClass="button" toggleGroup="$modes"
                               text="Enemies">
                     <VBox.margin>
                         <Insets bottom="10.0"/>
                     </VBox.margin>
+
                 </ToggleButton>
 
             </children>

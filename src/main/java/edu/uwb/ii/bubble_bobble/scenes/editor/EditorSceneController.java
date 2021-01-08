@@ -31,10 +31,21 @@ public class EditorSceneController {
     private static final int COLUMNS_CORNER = COLUMNS - 1;
     private static final String APP_PATH = System.getProperty("user.home") + "/AppData/Local/Bubble Bobble Clone";
     private static final String MAPS_PATH = System.getProperty("user.home") + "/AppData/Local/Bubble Bobble Clone/maps";
-    public StackPane boardWindow;
+    private Mode mode;
+    @FXML
+    private StackPane boardWindow;
+    @FXML
+    private ToggleButton wallToggleButton;
+    @FXML
+    private ToggleButton playerToggleButton;
+    @FXML
+    private ToggleButton enemiesToggleButton;
+    @FXML
     private GridPane grid;
 
     public void initialize() {
+        wallToggleButton.setSelected(true);
+        mode = Mode.WALL;
         Screen screen = Screen.getPrimary();
         Rectangle2D bounds = screen.getVisualBounds();
         fillGridWithCells(bounds);
@@ -56,9 +67,10 @@ public class EditorSceneController {
 
                 button.setOnMouseClicked(event -> {
                     handleToggleButtonClick(button);
+                    changeStyleClass(button);
                 });
 
-                button.getStyleClass().add("grid-button");
+                button.getStyleClass().add("grid-button-wall");
                 grid.add(button, c, r);
             }
         }
@@ -74,7 +86,7 @@ public class EditorSceneController {
 
         ToggleButton symmetricButton;
         if ((rowIndex == 0 || rowIndex == ROW_CORNER) && colIndex != 0 && colIndex != COLUMNS_CORNER) {
-          fillRowBorder(colIndex, rowIndex);
+            fillRowBorder(colIndex, rowIndex);
         }
 
         if ((colIndex == 0 || colIndex == COLUMNS_CORNER) && rowIndex != 0 && rowIndex != ROW_CORNER) {
@@ -166,8 +178,50 @@ public class EditorSceneController {
         }
     }
 
+    private void changeStyleClass(ToggleButton button) {
+        String styleClass;
+        switch (mode) {
+            case WALL:
+                styleClass = "grid-button-wall";
+                break;
+            case PLAYER:
+                styleClass = "grid-button-player";
+                break;
+            case ENEMIES:
+                styleClass = "grid-button-enemy";
+                break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + mode);
+        }
+
+        String finalStyleClass = styleClass;
+        button.getStyleClass().clear();
+        button.getStyleClass().add(finalStyleClass);
+    }
+
     @FXML
     void resetBoard(ActionEvent actionEvent) {
         grid.getChildren().forEach(cell -> ((ToggleButton) cell).setSelected(false));
+    }
+
+    @FXML
+    void handleToggleWall(ActionEvent event) {
+        if (wallToggleButton.isSelected()) {
+            mode = Mode.WALL;
+        }
+    }
+
+    @FXML
+    void handleTogglePlayer(ActionEvent event) {
+        if (playerToggleButton.isSelected()) {
+            mode = Mode.PLAYER;
+        }
+    }
+
+    @FXML
+    void handleToggleWEnemies(ActionEvent event) {
+        if (enemiesToggleButton.isSelected()) {
+            mode = Mode.ENEMIES;
+        }
     }
 }
