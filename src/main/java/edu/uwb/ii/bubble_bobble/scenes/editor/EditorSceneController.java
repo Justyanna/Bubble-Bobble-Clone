@@ -114,8 +114,11 @@ public class EditorSceneController {
                     .allMatch(row -> Arrays.stream(row).noneMatch(x -> x.getId().equalsIgnoreCase(ids[2])))) {
                 toggleAndSetClass(button, colIndex, rowIndex);
             } else {
-                if (button.getStyleClass().stream().anyMatch(x -> x.equals("grid-button-player-B")) ||
+                if (currentSelected == ids[2] &&
+                        button.getStyleClass().stream().anyMatch(x -> x.equals("grid-button-player-B")) ||
                         button.getStyleClass().stream().anyMatch(x -> x.equals("grid-button-player-A"))) {
+                    toggleAndSetClass(button, colIndex, rowIndex);
+                } else {
                     toggleAndSetClass(button, colIndex, rowIndex);
                 }
             }
@@ -126,7 +129,7 @@ public class EditorSceneController {
         String cell;
         if (currentSelected.equals(ids[1])) {
             cell = toggleAndSetClass(button, colIndex, rowIndex);
-            if (ids[1].equalsIgnoreCase(cell)) {
+            if (ids[1].equalsIgnoreCase(cell) || ids[0].equalsIgnoreCase(cell)) {
 
                 if ((rowIndex == 0 || rowIndex == ROW_CORNER) && colIndex != 0 && colIndex != COLUMNS_CORNER) {
                     fillRowBorder(colIndex, rowIndex);
@@ -150,6 +153,8 @@ public class EditorSceneController {
         button.getStyleClass().add("grid-button-" + cell);
         return cell;
     }
+
+
 
     private void fillRowBorder(Integer colIndex, Integer rowIndex) {
         int rowSym = Math.abs(rowIndex - ROWS) - 1;
@@ -231,7 +236,11 @@ public class EditorSceneController {
             for (Cell cell : cellRow) {
                 if (!cell.getId().equalsIgnoreCase("empty")) {
                     ToggleButton button = (ToggleButton) grid.getChildren().get(cell.getY() * COLUMNS + cell.getX());
-                    button.setSelected(true);
+                    button.getStyleClass().clear();
+                    button.getStyleClass()
+                            .add("grid-button-" + (cell.getId().equals("Wall") || cell.getId().equals("empty") ?
+                                    cell.getId().toLowerCase() :
+                                    cell.getId().toLowerCase() + "-" + (cell.getFacing() > 0 ? "A" : "B")));
                 }
             }
         }

@@ -16,7 +16,7 @@ public class Map {
         this.body = new Cell[32][26];
         for (int i = 0; i < 32; i++) {
             for (int j = 0; j < 26; j++) {
-                body[i][j] = new Cell(i, j, 1, "Empty");
+                body[i][j] = new Cell(i, j, 1, "empty");
             }
         }
     }
@@ -56,7 +56,7 @@ public class Map {
         for (Cell[] cellRow : body) {
             for (Cell cell : cellRow) {
                 switch (cell.getId()) {
-                    case "Empty":
+                    case "empty":
                         continue;
                     case "Wall": {
                         Element wall = document.createElement("Wall");
