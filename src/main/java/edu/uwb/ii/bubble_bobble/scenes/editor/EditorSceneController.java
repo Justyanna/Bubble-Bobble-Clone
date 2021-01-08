@@ -229,7 +229,7 @@ public class EditorSceneController {
     private void updateBoard() {
         for (Cell[] cellRow : map.getBody()) {
             for (Cell cell : cellRow) {
-                if (!cell.getId().equals("Empty")) {
+                if (!cell.getId().equalsIgnoreCase("empty")) {
                     ToggleButton button = (ToggleButton) grid.getChildren().get(cell.getY() * COLUMNS + cell.getX());
                     button.setSelected(true);
                 }
