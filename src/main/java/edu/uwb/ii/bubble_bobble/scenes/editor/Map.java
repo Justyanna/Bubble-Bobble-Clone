@@ -92,7 +92,7 @@ public class Map {
                         continue;
                     }
                     default: {
-                        Element enemy = document.createElement("Enemy");
+                        Element enemy = document.createElement(cell.getId());
                         Attr x = document.createAttribute("x");
                         x.setValue(String.valueOf(cell.getX()));
                         enemy.setAttributeNode(x);
@@ -104,10 +104,6 @@ public class Map {
                         Attr facing = document.createAttribute("facing");
                         facing.setValue(String.valueOf(cell.getFacing()));
                         enemy.setAttributeNode(facing);
-
-                        Attr name = document.createAttribute("name");
-                        name.setValue(cell.getId());
-                        enemy.setAttributeNode(name);
 
                         enemies.appendChild(enemy);
                         break;
@@ -124,7 +120,7 @@ public class Map {
         Element root = document.getDocumentElement();
         NodeList walls = root.getElementsByTagName("Wall");
         NodeList players = root.getElementsByTagName("Player");
-        NodeList enemies = root.getElementsByTagName("Enemy");
+        Node enemies = root.getElementsByTagName("Enemies").item(0);
 
         for (int i = 0; i < walls.getLength(); i++) {
             Node wall = walls.item(i);
@@ -142,14 +138,13 @@ public class Map {
             body[x][y].setFacing(facing);
         }
 
-        for (int i = 0; i < enemies.getLength(); i++) {
-            Node enemy = enemies.item(i);
+        for (int i = 0; i < enemies.getChildNodes().getLength(); i++) {
+            Node enemy = enemies.getChildNodes().item(i);
             int x = Integer.parseInt(enemy.getAttributes().getNamedItem("x").getTextContent());
             int y = Integer.parseInt(enemy.getAttributes().getNamedItem("y").getTextContent());
             int facing = Integer.parseInt(enemy.getAttributes().getNamedItem("facing").getTextContent());
-            String name = enemy.getAttributes().getNamedItem("name").getTextContent();
-            if (Arrays.stream(ids).anyMatch(id -> id == name)) {
-                body[x][y].setId(name);
+            if (Arrays.stream(ids).anyMatch(id -> id == enemy.getNodeValue())) {
+                body[x][y].setId(enemy.getNodeValue());
             }
             body[x][y].setFacing(facing);
         }
