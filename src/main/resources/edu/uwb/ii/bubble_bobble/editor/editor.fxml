@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <BorderPane fx:id="root" styleClass="root" stylesheets="@./editor.css" xmlns="http://javafx.com/javafx/11.0.1"
@@ -48,32 +48,9 @@
         </StackPane>
     </left>
     <center>
-        <VBox prefHeight="500.0" prefWidth="400.0" BorderPane.alignment="CENTER_LEFT">
+        <VBox fx:id="rightPanel" prefHeight="500.0" prefWidth="400.0" BorderPane.alignment="CENTER_LEFT">
             <children>
-                <ToggleButton fx:id="wallToggleButton" onAction="#handleToggleWall" prefHeight="50.0" prefWidth="150.0"
-                              toggleGroup="$modes"
-                              text="Wall">
-                    <VBox.margin>
-                        <Insets bottom="10.0"/>
-                    </VBox.margin>
 
-                </ToggleButton>
-                <ToggleButton fx:id="playerToggleButton" onAction="#handleTogglePlayer"
-                              prefHeight="50.0" prefWidth="150.0" styleClass="button" toggleGroup="$modes"
-                              text="Player">
-                    <VBox.margin>
-                        <Insets bottom="10.0"/>
-                    </VBox.margin>
-
-                </ToggleButton>
-                <ToggleButton fx:id="enemiesToggleButton" onAction="#handleToggleWEnemies"
-                              prefHeight="50.0" prefWidth="150.0" styleClass="button" toggleGroup="$modes"
-                              text="Enemies">
-                    <VBox.margin>
-                        <Insets bottom="10.0"/>
-                    </VBox.margin>
-
-                </ToggleButton>
 
             </children>
             <BorderPane.margin>

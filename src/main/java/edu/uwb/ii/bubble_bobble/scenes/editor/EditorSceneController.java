@@ -6,8 +6,10 @@ import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.control.ToggleButton;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Screen;
 import org.w3c.dom.Document;
@@ -16,6 +18,11 @@ import org.xml.sax.SAXException;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -24,31 +31,56 @@ import java.util.logging.Logger;
 
 public class EditorSceneController {
 
+    static final String[] ids = {"Empty", "Wall", "Player", "Knight", "Ninja"};
     private static final Logger LOGGER = Logger.getLogger(EditorSceneController.class.getName());
     private static final int ROWS = 26;
     private static final int ROW_CORNER = ROWS - 1;
     private static final int COLUMNS = 32;
     private static final int COLUMNS_CORNER = COLUMNS - 1;
-    private static final String APP_PATH = System.getProperty("user.home") + "/AppData/Local/Bubble Bobble Clone";
     private static final String MAPS_PATH = System.getProperty("user.home") + "/AppData/Local/Bubble Bobble Clone/maps";
-    private Mode mode;
+    private static final int PLAYER_LIMIT = 1;
+    private String currentSelected;
+    @FXML
+    VBox rightPanel;
+    private Map map;
     @FXML
     private StackPane boardWindow;
     @FXML
-    private ToggleButton wallToggleButton;
-    @FXML
-    private ToggleButton playerToggleButton;
-    @FXML
-    private ToggleButton enemiesToggleButton;
-    @FXML
     private GridPane grid;
+    @FXML
+    private ToggleGroup modes;
 
     public void initialize() {
-        wallToggleButton.setSelected(true);
-        mode = Mode.WALL;
+        map = new Map();
+        currentSelected = ids[0];
+        createRightPanel();
         Screen screen = Screen.getPrimary();
         Rectangle2D bounds = screen.getVisualBounds();
         fillGridWithCells(bounds);
+
+        modes.selectedToggleProperty().addListener((obsVal, oldVal, newVal) -> {
+            if (newVal == null) {
+                oldVal.setSelected(true);
+            }
+        });
+    }
+
+    private void createRightPanel() {
+        for (int i = 1; i < ids.length; i++) {
+
+            ToggleButton toggleButton = new ToggleButton(ids[i]);
+            toggleButton.setToggleGroup(modes);
+            toggleButton.setPrefHeight(30);
+            toggleButton.setPrefWidth(100);
+            int finalI = i;
+            toggleButton.setOnAction((event) -> handleIdToggleButtonClick(toggleButton, ids[finalI]));
+            if (ids[i] == "Wall") {
+                toggleButton.setSelected(true);
+                currentSelected = ids[1];
+            }
+            rightPanel.getChildren().add(toggleButton);
+            rightPanel.setSpacing(10);
+        }
     }
 
     private void fillGridWithCells(Rectangle2D bounds) {
@@ -67,7 +99,6 @@ public class EditorSceneController {
 
                 button.setOnMouseClicked(event -> {
                     handleToggleButtonClick(button);
-                    changeStyleClass(button);
                 });
 
                 button.getStyleClass().add("grid-button-wall");
@@ -97,6 +128,8 @@ public class EditorSceneController {
 
             fillBoardCorners(colIndex, rowIndex);
         }
+
+        map.toggle(colIndex, rowIndex, currentSelected);
     }
 
     private void fillRowBorder(Integer colIndex, Integer rowIndex) {
@@ -141,9 +174,15 @@ public class EditorSceneController {
         fileChooser.getExtensionFilters().add(extFilter);
         fileChooser.setInitialDirectory(new File(MAPS_PATH));
 
+        TransformerFactory transformerFactory = TransformerFactory.newInstance();
+        Transformer transformer;
         try {
             File file = fileChooser.showSaveDialog(boardWindow.getScene().getWindow());
-        } catch (IllegalArgumentException e) {
+            transformer = transformerFactory.newTransformer();
+            DOMSource domSource = new DOMSource(map.generateFxml());
+            StreamResult streamResult = new StreamResult(file);
+            transformer.transform(domSource, streamResult);
+        } catch (ParserConfigurationException | TransformerException | NullPointerException e) {
             e.printStackTrace();
         }
     }
@@ -164,7 +203,16 @@ public class EditorSceneController {
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
             Document doc = dBuilder.parse(file);
             doc.getDocumentElement().normalize();
-            System.out.println(doc.getDocumentElement().getNodeName());
+            map.importFormDocument(doc);
+            for (Cell[] cellRow : map.getBody()) {
+                for (Cell cell : cellRow) {
+                    if (cell.getId() != "Empty") {
+                        ToggleButton button =
+                                (ToggleButton) grid.getChildren().get(cell.getY() * COLUMNS + cell.getX());
+                        button.setSelected(true);
+                    }
+                }
+            }
         } catch (ParserConfigurationException | IOException | SAXException | IllegalArgumentException e) {
             e.printStackTrace();
         }
@@ -178,50 +226,14 @@ public class EditorSceneController {
         }
     }
 
-    private void changeStyleClass(ToggleButton button) {
-        String styleClass;
-        switch (mode) {
-            case WALL:
-                styleClass = "grid-button-wall";
-                break;
-            case PLAYER:
-                styleClass = "grid-button-player";
-                break;
-            case ENEMIES:
-                styleClass = "grid-button-enemy";
-                break;
-            default:
-                throw new IllegalStateException("Unexpected value: " + mode);
-        }
-
-        String finalStyleClass = styleClass;
-        button.getStyleClass().clear();
-        button.getStyleClass().add(finalStyleClass);
-    }
-
     @FXML
     void resetBoard(ActionEvent actionEvent) {
         grid.getChildren().forEach(cell -> ((ToggleButton) cell).setSelected(false));
     }
 
-    @FXML
-    void handleToggleWall(ActionEvent event) {
-        if (wallToggleButton.isSelected()) {
-            mode = Mode.WALL;
-        }
-    }
-
-    @FXML
-    void handleTogglePlayer(ActionEvent event) {
-        if (playerToggleButton.isSelected()) {
-            mode = Mode.PLAYER;
-        }
-    }
-
-    @FXML
-    void handleToggleWEnemies(ActionEvent event) {
-        if (enemiesToggleButton.isSelected()) {
-            mode = Mode.ENEMIES;
+    private void handleIdToggleButtonClick(ToggleButton button, String id) {
+        if (button.isSelected()) {
+            currentSelected = id;
         }
     }
 }
