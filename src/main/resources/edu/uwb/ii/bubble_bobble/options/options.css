@@ -2,7 +2,7 @@
     -fx-background-color: black;
 }
 
-.button{
+.button, .label{
    -fx-font-size: 28px;
    -fx-background-color: black;
    -fx-text-fill: "#31ff0d";
@@ -12,3 +12,18 @@
 .button:hover{
    -fx-font-size: 36px;
 }
+
+.spinner > .text-field{
+
+   -fx-font-size: 14px;
+   -fx-background-color: black;
+   -fx-text-fill: "#31ff0d";
+   -fx-font-family: "Barcade Brawl";
+}
+
+.spinner .increment-arrow-button,
+.spinner .decrement-arrow-button{
+   -fx-background-color: "#31ff0d";
+}
+
+

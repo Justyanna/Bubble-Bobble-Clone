@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Language>
+    <Menu>
+        <Button id="playGame">Jouer</Button>
+        <Button id="leaderboard">Tableau de score</Button>
+        <Button id="options">Options</Button>
+        <Button id="aboutUsButton">À propos de nous</Button>
+        <Button id="exitButton">Quitter</Button>
+    </Menu>
+    <Options>
+        <Button id="boardEditor">
+            Éditeur du conseil
+        </Button>
+    </Options>
+</Language>

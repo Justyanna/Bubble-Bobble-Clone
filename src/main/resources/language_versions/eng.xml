@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Language>
+    <Menu>
+        <Button id="playGame">Play Game</Button>
+        <Button id="leaderboard">Leaderboard</Button>
+        <Button id="options">Options</Button>
+        <Button id="aboutUsButton">About us</Button>
+        <Button id="exitButton">Exit</Button>
+    </Menu>
+    <Options>
+        <Button id="boardEditor">Board editor</Button>
+    </Options>
+</Language>

@@ -10,31 +10,31 @@
         <VBox alignment="CENTER" prefHeight="198.0" prefWidth="171.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
 
-                <Button mnemonicParsing="false" onAction="#switchToGame" prefHeight="50.0" prefWidth="400.0" styleClass="button" text="Play game">
+                <Button fx:id="playGame" mnemonicParsing="false" onAction="#switchToGame" prefHeight="50.0" prefWidth="500.0" styleClass="button" >
                     <VBox.margin>
                         <Insets bottom="10.0" />
                     </VBox.margin>
                 </Button>
 
-                <Button mnemonicParsing="false" onAction="#switchToLeaderboardAbout" prefHeight="50.0" prefWidth="550.0" text="Leaderboards" styleClass="button">
+                <Button fx:id="leaderboard" mnemonicParsing="false" onAction="#switchToLeaderboardAbout" prefHeight="50.0" prefWidth="650.0" styleClass="button">
                     <VBox.margin>
                         <Insets bottom="10.0" />
                     </VBox.margin>
                 </Button>
 
-                <Button mnemonicParsing="false" onAction="#switchToOptions" prefHeight="50.0" prefWidth="400.0" text="Options" styleClass="button">
+                <Button fx:id="options" mnemonicParsing="false" onAction="#switchToOptions" prefHeight="50.0" prefWidth="500.0" styleClass="button">
                     <VBox.margin>
                         <Insets bottom="10.0" />
                     </VBox.margin>
                 </Button>
 
-                <Button fx:id="aboutUsButton" onAction="#switchToAboutUs"  mnemonicParsing="false" prefHeight="50.0" prefWidth="400.0" text="About us" styleClass="button">
+                <Button fx:id="aboutUsButton" onAction="#switchToAboutUs"  mnemonicParsing="false" prefHeight="50.0" prefWidth="550.0" styleClass="button">
                     <VBox.margin>
                         <Insets bottom="10.0" />
                     </VBox.margin>
                 </Button>
 
-                <Button fx:id="exitButton" onAction="#closeApplication"  mnemonicParsing="false" prefHeight="50.0" prefWidth="400.0" text="Exit" styleClass="button">
+                <Button fx:id="exitButton" onAction="#closeApplication"  mnemonicParsing="false" prefHeight="50.0" prefWidth="500.0" styleClass="button">
                     <VBox.margin>
                         <Insets bottom="10.0" />
                     </VBox.margin>

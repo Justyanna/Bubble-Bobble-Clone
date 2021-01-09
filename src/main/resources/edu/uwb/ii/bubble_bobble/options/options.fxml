@@ -1,25 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.*?>
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="edu.uwb.ii.bubble_bobble.scenes.options.OptionsSceneController"
-            prefHeight="400.0" prefWidth="600.0" stylesheets="@./options.css">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" stylesheets="@./options.css" xmlns="http://javafx.com/javafx/11.0.1"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="edu.uwb.ii.bubble_bobble.scenes.options.OptionsSceneController">
     <children>
-        <VBox alignment="CENTER" prefHeight="198.0" prefWidth="171.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <VBox alignment="CENTER" prefHeight="198.0" prefWidth="171.0" AnchorPane.bottomAnchor="0.0"
+              AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
 
-                <Button mnemonicParsing="false" onAction="#switchToBoardEditor" prefHeight="50.0" prefWidth="550.0" text="Board Editor" styleClass="button">
+                <Button fx:id="boardEditor" mnemonicParsing="false" onAction="#switchToBoardEditor" prefHeight="50.0"
+                        prefWidth="550.0" styleClass="button" text="Board Editor">
                     <VBox.margin>
-                        <Insets bottom="10.0" />
+                        <Insets bottom="10.0"/>
                     </VBox.margin>
                 </Button>
+                <VBox fx:id="spinnerBox" alignment="CENTER">
+                    <children>
+                        <Label styleClass="label" text="Language version">
+                            <VBox.margin>
+                                <Insets bottom="20.0" right="10.0"/>
+                            </VBox.margin>
+                        </Label>
 
-                <Button mnemonicParsing="false" onAction="#switchToMenu" prefHeight="50.0" prefWidth="450.0" styleClass="button" text="Go to menu">
+                    </children>
                     <VBox.margin>
-                        <Insets bottom="10.0" />
+                        <Insets/>
+                    </VBox.margin>
+                </VBox>
+                <Button mnemonicParsing="false" onAction="#switchToMenu" prefHeight="50.0" prefWidth="450.0"
+                        styleClass="button" text="Go to menu">
+                    <VBox.margin>
+                        <Insets bottom="10.0" top="50.0"/>
                     </VBox.margin>
                 </Button>
 
@@ -27,7 +42,7 @@
         </VBox>
     </children>
     <padding>
-        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
     </padding>
 
 </AnchorPane>
