@@ -40,10 +40,10 @@
                                       styleClass="options__button" text="One gap frame"/>
                         <ToggleButton fx:id="twoGapFrame" onAction="#addTwoGapFrame" prefHeight="30" prefWidth="120"
                                       toggleGroup="$frames"
-                                      styleClass="options__button" text="Two gap frame"/>
+                                      styleClass="options__button" text="Two gaps center"/>
                         <ToggleButton fx:id="threeGapFrame" onAction="#addThreeGapFrame" prefHeight="30" prefWidth="120"
                                       toggleGroup="$frames"
-                                      styleClass="options__button" text="Three gap frame"/>
+                                      styleClass="options__button" text="Two gaps edges"/>
                     </children>
                     <padding>
                         <Insets topRightBottomLeft="10"/>
