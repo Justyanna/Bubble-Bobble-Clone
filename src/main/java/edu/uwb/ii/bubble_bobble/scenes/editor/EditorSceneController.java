@@ -363,23 +363,19 @@ public class EditorSceneController {
 
     @FXML
     void addThreeGapFrame(ActionEvent actionEvent) {
-        addOneGapFrame();
-        addTwoGapFrame();
         grid.getChildren().forEach(cell -> {
             Integer colIndex = GridPane.getColumnIndex(cell);
             Integer rowIndex = GridPane.getRowIndex(cell);
-            boolean b =
-                    (((rowIndex == 0 || rowIndex == ROW_CORNER) && colIndex != 7 && colIndex != 8 && colIndex != 9 &&
-                            colIndex != 23 && colIndex != 24 && colIndex != 25 && colIndex != 15 && colIndex != 16 &&
-                            colIndex != 17 ))|| (colIndex == 0 || colIndex == COLUMNS_CORNER);
+            boolean b = ((rowIndex == 0 || rowIndex == ROW_CORNER) && colIndex != 1 && colIndex != 2 && colIndex != 3 &&
+                    colIndex != 4 && colIndex != 27 && colIndex != 28 && colIndex != 29 && colIndex != 30) ||
+                    (colIndex == 0 || colIndex == COLUMNS_CORNER);
             if (threeGapFrame.isSelected()) {
                 if (b) {
                     map.getBody()[colIndex][rowIndex].setId("Wall");
                     cell.getStyleClass().clear();
                     cell.getStyleClass().add("grid-button-wall");
-                } else if (((rowIndex == 0 || rowIndex == ROW_CORNER) && colIndex == 7) || colIndex == 8 ||
-                        colIndex == 9 || colIndex == 23 || colIndex == 24 || colIndex == 25 || colIndex == 15 ||
-                        colIndex == 16 || colIndex == 17) {
+                } else if (((rowIndex == 0 || rowIndex == ROW_CORNER) && colIndex == 1 || colIndex == 2 ||
+                        colIndex == 3 || colIndex == 4 || colIndex == 27 || colIndex == 28|| colIndex == 29|| colIndex == 30)) {
                     map.getBody()[colIndex][rowIndex].setId("empty");
                     cell.getStyleClass().clear();
                     cell.getStyleClass().add("grid-button-empty");
