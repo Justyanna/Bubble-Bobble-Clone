@@ -13,17 +13,11 @@ public class Player extends Entity {
 
     private Inputs _controls;
 
-    private int _spawn_x;
-    private int _spawn_y;
-
-    public Player(int x, int y, Inputs controls, ArrayList<Projectile> projectile_output) {
+    public Player(double x, double y, Inputs controls, ArrayList<Projectile> projectile_output) {
 
         super(ResourceManager.get().placeholder, Animations.TMP_PLAYER, 2, 2);
 
         _controls = controls;
-
-        _spawn_x = x;
-        _spawn_y = y;
 
         _speed = 7.0 / 60.0;
         _fire_rate = 1.5;

@@ -7,7 +7,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.canvas.Canvas?>
 <?import javafx.scene.layout.StackPane?>
-<BorderPane xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1"
+<BorderPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="edu.uwb.ii.bubble_bobble.scenes.game.GameSceneController" stylesheets="@./game.css"
             fx:id="root" styleClass="root">
     <top>

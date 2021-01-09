@@ -37,6 +37,7 @@ public class Game {
     public void start() {
 
         _level = new Map("map_01", ResourceManager.get().placeholder);
+        _player = new Player(_level.getSpawn().x, _level.getSpawn().y, App.getInputs(), _bubbles);
 
     }
 

@@ -3,8 +3,12 @@ package edu.uwb.ii.bubble_bobble.scenes.game;
 import edu.uwb.ii.bubble_bobble.game.Collider;
 import edu.uwb.ii.bubble_bobble.game.collider.MapCollider;
 import edu.uwb.ii.bubble_bobble.game.rendering.SpriteSheet;
+import edu.uwb.ii.bubble_bobble.game.utils.Position;
 import javafx.scene.canvas.GraphicsContext;
 import org.w3c.dom.Document;
+import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -13,6 +17,7 @@ import java.io.File;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.util.ArrayList;
 
 public class Map {
 
@@ -24,17 +29,25 @@ public class Map {
     private boolean [][] _body;
     private MapCollider _collider;
 
+    private ArrayList<Position> _spawn_points;
+    private ArrayList<String> _enemy_names;
+    private ArrayList<Position> _enemy_spawns;
+
     public Map(String source, SpriteSheet skin) {
 
         _skin = skin;
         _body = new boolean[COLUMNS][ROWS];
         _collider = new MapCollider(this);
+        _spawn_points = new ArrayList<>();
 
         load(source);
 
     }
 
     public Collider get_collider() { return _collider; }
+    public Position getSpawn() { return _spawn_points.get(0); }
+    public ArrayList<String> get_enemy_names() { return _enemy_names; }
+    public ArrayList<Position> get_enemy_spawns() { return _enemy_spawns; }
 
     public boolean check(double x, double y) {
 
@@ -53,20 +66,38 @@ public class Map {
             Document doc = dBuilder.parse(in);
             doc.getDocumentElement().normalize();
 
-            var walls = doc.getElementsByTagName("Walls").item(0).getChildNodes();
+            NodeList walls = doc.getElementsByTagName("Walls").item(0).getChildNodes();
 
-            for(var node = walls.item(0); node != null; node = node.getNextSibling()) {
+            for(Node node = walls.item(0); node != null; node = node.getNextSibling()) {
 
-                if(node.getNodeType() == 1) {
+                if(node.getNodeType() != Node.ELEMENT_NODE) continue;
 
-                    var attr = node.getAttributes();
-                    var x = attr.getNamedItem("x");
-                    var y = attr.getNamedItem("y");
+                NamedNodeMap attr = node.getAttributes();
+                Node x = attr.getNamedItem("x");
+                Node y = attr.getNamedItem("y");
 
-                    if(x == null || y == null) continue;
+                if(x == null || y == null) continue;
 
-                    _body[Integer.parseInt(x.getNodeValue())][Integer.parseInt(y.getNodeValue())] = true;
+                _body[Integer.parseInt(x.getNodeValue())][Integer.parseInt(y.getNodeValue())] = true;
 
+            }
+
+            NodeList players = doc.getElementsByTagName("Players").item(0).getChildNodes();
+
+            for(Node player = players.item(0); player != null; player = player.getNextSibling()) {
+
+                if(player.getNodeType() != Node.ELEMENT_NODE) continue;
+
+                NamedNodeMap player_data = player.getAttributes();
+                Node x = player_data.getNamedItem("x");
+                Node y = player_data.getNamedItem("y");
+                Node direction = player_data.getNamedItem("facing");
+
+                if(x != null && y != null && direction != null) {
+                    _spawn_points.add(new Position(
+                            Integer.parseInt(x.getNodeValue()),
+                            Integer.parseInt(y.getNodeValue()),
+                            Integer.parseInt(direction.getNodeValue())));
                 }
 
             }
@@ -74,20 +105,6 @@ public class Map {
         catch (Exception e) {
             e.printStackTrace();
         }
-
-//        for(int x = 0; x < COLUMNS; x++) {
-//            for(int y = 0; y < ROWS; y++) {
-//                if(y == 0 || y == ROWS - 1 || x == 0 || x == COLUMNS - 1) {
-//                    if(x == 14 || x == 15 || x == 16 || x == 17) continue;
-//                    _body[x][y] = true;
-//                }
-//            }
-//        }
-//
-//        _body[14][20] = true;
-//        _body[15][20] = true;
-//        _body[16][20] = true;
-//        _body[17][20] = true;
 
     }
 
