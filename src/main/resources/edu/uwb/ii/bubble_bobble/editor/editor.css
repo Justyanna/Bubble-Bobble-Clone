@@ -7,45 +7,69 @@
 }
 
 .board-window {
-    -fx-background-color: goldenrod;
+    -fx-background-color: yellow;
 }
 
 
 .grid-button-empty
 {
     -fx-background-color: black;
+    -fx-border-style: solid  solid  solid  solid;
+    -fx-border-color: white white white white;
+    -fx-border-width: 1;
 }
 
 .grid-button-wall
 {
     -fx-background-color: white;
+    -fx-border-style: solid  solid  solid  solid;
+    -fx-border-color: white white white white;
+    -fx-border-width: 1;
 }
 
 .grid-button-player-A
 {
     -fx-background-color: blue;
+    -fx-border-style: solid  solid  solid  solid;
+    -fx-border-color: white white white white;
+    -fx-border-width: 1;
 }
 .grid-button-player-B
 {
     -fx-background-color: "#091c5c";
+    -fx-border-style: solid  solid  solid  solid;
+    -fx-border-color: white white white white;
+    -fx-border-width: 1;
 }
 
 .grid-button-knight-A
 {
     -fx-background-color: red;
+    -fx-border-style: solid  solid  solid  solid;
+    -fx-border-color: white white white white;
+    -fx-border-width: 1;
 }
 
 .grid-button-knight-B
 {
     -fx-background-color: "#69120c";
+    -fx-border-style: solid  solid  solid  solid;
+    -fx-border-color: white white white white;
+    -fx-border-width: 1;
 }
 
 .grid-button-ninja-A
 {
     -fx-background-color: green;
+    -fx-border-style: solid  solid  solid  solid;
+    -fx-border-color: white white white white;
+    -fx-border-width: 1;
 }
 
 .grid-button-ninja-B
 {
     -fx-background-color: "#095c15";
+    -fx-border-style: solid  solid  solid  solid;
+    -fx-border-color: white white white white;
+    -fx-border-width: 1;
 }

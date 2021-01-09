@@ -3,83 +3,69 @@
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<BorderPane fx:id="root" styleClass="root" stylesheets="@./editor.css" xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="edu.uwb.ii.bubble_bobble.scenes.editor.EditorSceneController">
+
+<BorderPane fx:id="root" styleClass="root" stylesheets="@./editor.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.uwb.ii.bubble_bobble.scenes.editor.EditorSceneController">
     <fx:define>
-        <ToggleGroup fx:id="modes"/>
+        <ToggleGroup fx:id="modes" />
     </fx:define>
     <fx:define>
-        <ToggleGroup fx:id="frames"/>
+        <ToggleGroup fx:id="frames" />
     </fx:define>
     <top>
         <BorderPane styleClass="header">
             <left>
                 <HBox alignment="CENTER_LEFT" styleClass="header">
                     <children>
-                        <Button fx:id="saveButton" onAction="#saveMap" prefHeight="30" prefWidth="70"
-                                styleClass="options__button" text="Save"/>
-                        <Button fx:id="importButton" onAction="#importMap" prefHeight="30" prefWidth="70"
-                                styleClass="options__button" text="Import"/>
-                        <Button fx:id="resetButton" onAction="#resetBoard" prefHeight="30" prefWidth="70"
-                                styleClass="options__button" text="Reset"/>
+                        <Button fx:id="saveButton" onAction="#saveMap" prefHeight="30" prefWidth="70" styleClass="options__button" text="Save" />
+                        <Button fx:id="importButton" onAction="#importMap" prefHeight="30" prefWidth="70" styleClass="options__button" text="Import" />
+                        <Button fx:id="resetButton" onAction="#resetBoard" prefHeight="30" prefWidth="70" styleClass="options__button" text="Reset" />
                     </children>
                     <padding>
-                        <Insets topRightBottomLeft="10"/>
+                        <Insets topRightBottomLeft="10" />
                     </padding>
                 </HBox>
             </left>
             <center>
                 <HBox alignment="CENTER" styleClass="header">
                     <children>
-                        <ToggleButton fx:id="fullFrame" onAction="#addFullFrame" prefHeight="30" prefWidth="120"
-                                      toggleGroup="$frames"
-                                      styleClass="options__button" text="Full frame"/>
-                        <ToggleButton fx:id="oneGapFrame" onAction="#addOneGapFrame" prefHeight="30" prefWidth="120"
-                                      toggleGroup="$frames"
-                                      styleClass="options__button" text="One gap frame"/>
-                        <ToggleButton fx:id="twoGapFrame" onAction="#addTwoGapFrame" prefHeight="30" prefWidth="120"
-                                      toggleGroup="$frames"
-                                      styleClass="options__button" text="Two gaps center"/>
-                        <ToggleButton fx:id="threeGapFrame" onAction="#addThreeGapFrame" prefHeight="30" prefWidth="120"
-                                      toggleGroup="$frames"
-                                      styleClass="options__button" text="Two gaps edges"/>
+                        <ToggleButton fx:id="fullFrame" onAction="#addFullFrame" prefHeight="30" prefWidth="120" styleClass="options__button" text="Full frame" toggleGroup="$frames"/>
+                        <ToggleButton fx:id="oneGapFrame" onAction="#addOneGapFrame" prefHeight="30" prefWidth="120" styleClass="options__button" text="One gap frame" toggleGroup="$frames" />
+                        <ToggleButton fx:id="twoGapFrame" onAction="#addTwoGapFrame" prefHeight="30" prefWidth="120" styleClass="options__button" text="Two gaps center" toggleGroup="$frames" />
+                        <ToggleButton fx:id="threeGapFrame" onAction="#addThreeGapFrame" prefHeight="30" prefWidth="120" styleClass="options__button" text="Two gaps edges" toggleGroup="$frames" />
                     </children>
                     <padding>
-                        <Insets topRightBottomLeft="10"/>
+                        <Insets topRightBottomLeft="10" />
                     </padding>
                 </HBox>
             </center>
             <right>
                 <HBox alignment="CENTER_RIGHT" styleClass="header">
                     <children>
-                        <Button fx:id="secondaryButton" onAction="#switchToOptions" prefHeight="30"
-                                styleClass="options__button" text="Go to options"/>
+                        <Button fx:id="secondaryButton" onAction="#switchToOptions" prefHeight="30" styleClass="options__button" text="Go to options" />
                     </children>
-                    <padding>
-                        <Insets topRightBottomLeft="5"/>
-                    </padding>
+
                 </HBox>
 
             </right>
         </BorderPane>
     </top>
-    <left>
-        <StackPane fx:id="boardWindow" styleClass="board-window" BorderPane.alignment="TOP_LEFT">
-            <BorderPane.margin>
-                <Insets left="70.0"/>
-            </BorderPane.margin>
-        </StackPane>
-    </left>
+ 
+
     <center>
-        <VBox fx:id="rightPanel" prefHeight="500.0" prefWidth="400.0" BorderPane.alignment="CENTER_LEFT">
+        <StackPane fx:id="boardWindow" styleClass="board-window" BorderPane.alignment="CENTER_RIGHT">
+
+        </StackPane>
+    </center>
+    <right>
+        <VBox fx:id="rightPanel" prefHeight="500.0" prefWidth="400.0">
             <children>
 
 
             </children>
             <BorderPane.margin>
-                <Insets left="50.0" top="5.0"/>
+                <Insets left="50.0" top="40.0" />
             </BorderPane.margin>
         </VBox>
-    </center>
+    </right>
+
 </BorderPane>

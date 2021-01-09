@@ -1,9 +1,9 @@
 package edu.uwb.ii.bubble_bobble.scenes.editor;
 
 import edu.uwb.ii.bubble_bobble.App;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.geometry.Insets;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
@@ -94,23 +94,23 @@ public class EditorSceneController {
 
     private void fillGridWithCells(Rectangle2D bounds) {
         grid = new GridPane();
-        grid.setMaxWidth(0.8 * bounds.getWidth());
-        grid.setMaxHeight(0.65 * bounds.getWidth());
-        grid.setPadding(new Insets(5, 5, 5, 5));
-        grid.setHgap(1);
-        grid.setVgap(2);
+        grid.prefWidthProperty().bind(boardWindow.widthProperty());
+        grid.prefHeightProperty().bind(boardWindow.heightProperty());
 
-        for (int r = 0; r < ROWS; r++) {
-            for (int c = 0; c < COLUMNS; c++) {
-                ToggleButton button = new ToggleButton();
-                button.setPrefHeight(bounds.getHeight() / ROWS);
-                button.setPrefWidth(bounds.getWidth() / COLUMNS);
 
-                button.setOnMouseClicked(event -> handleToggleButtonClick(button));
-                button.getStyleClass().add("grid-button-empty");
-                grid.add(button, c, r);
+        Platform.runLater(() -> {
+            for (int r = 0; r < ROWS; r++) {
+                for (int c = 0; c < COLUMNS; c++) {
+                    ToggleButton button = new ToggleButton();
+                    button.setPrefHeight((grid.prefHeightProperty().get()) / ROWS);
+                    button.setPrefWidth((grid.prefWidthProperty().get() ) / COLUMNS);
+                    button.setOnMouseClicked(event -> handleToggleButtonClick(button));
+                    button.getStyleClass().add("grid-button-empty");
+
+                    grid.add(button, c, r);
+                }
             }
-        }
+        });
 
         boardWindow.getChildren().add(grid);
     }
@@ -309,15 +309,14 @@ public class EditorSceneController {
             Integer colIndex = GridPane.getColumnIndex(cell);
             Integer rowIndex = GridPane.getRowIndex(cell);
             boolean b = (((rowIndex == 0 || rowIndex == ROW_CORNER) && colIndex != 15 && colIndex != 16 &&
-                    colIndex != 17) )|| (colIndex == 0 || colIndex == COLUMNS_CORNER);
+                    colIndex != 17)) || (colIndex == 0 || colIndex == COLUMNS_CORNER);
             if (oneGapFrame.isSelected()) {
                 if (b) {
                     map.getBody()[colIndex][rowIndex].setId("Wall");
                     cell.getStyleClass().clear();
                     cell.getStyleClass().add("grid-button-wall");
-                } else if (((rowIndex == 0 || rowIndex == ROW_CORNER) && colIndex == 15) ||
-                        colIndex == 16 ||
-                         colIndex == 17) {
+                } else if (((rowIndex == 0 || rowIndex == ROW_CORNER) && colIndex == 15) || colIndex == 16 ||
+                        colIndex == 17) {
                     map.getBody()[colIndex][rowIndex].setId("empty");
                     cell.getStyleClass().clear();
                     cell.getStyleClass().add("grid-button-empty");
@@ -375,7 +374,8 @@ public class EditorSceneController {
                     cell.getStyleClass().clear();
                     cell.getStyleClass().add("grid-button-wall");
                 } else if (((rowIndex == 0 || rowIndex == ROW_CORNER) && colIndex == 1 || colIndex == 2 ||
-                        colIndex == 3 || colIndex == 4 || colIndex == 27 || colIndex == 28|| colIndex == 29|| colIndex == 30)) {
+                        colIndex == 3 || colIndex == 4 || colIndex == 27 || colIndex == 28 || colIndex == 29 ||
+                        colIndex == 30)) {
                     map.getBody()[colIndex][rowIndex].setId("empty");
                     cell.getStyleClass().clear();
                     cell.getStyleClass().add("grid-button-empty");
