@@ -10,5 +10,6 @@ public interface Animations {
     Animation TMP_ENEMY = new Animation(16, 2, 4);
     Animation TMP_BUBBLE_FLY = new Animation(32, 1, 0);
     Animation TMP_BUBBLE_RUSH = new Animation(33, 1, 0);
+    Animation TMP_ENEMY_CAPTURED = new Animation(34, 1, 0);
 
 }

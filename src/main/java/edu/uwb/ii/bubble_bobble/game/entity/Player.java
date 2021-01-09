@@ -59,7 +59,7 @@ public class Player extends Entity {
         }
 
         if(_controls.action && _cooldown <= 0.0) {
-            _projectiles.add(new Bubble(front(), _y, _direction));
+            _projectiles.add(new Bubble(front() - _direction, _y, _direction));
             _cooldown = 1.0;
         }
 

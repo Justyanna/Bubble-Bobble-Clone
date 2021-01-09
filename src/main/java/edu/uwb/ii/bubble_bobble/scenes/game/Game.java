@@ -1,10 +1,10 @@
 package edu.uwb.ii.bubble_bobble.scenes.game;
 
-import edu.uwb.ii.bubble_bobble.App;
 import edu.uwb.ii.bubble_bobble.game.entity.Enemy;
 import edu.uwb.ii.bubble_bobble.game.entity.Player;
 import edu.uwb.ii.bubble_bobble.game.entity.Projectile;
 import edu.uwb.ii.bubble_bobble.game.entity.enemy.Errant;
+import edu.uwb.ii.bubble_bobble.game.entity.projectile.Bubble;
 import edu.uwb.ii.bubble_bobble.game.rendering.ResourceManager;
 import javafx.scene.canvas.GraphicsContext;
 
@@ -75,6 +75,7 @@ public class Game {
 //        -- drawing
 
         _level.draw(gc, scale);
+
         for(Enemy e : _enemies)
             e.draw(gc, scale);
         _player.draw(gc, scale);
@@ -86,10 +87,26 @@ public class Game {
 
 //        -- collisions
 
-        for(Iterator<Enemy> it = _enemies.iterator(); it.hasNext();) {
-            Enemy e = it.next();
-            if(e.collide(_player))
+        for(Iterator<Projectile> it = _bubbles.iterator(); it.hasNext();) {
+
+            Bubble b = (Bubble) it.next();
+            if(b.isActive()) {
+
+                int i = 0;
+                for(Enemy e : _enemies) {
+                    if(b.collide(e)) {
+                        b.capture(_enemies.remove(i));
+                        break;
+                    }
+                    i++;
+                }
+
+            }
+            else if(b.collide(_player)) {
                 it.remove();
+            }
+
+
         }
 
     }

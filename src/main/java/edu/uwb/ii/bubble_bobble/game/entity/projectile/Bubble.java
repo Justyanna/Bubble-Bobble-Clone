@@ -1,5 +1,6 @@
 package edu.uwb.ii.bubble_bobble.game.entity.projectile;
 
+import edu.uwb.ii.bubble_bobble.game.entity.Enemy;
 import edu.uwb.ii.bubble_bobble.game.entity.Projectile;
 import edu.uwb.ii.bubble_bobble.game.rendering.Animations;
 import edu.uwb.ii.bubble_bobble.game.rendering.ResourceManager;
@@ -8,6 +9,7 @@ import edu.uwb.ii.bubble_bobble.scenes.game.Game;
 public class Bubble extends Projectile {
 
     private boolean _active;
+    private Enemy _captive;
 
     public Bubble(double x, double y, int direction) {
 
@@ -18,14 +20,25 @@ public class Bubble extends Projectile {
 
     }
 
+    public boolean isActive() { return _active; }
+
+    public void capture(Enemy enemy) {
+
+        _captive = enemy;
+
+    }
+
     @Override
     public void movementRules() {
 
-        if(_active && (_traveled >= _max_distance || _dx == 0)) {
+        if(_active && (_traveled >= _max_distance || _dx == 0 || _captive != null)) {
 
-            _animation = Animations.TMP_BUBBLE_FLY;
+            if(_captive == null) _animation = Animations.TMP_BUBBLE_FLY;
+            else _animation = Animations.TMP_ENEMY_CAPTURED;
+
             _dx = 0;
             _dy = -Game.GRAVITY / 4.0;
+            _active = false;
 
         }
 
