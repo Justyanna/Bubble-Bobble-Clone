@@ -46,14 +46,23 @@ public class OptionsSceneController {
             CurrentLanguageVersionProvider.currentLanguageVersion = file_path;
         });
 
-
+        switch (getCurrentSpinnerValue()) {
+            case "PL":
+                languageSpinner.increment();
+                break;
+            case "ENG":
+                break;
+            case "FR":
+                languageSpinner.increment(2);
+                break;
+        }
         spinnerBox.getChildren().add(languageSpinner);
     }
 
     private String getCurrentSpinnerValue() {
         int slash = CurrentLanguageVersionProvider.currentLanguageVersion.indexOf("/") + 1;
         int dot = CurrentLanguageVersionProvider.currentLanguageVersion.indexOf(".");
-        return CurrentLanguageVersionProvider.currentLanguageVersion.substring(slash, dot);
+        return CurrentLanguageVersionProvider.currentLanguageVersion.substring(slash, dot).toUpperCase();
     }
 
 
