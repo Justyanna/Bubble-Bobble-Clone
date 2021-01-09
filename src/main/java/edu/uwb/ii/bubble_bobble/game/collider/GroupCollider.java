@@ -4,11 +4,11 @@ import edu.uwb.ii.bubble_bobble.game.Collider;
 
 import java.util.ArrayList;
 
-public class ColliderGroup implements Collider {
+public class GroupCollider implements Collider {
 
     private ArrayList<Collider> _colliders;
 
-    public ColliderGroup() {
+    public GroupCollider() {
         _colliders = new ArrayList<>();
     }
 

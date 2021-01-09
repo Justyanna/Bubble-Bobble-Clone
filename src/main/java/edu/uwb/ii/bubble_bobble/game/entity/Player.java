@@ -4,6 +4,7 @@ import edu.uwb.ii.bubble_bobble.game.Entity;
 import edu.uwb.ii.bubble_bobble.game.Inputs;
 import edu.uwb.ii.bubble_bobble.game.rendering.Animations;
 import edu.uwb.ii.bubble_bobble.game.rendering.ResourceManager;
+import edu.uwb.ii.bubble_bobble.scenes.game.Game;
 
 public class Player extends Entity {
 
@@ -28,13 +29,14 @@ public class Player extends Entity {
     }
 
     @Override
-    public double[] movementRules(boolean[][] map) {
+    public void movementRules() {
 
-        double dx = 0, dy = 10.0 / 60.0;
+        _dx = 0;
+        _dy = Game.GRAVITY;
 
         if (_jump > 0) {
             double jh = 8.0 / 60.0;
-            dy = _jump * _jump_height < jh ? -_jump * _jump_height * 1.1 : -jh;
+            _dy = _jump * _jump_height < jh ? -_jump * _jump_height * 1.1 : -jh;
             _jump -= jh / _jump_height;
             if (!_controls.jump)
                 _jump *= 0.1;
@@ -42,19 +44,17 @@ public class Player extends Entity {
 
         if (_controls.left) {
             _direction = -1;
-            dx -= _speed;
+            _dx -= _speed;
         }
 
         if (_controls.right) {
             _direction = 1;
-            dx += _speed;
+            _dx += _speed;
         }
 
         if (_grounded && _controls.jump) {
             _jump = 1.0;
         }
-
-        return new double[]{dx, dy};
 
     }
 }

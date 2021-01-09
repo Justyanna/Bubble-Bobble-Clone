@@ -1,14 +1,16 @@
 package edu.uwb.ii.bubble_bobble.game;
 
+import edu.uwb.ii.bubble_bobble.game.collider.EntityCollider;
 import edu.uwb.ii.bubble_bobble.game.rendering.Animation;
 import edu.uwb.ii.bubble_bobble.game.rendering.SpriteSheet;
+import edu.uwb.ii.bubble_bobble.scenes.game.Map;
 import javafx.scene.canvas.GraphicsContext;
 
 abstract public class Entity {
 
     private SpriteSheet _gfx;
     private Animation _animation;
-    protected Collider _collider;
+    protected EntityCollider _collider;
 
     protected int _width;
     protected int _height;
@@ -20,6 +22,8 @@ abstract public class Entity {
 
     protected double _x;
     protected double _y;
+    protected double _dx;
+    protected double _dy;
     protected double _jump;
 
     private boolean _spawned;
@@ -31,15 +35,25 @@ abstract public class Entity {
         _width = w;
         _height = h;
 
+        _collider = new EntityCollider(this);
+
         _direction = 1;
-        _speed = 0;
+        _speed = 0.0;
         _jump_height = 5.5;
-        _jump = 0;
+        _dx = 0.0;
+        _dy = 0.0;
+        _jump = 0.0;
         _grounded = false;
 
         _spawned = false;
 
     }
+
+    public double get_x() { return _x; }
+    public double get_y() { return _y; }
+    public int get_width() { return _width; }
+    public int get_height() { return _height; }
+    public Collider get_collider() { return _collider; };
 
     public Entity spawn(int x, int y) {
 
@@ -69,48 +83,56 @@ abstract public class Entity {
 
     }
 
-    public final void move(boolean [][] map) {
+    public boolean collide(Entity e) {
 
-        double [] delta = movementRules(map);
+        return _collider.test(e.get_collider());
 
-        int w = map.length;
-        int h = map[0].length;
-        double dx = delta[0];
-        double dy = delta[1];
+    }
 
-        _x += dx;
-        _y += dy;
+    public final void move(Map map) {
 
-        int x = ((int) _x + w) % w;
-        int y = ((int) _y + h) % h;
+        movementRules();
 
-        int wx = (x + (1 + _direction) / 2 * _width) % w;
+        _x += _dx;
+        _y += _dy;
 
-        boolean wall_ahead = map[wx][y]  && !map[(wx  - _direction + w) % w][y]
-                || _y % 1 >= dy && map[wx][(y + 1) % h] && !map[(wx  - _direction + w) % w][(y + 1) % h];
+        if(_collider.test(map.get_collider())) {
 
-        if(wall_ahead)
-            _x = Math.floor(_x + (1 - _direction) / 2);
+            boolean stopped = false;
 
-        x = ((int) _x + w) % w;
+            if(_collider.left && _dx < 0) {
+                _x = Math.ceil(_x);
+                _dx = 0;
+                stopped = true;
+            }
 
-        boolean wall_below = map[x][(y + 1) % h] || _x % 1 > 0.0 && map[(x + _width) % w][(y + 1) % h];
+            if(_collider.right && _dx > 0) {
+                _x = Math.floor(_x);
+                _dx = 0;
+                stopped = true;
+            }
 
-        if(wall_below && _y % 1 <= dy * 1.1) {
-            _y = Math.floor(_y);
-            _grounded = true;
+            _grounded = _collider.bottom && _dy > 0 && (!stopped || _grounded);
+
+            if(_grounded) {
+                _y = Math.floor(_y);
+                _dy = 0.0;
+            }
+
+            _collider.clearContactData();
+
         }
         else {
             _grounded = false;
         }
 
-        if(this._x < -1) this._x = map.length;
-        if(this._x > map.length) this._x = -1;
-        if(this._y < -1) this._y = map[0].length;
-        if(this._y > map[0].length) this._y = -1;
+        if(_x < -1.0) _x = Map.COLUMNS;
+        if(_x > Map.COLUMNS - 1.0 + _width) _x = 1.0 - _width;
+        if(_y < -1.0) _y = Map.ROWS;
+        if(_y > Map.ROWS - 1.0 + _height) _y = 1.0 - _height;
 
     }
 
-    abstract public double [] movementRules(boolean [][] map);
+    abstract public void movementRules();
 
 }

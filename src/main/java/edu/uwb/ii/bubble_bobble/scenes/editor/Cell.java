@@ -23,8 +23,9 @@ public class Cell {
         } else {
             facing = -1;
         }
-        return id.equals("Wall") || id.equals("empty") ? id.toLowerCase() :
-                id.toLowerCase() + "-" + (facing > 0 ? "A" : "B");
+        return id.equals("Wall") || id.equals("empty")
+                ? id.toLowerCase()
+                : id.toLowerCase() + "-" + (facing > 0 ? "A" : "B");
     }
 
     int getX() {

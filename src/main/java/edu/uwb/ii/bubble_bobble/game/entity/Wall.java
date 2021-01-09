@@ -29,7 +29,7 @@ public class Wall extends Entity {
     }
 
     @Override
-    public double [] movementRules(boolean [][] map) {
-        return new double[] {0, 0};
+    public void movementRules() {
+        return;
     }
 }
