@@ -149,10 +149,13 @@
         <Wall x="31" y="25"/>
     </Walls>
     <Players>
-        <Player facing="1" x="2" y="23"/>
+        <Player facing="1" x="2" y="13"/>
     </Players>
     <Enemies>
-        <Errant facing="-1" x="29" y="23"/>
+        <Errant facing="1" x="20" y="23"/>
+        <Errant facing="1" x="4" y="13"/>
+        <Errant facing="1" x="3" y="3"/>
+
     </Enemies>
     <Rules/>
 </Map>

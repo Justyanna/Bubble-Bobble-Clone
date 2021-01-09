@@ -14,21 +14,18 @@ import java.io.IOException;
 
 public class GameSceneController {
 
-//    -- utility
+    //    -- utility
     private final static long INTERVAL = 1000000000L / 60;
     private static long last_update = System.nanoTime();
-
-    @FXML
-    BorderPane root;
     @FXML
     public StackPane gameWindow;
     @FXML
     public Canvas board;
     public GraphicsContext gc;
     public AnimationTimer timer;
-
+    @FXML
+    BorderPane root;
     private int cell_size;
-
     private Game _game;
 
     public void initialize() {
@@ -49,8 +46,8 @@ public class GameSceneController {
             }
         };
 
-//        -- waits for fxml elements to load properly
-        Platform.runLater(()-> {
+        //        -- waits for fxml elements to load properly
+        Platform.runLater(() -> {
 
             board.requestFocus();
             cell_size = (int) (board.getHeight() / Map.ROWS);
@@ -58,18 +55,15 @@ public class GameSceneController {
             gc.clearRect(0, 0, board.getWidth(), board.getHeight());
             _game.update(gc, cell_size);
             timer.start();
-
         });
-
     }
 
-//    Actions
+    //    Actions
 
     @FXML
     private void switchToPrimary() throws IOException {
         timer.stop();
-        gc.clearRect(0, gc.getCanvas().getWidth(), 0, gc.getCanvas().getHeight());
+        gc.clearRect(0, 0, gc.getCanvas().getWidth(), gc.getCanvas().getHeight());
         App.setRoot("menu");
     }
-
 }

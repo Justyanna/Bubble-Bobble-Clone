@@ -32,7 +32,8 @@ import java.util.logging.Logger;
 
 public class EditorSceneController {
 
-    static final String[] ids = {"empty", "Wall", "Player", "Knight", "Ninja"};
+    static final String[] ids =
+            {"empty", "Wall", "Player", "Beast", "Errant", "Imp", "Lunatic", "Nimrod", "Specter", "Warlock", "Wisp"};
     private static final Logger LOGGER = Logger.getLogger(EditorSceneController.class.getName());
     private static final int ROWS = 26;
     private static final int ROW_CORNER = ROWS - 1;
@@ -97,13 +98,12 @@ public class EditorSceneController {
         grid.prefWidthProperty().bind(boardWindow.widthProperty());
         grid.prefHeightProperty().bind(boardWindow.heightProperty());
 
-
         Platform.runLater(() -> {
             for (int r = 0; r < ROWS; r++) {
                 for (int c = 0; c < COLUMNS; c++) {
                     ToggleButton button = new ToggleButton();
                     button.setPrefHeight((grid.prefHeightProperty().get()) / ROWS);
-                    button.setPrefWidth((grid.prefWidthProperty().get() ) / COLUMNS);
+                    button.setPrefWidth((grid.prefWidthProperty().get()) / COLUMNS);
                     button.setOnMouseClicked(event -> handleToggleButtonClick(button));
                     button.getStyleClass().add("grid-button-empty");
 

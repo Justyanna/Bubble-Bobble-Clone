@@ -8,13 +8,15 @@ import edu.uwb.ii.bubble_bobble.scenes.game.Map;
 public class Specter extends Enemy {
 
     private boolean _jumped;
+    private int _up;
     private Map _level;
 
-    public Specter (int x, int y, int direction, Map level) {
+    public Specter(int x, int y, int direction, Map level) {
 
-        super(ResourceManager.get().placeholder, 2, 2, 6.0, x, y, direction);
+        super(ResourceManager.get().placeholder, 2, 2, 6.2, x, y, direction);
         _level = level;
         _jumped = false;
+        _up = 1;
     }
 
     @Override
@@ -22,15 +24,18 @@ public class Specter extends Enemy {
 
         _dx = _direction * _speed;
 
-        boolean wall_ahead = _grounded && _level.check(_x + (1 + _direction) / 2.0 * _width + _dx, _y);
+        boolean wall_ahead = _level.check(_x + (1 + _direction) / 2.0 * _width + _dx, _y);
+        boolean wall_uphead = _level.check(_x, _y + (1 + _up) / 2.0 * _height + 2 * _dy);
 
         if (wall_ahead) {
             _direction *= -1;
         }
 
-        _dx = _grounded ? _direction * _speed : 0.0;
-        _dy = Game.GRAVITY;
+        if (wall_uphead) {
+            _up *= -1;
+        }
 
+        _dx = _grounded ? _direction * _speed : _direction * _speed;
+        _dy = Game.GRAVITY * _up;
     }
-
 }

@@ -7,7 +7,8 @@
 }
 
 .board-window {
-    -fx-background-color: yellow;
+    -fx-background-color: goldenrod;
+   -fx-padding: 0 0 0 50;
 }
 
 
@@ -42,7 +43,15 @@
     -fx-border-width: 1;
 }
 
-.grid-button-knight-A
+.grid-button-beast-A,
+.grid-button-errant-A,
+.grid-button-imp-A,
+.grid-button-lunatic-A,
+.grid-button-nimrod-A,
+.grid-button-specter-A,
+.grid-button-warlock-A,
+.grid-button-wisp-A
+
 {
     -fx-background-color: red;
     -fx-border-style: solid  solid  solid  solid;
@@ -50,7 +59,14 @@
     -fx-border-width: 1;
 }
 
-.grid-button-knight-B
+.grid-button-beast-B,
+.grid-button-errant-B,
+.grid-button-imp-B,
+.grid-button-lunatic-B,
+.grid-button-nimrod-B,
+.grid-button-specter-B,
+.grid-button-warlock-B,
+.grid-button-wisp-B
 {
     -fx-background-color: "#69120c";
     -fx-border-style: solid  solid  solid  solid;
@@ -58,18 +74,3 @@
     -fx-border-width: 1;
 }
 
-.grid-button-ninja-A
-{
-    -fx-background-color: green;
-    -fx-border-style: solid  solid  solid  solid;
-    -fx-border-color: white white white white;
-    -fx-border-width: 1;
-}
-
-.grid-button-ninja-B
-{
-    -fx-background-color: "#095c15";
-    -fx-border-style: solid  solid  solid  solid;
-    -fx-border-color: white white white white;
-    -fx-border-width: 1;
-}
