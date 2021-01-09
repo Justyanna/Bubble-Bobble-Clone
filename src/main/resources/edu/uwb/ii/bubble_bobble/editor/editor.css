@@ -27,7 +27,7 @@
 }
 .grid-button-player-B
 {
-    -fx-background-color: blue;
+    -fx-background-color: "#091c5c";
 }
 
 .grid-button-knight-A
@@ -37,7 +37,7 @@
 
 .grid-button-knight-B
 {
-    -fx-background-color: red;
+    -fx-background-color: "#69120c";
 }
 
 .grid-button-ninja-A
@@ -47,5 +47,5 @@
 
 .grid-button-ninja-B
 {
-    -fx-background-color: green;
+    -fx-background-color: "#095c15";
 }

@@ -44,7 +44,7 @@ public class Cell {
         this.facing = facing;
     }
 
-    String getId() {
+    public String getId() {
         return id;
     }
 

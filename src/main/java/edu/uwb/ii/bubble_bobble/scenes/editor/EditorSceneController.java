@@ -1,6 +1,7 @@
 package edu.uwb.ii.bubble_bobble.scenes.editor;
 
 import edu.uwb.ii.bubble_bobble.App;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Rectangle2D;
@@ -39,9 +40,17 @@ public class EditorSceneController {
     private static final int COLUMNS_CORNER = COLUMNS - 1;
     private static final String MAPS_PATH = System.getProperty("user.home") + "/AppData/Local/Bubble Bobble Clone/maps";
     @FXML
-    VBox rightPanel;
+    ToggleButton threeGapFrame;
     private String currentSelected;
     private Map map;
+    @FXML
+    private VBox rightPanel;
+    @FXML
+    private ToggleButton fullFrame;
+    @FXML
+    private ToggleButton oneGapFrame;
+    @FXML
+    private ToggleButton twoGapFrame;
     @FXML
     private StackPane boardWindow;
     @FXML
@@ -148,13 +157,15 @@ public class EditorSceneController {
     }
 
     private String toggleAndSetClass(ToggleButton button, Integer colIndex, Integer rowIndex) {
-        String cell = map.toggle(colIndex, rowIndex, currentSelected);
+        return toggleAndSetClass(button, colIndex, rowIndex, currentSelected);
+    }
+
+    private String toggleAndSetClass(ToggleButton button, Integer colIndex, Integer rowIndex, String cellClass) {
+        String cell = map.toggle(colIndex, rowIndex, cellClass);
         button.getStyleClass().clear();
         button.getStyleClass().add("grid-button-" + cell);
         return cell;
     }
-
-
 
     private void fillRowBorder(Integer colIndex, Integer rowIndex) {
         int rowSym = Math.abs(rowIndex - ROWS) - 1;
@@ -210,9 +221,7 @@ public class EditorSceneController {
 
     @FXML
     void importMap() {
-
         tryCreateMapsDirectory();
-
         FileChooser fileChooser = new FileChooser();
         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("xml files (*.xml)", "*.xml");
         fileChooser.getExtensionFilters().add(extFilter);
@@ -256,6 +265,7 @@ public class EditorSceneController {
 
     @FXML
     void resetBoard() {
+        map.resetMap();
         grid.getChildren().forEach(cell -> {
             cell.getStyleClass().clear();
             cell.getStyleClass().add("grid-button-empty");
@@ -266,5 +276,141 @@ public class EditorSceneController {
         if (button.isSelected()) {
             currentSelected = id;
         }
+    }
+
+    @FXML
+    void addFullFrame() {
+
+        grid.getChildren().forEach(cell -> {
+            Integer colIndex = GridPane.getColumnIndex(cell);
+            Integer rowIndex = GridPane.getRowIndex(cell);
+            if (fullFrame.isSelected()) {
+                if ((rowIndex == 0 || rowIndex == ROW_CORNER) || (colIndex == 0 || colIndex == COLUMNS_CORNER)) {
+                    map.getBody()[colIndex][rowIndex].setId("Wall");
+                    cell.getStyleClass().clear();
+                    cell.getStyleClass().add("grid-button-wall");
+                }
+            } else {
+                if ((rowIndex == 0 || rowIndex == ROW_CORNER) || (colIndex == 0 || colIndex == COLUMNS_CORNER)) {
+                    map.getBody()[colIndex][rowIndex].setId("empty");
+                    cell.getStyleClass().clear();
+                    cell.getStyleClass().add("grid-button-empty");
+                }
+            }
+        });
+    }
+
+    @FXML
+    void addOneGapFrame() {
+
+        grid.getChildren().forEach(cell -> {
+            Integer colIndex = GridPane.getColumnIndex(cell);
+            Integer rowIndex = GridPane.getRowIndex(cell);
+            boolean b = (((rowIndex == 0 && colIndex != 15) || (rowIndex == ROW_CORNER && colIndex != 15)) &&
+                    ((rowIndex == 0 && colIndex != 16) || (rowIndex == ROW_CORNER && colIndex != 16)) &&
+                    ((rowIndex == 0 && colIndex != 17) || (rowIndex == ROW_CORNER && colIndex != 17))) ||
+                    (colIndex == 0 || colIndex == COLUMNS_CORNER);
+            if (oneGapFrame.isSelected()) {
+                if (b) {
+                    map.getBody()[colIndex][rowIndex].setId("Wall");
+                    cell.getStyleClass().clear();
+                    cell.getStyleClass().add("grid-button-wall");
+                } else if (((rowIndex == 0 || rowIndex == ROW_CORNER) && colIndex == 15) ||
+                        ((rowIndex == 0 || rowIndex == ROW_CORNER) && colIndex == 16) ||
+                        ((rowIndex == 0 || rowIndex == ROW_CORNER) && colIndex == 17)) {
+                    map.getBody()[colIndex][rowIndex].setId("empty");
+                    cell.getStyleClass().clear();
+                    cell.getStyleClass().add("grid-button-empty");
+                }
+            } else {
+                if (b) {
+                    map.getBody()[colIndex][rowIndex].setId("empty");
+                    cell.getStyleClass().clear();
+                    cell.getStyleClass().add("grid-button-empty");
+                }
+            }
+        });
+    }
+
+    @FXML
+    void addTwoGapFrame() {
+        grid.getChildren().forEach(cell -> {
+            Integer colIndex = GridPane.getColumnIndex(cell);
+            Integer rowIndex = GridPane.getRowIndex(cell);
+            boolean b = (((rowIndex == 0 && colIndex != 7) || (rowIndex == ROW_CORNER && colIndex != 7)) &&
+                    ((rowIndex == 0 && colIndex != 8) || (rowIndex == ROW_CORNER && colIndex != 8)) &&
+                    ((rowIndex == 0 && colIndex != 9) || (rowIndex == ROW_CORNER && colIndex != 9)) &&
+                    ((rowIndex == 0 && colIndex != 23) || (rowIndex == ROW_CORNER && colIndex != 23)) &&
+                    ((rowIndex == 0 && colIndex != 24) || (rowIndex == ROW_CORNER && colIndex != 24)) &&
+                    ((rowIndex == 0 && colIndex != 25) || (rowIndex == ROW_CORNER && colIndex != 25))) ||
+                    (colIndex == 0 || colIndex == COLUMNS_CORNER);
+            if (twoGapFrame.isSelected()) {
+                if (b) {
+                    map.getBody()[colIndex][rowIndex].setId("Wall");
+                    cell.getStyleClass().clear();
+                    cell.getStyleClass().add("grid-button-wall");
+                } else if (((rowIndex == 0 || rowIndex == ROW_CORNER) && colIndex == 7) ||
+                        ((rowIndex == 0 || rowIndex == ROW_CORNER) && colIndex == 8) ||
+                        ((rowIndex == 0 || rowIndex == ROW_CORNER) && colIndex == 9) ||
+                        ((rowIndex == 0 || rowIndex == ROW_CORNER) && colIndex == 23) ||
+                        ((rowIndex == 0 || rowIndex == ROW_CORNER) && colIndex == 24) ||
+                        ((rowIndex == 0 || rowIndex == ROW_CORNER) && colIndex == 25)) {
+                    map.getBody()[colIndex][rowIndex].setId("empty");
+                    cell.getStyleClass().clear();
+                    cell.getStyleClass().add("grid-button-empty");
+                }
+            } else {
+                if (b) {
+                    map.getBody()[colIndex][rowIndex].setId("empty");
+                    cell.getStyleClass().clear();
+                    cell.getStyleClass().add("grid-button-empty");
+                }
+            }
+        });
+    }
+
+    @FXML
+    void addThreeGapFrame(ActionEvent actionEvent) {
+    addOneGapFrame();
+    addTwoGapFrame();
+        grid.getChildren().forEach(cell -> {
+            Integer colIndex = GridPane.getColumnIndex(cell);
+            Integer rowIndex = GridPane.getRowIndex(cell);
+            boolean b = (((rowIndex == 0 && colIndex != 7) || (rowIndex == ROW_CORNER && colIndex != 7)) &&
+                    ((rowIndex == 0 && colIndex != 8) || (rowIndex == ROW_CORNER && colIndex != 8)) &&
+                    ((rowIndex == 0 && colIndex != 9) || (rowIndex == ROW_CORNER && colIndex != 9)) &&
+                    ((rowIndex == 0 && colIndex != 23) || (rowIndex == ROW_CORNER && colIndex != 23)) &&
+                    ((rowIndex == 0 && colIndex != 24) || (rowIndex == ROW_CORNER && colIndex != 24)) &&
+                    ((rowIndex == 0 && colIndex != 25) || (rowIndex == ROW_CORNER && colIndex != 25)) &&
+                    ((rowIndex == 0 && colIndex != 15) || (rowIndex == ROW_CORNER && colIndex != 15)) &&
+                    ((rowIndex == 0 && colIndex != 16) || (rowIndex == ROW_CORNER && colIndex != 16)) &&
+                    ((rowIndex == 0 && colIndex != 17) || (rowIndex == ROW_CORNER && colIndex != 17))) ||
+                    (colIndex == 0 || colIndex == COLUMNS_CORNER);
+            if (threeGapFrame.isSelected()) {
+                if (b) {
+                    map.getBody()[colIndex][rowIndex].setId("Wall");
+                    cell.getStyleClass().clear();
+                    cell.getStyleClass().add("grid-button-wall");
+                } else if (((rowIndex == 0 || rowIndex == ROW_CORNER) && colIndex == 7) ||
+                        ((rowIndex == 0 || rowIndex == ROW_CORNER) && colIndex == 8) ||
+                        ((rowIndex == 0 || rowIndex == ROW_CORNER) && colIndex == 9) ||
+                        ((rowIndex == 0 || rowIndex == ROW_CORNER) && colIndex == 23) ||
+                        ((rowIndex == 0 || rowIndex == ROW_CORNER) && colIndex == 24) ||
+                        ((rowIndex == 0 || rowIndex == ROW_CORNER) && colIndex == 25) ||
+                        ((rowIndex == 0 || rowIndex == ROW_CORNER) && colIndex == 15) ||
+                        ((rowIndex == 0 || rowIndex == ROW_CORNER) && colIndex == 16) ||
+                        ((rowIndex == 0 || rowIndex == ROW_CORNER) && colIndex == 17)) {
+                    map.getBody()[colIndex][rowIndex].setId("empty");
+                    cell.getStyleClass().clear();
+                    cell.getStyleClass().add("grid-button-empty");
+                }
+            } else {
+                if (b) {
+                    map.getBody()[colIndex][rowIndex].setId("empty");
+                    cell.getStyleClass().clear();
+                    cell.getStyleClass().add("grid-button-empty");
+                }
+            }
+        });
     }
 }
