@@ -82,8 +82,10 @@ public class EditorSceneController {
             toggleButton.setPrefWidth(100);
             int finalI = i;
             toggleButton.setOnAction(event -> handleIdToggleButtonClick(toggleButton, ids[finalI]));
-
-            currentSelected = ids[0];
+            if (i == 1) {
+                toggleButton.setSelected(true);
+                currentSelected = ids[1];
+            }
 
             rightPanel.getChildren().add(toggleButton);
             rightPanel.setSpacing(10);
@@ -306,18 +308,16 @@ public class EditorSceneController {
         grid.getChildren().forEach(cell -> {
             Integer colIndex = GridPane.getColumnIndex(cell);
             Integer rowIndex = GridPane.getRowIndex(cell);
-            boolean b = (((rowIndex == 0 && colIndex != 15) || (rowIndex == ROW_CORNER && colIndex != 15)) &&
-                    ((rowIndex == 0 && colIndex != 16) || (rowIndex == ROW_CORNER && colIndex != 16)) &&
-                    ((rowIndex == 0 && colIndex != 17) || (rowIndex == ROW_CORNER && colIndex != 17))) ||
-                    (colIndex == 0 || colIndex == COLUMNS_CORNER);
+            boolean b = (((rowIndex == 0 || rowIndex == ROW_CORNER) && colIndex != 15 && colIndex != 16 &&
+                    colIndex != 17) )|| (colIndex == 0 || colIndex == COLUMNS_CORNER);
             if (oneGapFrame.isSelected()) {
                 if (b) {
                     map.getBody()[colIndex][rowIndex].setId("Wall");
                     cell.getStyleClass().clear();
                     cell.getStyleClass().add("grid-button-wall");
                 } else if (((rowIndex == 0 || rowIndex == ROW_CORNER) && colIndex == 15) ||
-                        ((rowIndex == 0 || rowIndex == ROW_CORNER) && colIndex == 16) ||
-                        ((rowIndex == 0 || rowIndex == ROW_CORNER) && colIndex == 17)) {
+                        colIndex == 16 ||
+                         colIndex == 17) {
                     map.getBody()[colIndex][rowIndex].setId("empty");
                     cell.getStyleClass().clear();
                     cell.getStyleClass().add("grid-button-empty");
@@ -337,24 +337,16 @@ public class EditorSceneController {
         grid.getChildren().forEach(cell -> {
             Integer colIndex = GridPane.getColumnIndex(cell);
             Integer rowIndex = GridPane.getRowIndex(cell);
-            boolean b = (((rowIndex == 0 && colIndex != 7) || (rowIndex == ROW_CORNER && colIndex != 7)) &&
-                    ((rowIndex == 0 && colIndex != 8) || (rowIndex == ROW_CORNER && colIndex != 8)) &&
-                    ((rowIndex == 0 && colIndex != 9) || (rowIndex == ROW_CORNER && colIndex != 9)) &&
-                    ((rowIndex == 0 && colIndex != 23) || (rowIndex == ROW_CORNER && colIndex != 23)) &&
-                    ((rowIndex == 0 && colIndex != 24) || (rowIndex == ROW_CORNER && colIndex != 24)) &&
-                    ((rowIndex == 0 && colIndex != 25) || (rowIndex == ROW_CORNER && colIndex != 25))) ||
+            boolean b = ((rowIndex == 0 || rowIndex == ROW_CORNER) && colIndex != 7 && colIndex != 8 && colIndex != 9 &&
+                    colIndex != 23 && colIndex != 24 && colIndex != 25) ||
                     (colIndex == 0 || colIndex == COLUMNS_CORNER);
             if (twoGapFrame.isSelected()) {
                 if (b) {
                     map.getBody()[colIndex][rowIndex].setId("Wall");
                     cell.getStyleClass().clear();
                     cell.getStyleClass().add("grid-button-wall");
-                } else if (((rowIndex == 0 || rowIndex == ROW_CORNER) && colIndex == 7) ||
-                        ((rowIndex == 0 || rowIndex == ROW_CORNER) && colIndex == 8) ||
-                        ((rowIndex == 0 || rowIndex == ROW_CORNER) && colIndex == 9) ||
-                        ((rowIndex == 0 || rowIndex == ROW_CORNER) && colIndex == 23) ||
-                        ((rowIndex == 0 || rowIndex == ROW_CORNER) && colIndex == 24) ||
-                        ((rowIndex == 0 || rowIndex == ROW_CORNER) && colIndex == 25)) {
+                } else if (((rowIndex == 0 || rowIndex == ROW_CORNER) && colIndex == 7 || colIndex == 8 ||
+                        colIndex == 9 || colIndex == 23 || colIndex == 24 || colIndex == 25)) {
                     map.getBody()[colIndex][rowIndex].setId("empty");
                     cell.getStyleClass().clear();
                     cell.getStyleClass().add("grid-button-empty");
@@ -371,35 +363,23 @@ public class EditorSceneController {
 
     @FXML
     void addThreeGapFrame(ActionEvent actionEvent) {
-    addOneGapFrame();
-    addTwoGapFrame();
+        addOneGapFrame();
+        addTwoGapFrame();
         grid.getChildren().forEach(cell -> {
             Integer colIndex = GridPane.getColumnIndex(cell);
             Integer rowIndex = GridPane.getRowIndex(cell);
-            boolean b = (((rowIndex == 0 && colIndex != 7) || (rowIndex == ROW_CORNER && colIndex != 7)) &&
-                    ((rowIndex == 0 && colIndex != 8) || (rowIndex == ROW_CORNER && colIndex != 8)) &&
-                    ((rowIndex == 0 && colIndex != 9) || (rowIndex == ROW_CORNER && colIndex != 9)) &&
-                    ((rowIndex == 0 && colIndex != 23) || (rowIndex == ROW_CORNER && colIndex != 23)) &&
-                    ((rowIndex == 0 && colIndex != 24) || (rowIndex == ROW_CORNER && colIndex != 24)) &&
-                    ((rowIndex == 0 && colIndex != 25) || (rowIndex == ROW_CORNER && colIndex != 25)) &&
-                    ((rowIndex == 0 && colIndex != 15) || (rowIndex == ROW_CORNER && colIndex != 15)) &&
-                    ((rowIndex == 0 && colIndex != 16) || (rowIndex == ROW_CORNER && colIndex != 16)) &&
-                    ((rowIndex == 0 && colIndex != 17) || (rowIndex == ROW_CORNER && colIndex != 17))) ||
-                    (colIndex == 0 || colIndex == COLUMNS_CORNER);
+            boolean b =
+                    (((rowIndex == 0 || rowIndex == ROW_CORNER) && colIndex != 7 && colIndex != 8 && colIndex != 9 &&
+                            colIndex != 23 && colIndex != 24 && colIndex != 25 && colIndex != 15 && colIndex != 16 &&
+                            colIndex != 17 ))|| (colIndex == 0 || colIndex == COLUMNS_CORNER);
             if (threeGapFrame.isSelected()) {
                 if (b) {
                     map.getBody()[colIndex][rowIndex].setId("Wall");
                     cell.getStyleClass().clear();
                     cell.getStyleClass().add("grid-button-wall");
-                } else if (((rowIndex == 0 || rowIndex == ROW_CORNER) && colIndex == 7) ||
-                        ((rowIndex == 0 || rowIndex == ROW_CORNER) && colIndex == 8) ||
-                        ((rowIndex == 0 || rowIndex == ROW_CORNER) && colIndex == 9) ||
-                        ((rowIndex == 0 || rowIndex == ROW_CORNER) && colIndex == 23) ||
-                        ((rowIndex == 0 || rowIndex == ROW_CORNER) && colIndex == 24) ||
-                        ((rowIndex == 0 || rowIndex == ROW_CORNER) && colIndex == 25) ||
-                        ((rowIndex == 0 || rowIndex == ROW_CORNER) && colIndex == 15) ||
-                        ((rowIndex == 0 || rowIndex == ROW_CORNER) && colIndex == 16) ||
-                        ((rowIndex == 0 || rowIndex == ROW_CORNER) && colIndex == 17)) {
+                } else if (((rowIndex == 0 || rowIndex == ROW_CORNER) && colIndex == 7) || colIndex == 8 ||
+                        colIndex == 9 || colIndex == 23 || colIndex == 24 || colIndex == 25 || colIndex == 15 ||
+                        colIndex == 16 || colIndex == 17) {
                     map.getBody()[colIndex][rowIndex].setId("empty");
                     cell.getStyleClass().clear();
                     cell.getStyleClass().add("grid-button-empty");

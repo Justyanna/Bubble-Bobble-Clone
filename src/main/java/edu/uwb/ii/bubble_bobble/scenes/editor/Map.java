@@ -66,7 +66,7 @@ public class Map {
             for (Cell cell : cellRow) {
                 switch (cell.getId()) {
                     case "empty":
-                        continue;
+                        break;
                     case "Wall": {
                         Element wall = document.createElement("Wall");
                         Attr x = document.createAttribute("x");
@@ -98,7 +98,7 @@ public class Map {
                         break;
                     }
                     case "Rules": {
-                        continue;
+                        break;
                     }
                     default: {
                         Element enemy = document.createElement(cell.getId());
@@ -120,7 +120,7 @@ public class Map {
                 }
             }
         }
-
+        System.out.println();
         return document;
     }
 
@@ -152,8 +152,8 @@ public class Map {
             int x = Integer.parseInt(enemy.getAttributes().getNamedItem("x").getTextContent());
             int y = Integer.parseInt(enemy.getAttributes().getNamedItem("y").getTextContent());
             int facing = Integer.parseInt(enemy.getAttributes().getNamedItem("facing").getTextContent());
-            if (Arrays.stream(ids).anyMatch(id -> id == enemy.getNodeValue())) {
-                body[x][y].setId(enemy.getNodeValue());
+            if (Arrays.stream(ids).anyMatch(id -> id.equals( enemy.getNodeName()))) {
+                body[x][y].setId(enemy.getNodeName());
             }
             body[x][y].setFacing(facing);
         }
