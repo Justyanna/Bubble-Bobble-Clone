@@ -10,9 +10,9 @@ public class Specter extends Enemy {
     private boolean _jumped;
     private Map _level;
 
-    public Specter (int x, int y, Map level) {
+    public Specter (int x, int y, int direction, Map level) {
 
-        super(ResourceManager.get().placeholder, 2, 2, 6.0, x, y);
+        super(ResourceManager.get().placeholder, 2, 2, 6.0, x, y, direction);
         _level = level;
         _jumped = false;
     }

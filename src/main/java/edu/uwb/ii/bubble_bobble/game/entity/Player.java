@@ -1,5 +1,6 @@
 package edu.uwb.ii.bubble_bobble.game.entity;
 
+import edu.uwb.ii.bubble_bobble.App;
 import edu.uwb.ii.bubble_bobble.game.Entity;
 import edu.uwb.ii.bubble_bobble.game.Inputs;
 import edu.uwb.ii.bubble_bobble.game.entity.projectile.Bubble;
@@ -13,18 +14,19 @@ public class Player extends Entity {
 
     private Inputs _controls;
 
-    public Player(double x, double y, Inputs controls, ArrayList<Projectile> projectile_output) {
+    public Player(double x, double y, int direction, ArrayList<Projectile> projectile_output) {
 
         super(ResourceManager.get().placeholder, Animations.TMP_PLAYER, 2, 2);
 
-        _controls = controls;
+        _controls = App.getInputs();
+        _projectiles = projectile_output;
 
         _speed = 7.0 / 60.0;
         _fire_rate = 1.5;
 
-        _projectiles = projectile_output;
+        _direction = direction;
 
-        spawn(x, y);
+        spawn(x + (_direction - 1) / 2.0, y);
 
     }
 

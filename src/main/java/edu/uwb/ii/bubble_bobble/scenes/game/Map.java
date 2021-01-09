@@ -13,10 +13,8 @@ import org.w3c.dom.NodeList;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.URL;
 import java.util.ArrayList;
 
 public class Map {
@@ -29,9 +27,8 @@ public class Map {
     private boolean [][] _body;
     private MapCollider _collider;
 
-    private ArrayList<Position> _spawn_points;
-    private ArrayList<String> _enemy_names;
-    private ArrayList<Position> _enemy_spawns;
+    private ArrayList<String> _spawn_points;
+    private ArrayList<String> _enemies;
 
     public Map(String source, SpriteSheet skin) {
 
@@ -39,15 +36,15 @@ public class Map {
         _body = new boolean[COLUMNS][ROWS];
         _collider = new MapCollider(this);
         _spawn_points = new ArrayList<>();
+        _enemies = new ArrayList<>();
 
         load(source);
 
     }
 
     public Collider get_collider() { return _collider; }
-    public Position getSpawn() { return _spawn_points.get(0); }
-    public ArrayList<String> get_enemy_names() { return _enemy_names; }
-    public ArrayList<Position> get_enemy_spawns() { return _enemy_spawns; }
+    public ArrayList<String> get_spawn_points() { return _spawn_points; }
+    public ArrayList<String> get_enemies() { return _enemies; }
 
     public boolean check(double x, double y) {
 
@@ -94,10 +91,27 @@ public class Map {
                 Node direction = player_data.getNamedItem("facing");
 
                 if(x != null && y != null && direction != null) {
-                    _spawn_points.add(new Position(
-                            Integer.parseInt(x.getNodeValue()),
-                            Integer.parseInt(y.getNodeValue()),
-                            Integer.parseInt(direction.getNodeValue())));
+                    _spawn_points.add(x.getNodeValue() + " " + y.getNodeValue() + " " + direction.getNodeValue());
+                }
+
+            }
+
+            NodeList enemies = doc.getElementsByTagName("Enemies").item(0).getChildNodes();
+
+            for(Node enemy = enemies.item(0); enemy != null; enemy = enemy.getNextSibling()) {
+
+                if(enemy.getNodeType() != Node.ELEMENT_NODE) continue;
+
+                NamedNodeMap enemy_data = enemy.getAttributes();
+                Node x = enemy_data.getNamedItem("x");
+                Node y = enemy_data.getNamedItem("y");
+                Node direction = enemy_data.getNamedItem("facing");
+
+                if(x != null && y != null && direction != null) {
+                    _enemies.add(enemy.getNodeName()
+                            + " " + x.getNodeValue()
+                            + " " + y.getNodeValue()
+                            + " " + direction.getNodeValue());
                 }
 
             }

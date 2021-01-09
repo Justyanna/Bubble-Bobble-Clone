@@ -152,7 +152,7 @@
         <Player facing="1" x="2" y="23"/>
     </Players>
     <Enemies>
-        <Enemy facing="-1" name="Knight" x="29" y="23"/>
+        <Errant facing="-1" x="29" y="23"/>
     </Enemies>
     <Rules/>
 </Map>

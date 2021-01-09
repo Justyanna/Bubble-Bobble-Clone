@@ -4,7 +4,7 @@ import edu.uwb.ii.bubble_bobble.App;
 import edu.uwb.ii.bubble_bobble.game.entity.Enemy;
 import edu.uwb.ii.bubble_bobble.game.entity.Player;
 import edu.uwb.ii.bubble_bobble.game.entity.Projectile;
-import edu.uwb.ii.bubble_bobble.game.entity.enemy.Walker;
+import edu.uwb.ii.bubble_bobble.game.entity.enemy.Errant;
 import edu.uwb.ii.bubble_bobble.game.rendering.ResourceManager;
 import javafx.scene.canvas.GraphicsContext;
 
@@ -28,8 +28,6 @@ public class Game {
         _bubbles = new ArrayList<>();
         _projectiles = new ArrayList<>();
 
-        _player = new Player(10, 10, App.getInputs(), _bubbles);
-
         start();
 
     }
@@ -37,7 +35,27 @@ public class Game {
     public void start() {
 
         _level = new Map("map_01", ResourceManager.get().placeholder);
-        _player = new Player(_level.getSpawn().x, _level.getSpawn().y, App.getInputs(), _bubbles);
+
+        String [] player_data = _level.get_spawn_points().get(0).split(" ");
+
+        int x = Integer.parseInt(player_data[0]);
+        int y = Integer.parseInt(player_data[1]);
+        int direction = Integer.parseInt(player_data[2]);
+
+        _player = new Player(x, y, direction, _bubbles);
+
+        for(String enemy : _level.get_enemies()) {
+
+            String [] enemy_data = enemy.split(" ");
+
+            System.out.println(enemy_data[0]);
+            x = Integer.parseInt(enemy_data[1]);
+            y = Integer.parseInt(enemy_data[2]);
+            direction = Integer.parseInt(enemy_data[3]);
+
+            _enemies.add(new Errant(x, y, direction, _level));
+
+        }
 
     }
 
@@ -65,10 +83,6 @@ public class Game {
             b.draw(gc, scale);
         for(Projectile p : _projectiles)
             p.draw(gc, scale);
-
-        if(_enemies.size() < 1) {
-            _enemies.add(new Walker(15, 17, _level));
-        }
 
 //        -- collisions
 
