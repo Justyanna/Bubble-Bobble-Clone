@@ -1,32 +1,43 @@
 package edu.uwb.ii.bubble_bobble.game;
 
 import edu.uwb.ii.bubble_bobble.game.collider.EntityCollider;
+import edu.uwb.ii.bubble_bobble.game.entity.Projectile;
 import edu.uwb.ii.bubble_bobble.game.rendering.Animation;
 import edu.uwb.ii.bubble_bobble.game.rendering.SpriteSheet;
 import edu.uwb.ii.bubble_bobble.scenes.game.Map;
 import javafx.scene.canvas.GraphicsContext;
 
+import java.util.ArrayList;
+
 abstract public class Entity {
 
-    private SpriteSheet _gfx;
-    private Animation _animation;
+//    -- dependencies
+    protected SpriteSheet _gfx;
+    protected Animation _animation;
     protected EntityCollider _collider;
 
+//    -- constants
     protected int _width;
     protected int _height;
+    protected ArrayList<Projectile> _projectiles;
 
-    protected int _direction;
+//    -- stats
     protected double _speed;
     protected double _jump_height;
-    protected boolean _grounded;
+    protected double _fire_rate;
 
+//    -- state
     protected double _x;
     protected double _y;
+    protected int _direction;
     protected double _dx;
     protected double _dy;
     protected double _jump;
+    protected double _cooldown;
 
+//    -- flags
     private boolean _spawned;
+    protected boolean _grounded;
 
     public Entity(SpriteSheet gfx, Animation animation, int w, int h) {
 
@@ -37,15 +48,18 @@ abstract public class Entity {
 
         _collider = new EntityCollider(this);
 
-        _direction = 1;
         _speed = 0.0;
         _jump_height = 5.5;
+        _fire_rate = 0.0;
+
+        _direction = 1;
         _dx = 0.0;
         _dy = 0.0;
         _jump = 0.0;
-        _grounded = false;
+        _cooldown = 0.0;
 
         _spawned = false;
+        _grounded = false;
 
     }
 
@@ -53,9 +67,25 @@ abstract public class Entity {
     public double get_y() { return _y; }
     public int get_width() { return _width; }
     public int get_height() { return _height; }
-    public Collider get_collider() { return _collider; };
+    public Collider get_collider() { return _collider; }
 
-    public Entity spawn(int x, int y) {
+    public double front() {
+        return _x + (1 + _direction) / 2.0 * _width;
+    }
+
+    public double back() {
+        return _x - (_direction - 1) / 2.0 * _width;
+    }
+
+    public double top() {
+        return _y + 1 - _height;
+    }
+
+    public double bottom() {
+        return _y + 1;
+    }
+
+    public Entity spawn(double x, double y) {
 
         _x = x;
         _y = y;
@@ -130,6 +160,10 @@ abstract public class Entity {
         if(_x > Map.COLUMNS - 1.0 + _width) _x = 1.0 - _width;
         if(_y < -1.0) _y = Map.ROWS;
         if(_y > Map.ROWS - 1.0 + _height) _y = 1.0 - _height;
+
+        if(_fire_rate > 0.0 && _cooldown > 0.0) {
+            _cooldown -= _fire_rate / 60.0;
+        }
 
     }
 

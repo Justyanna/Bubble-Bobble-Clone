@@ -47,7 +47,7 @@ public class Animation {
 
         int result = _frames[_frame];
 
-        if(_frames.length > 1 && --_counter < 1) {
+        if(_speed > 0 && _frames.length > 1 && --_counter < 1) {
 
             _counter = _duration;
             _frame = ++_frame < _frames.length ? _frame : 0;

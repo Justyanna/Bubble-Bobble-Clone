@@ -1,9 +1,9 @@
 package edu.uwb.ii.bubble_bobble.scenes.game;
 
 import edu.uwb.ii.bubble_bobble.App;
-import edu.uwb.ii.bubble_bobble.game.collider.BoxCollider;
 import edu.uwb.ii.bubble_bobble.game.entity.Enemy;
 import edu.uwb.ii.bubble_bobble.game.entity.Player;
+import edu.uwb.ii.bubble_bobble.game.entity.Projectile;
 import edu.uwb.ii.bubble_bobble.game.entity.enemy.Walker;
 import edu.uwb.ii.bubble_bobble.game.rendering.ResourceManager;
 import javafx.scene.canvas.GraphicsContext;
@@ -19,11 +19,16 @@ public class Game {
 
     private Player _player;
     private ArrayList<Enemy> _enemies;
+    private ArrayList<Projectile> _bubbles;
+    private ArrayList<Projectile> _projectiles;
 
     public Game() {
 
-        _player = new Player(10, 10, App.getInputs());
         _enemies = new ArrayList<>();
+        _bubbles = new ArrayList<>();
+        _projectiles = new ArrayList<>();
+
+        _player = new Player(10, 10, App.getInputs(), _bubbles);
 
         start();
 
@@ -39,10 +44,14 @@ public class Game {
 
 //        -- moving
 
-        for(Enemy e : _enemies) {
+        for(Enemy e : _enemies)
             e.move(_level);
-        }
         _player.move(_level);
+
+        for(Projectile b : _bubbles)
+            b.move(_level);
+        for(Projectile p : _projectiles)
+            p.move(_level);
 
 //        -- drawing
 
@@ -50,6 +59,11 @@ public class Game {
         for(Enemy e : _enemies)
             e.draw(gc, scale);
         _player.draw(gc, scale);
+
+        for(Projectile b : _bubbles)
+            b.draw(gc, scale);
+        for(Projectile p : _projectiles)
+            p.draw(gc, scale);
 
         if(_enemies.size() < 1) {
             _enemies.add(new Walker(15, 17, _level));

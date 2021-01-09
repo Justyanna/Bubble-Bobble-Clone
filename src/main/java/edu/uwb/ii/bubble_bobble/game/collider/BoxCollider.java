@@ -29,8 +29,8 @@ public class BoxCollider implements Collider {
 
         if(c instanceof BoxCollider) {
             BoxCollider bc = (BoxCollider) c;
-            return Math.abs(ox - bc.ox) < (w + bc.w) / 2.0
-                    && Math.abs(oy - bc.oy) < (h + bc.h) / 2.0;
+            return Math.abs(ox - bc.ox) < (w + bc.w) / 2.5
+                    && Math.abs(oy - bc.oy) < (h + bc.h) / 2.5;
         }
 
         if(c instanceof EntityCollider) {

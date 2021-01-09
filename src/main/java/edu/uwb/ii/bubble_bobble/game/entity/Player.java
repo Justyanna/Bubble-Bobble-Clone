@@ -2,9 +2,12 @@ package edu.uwb.ii.bubble_bobble.game.entity;
 
 import edu.uwb.ii.bubble_bobble.game.Entity;
 import edu.uwb.ii.bubble_bobble.game.Inputs;
+import edu.uwb.ii.bubble_bobble.game.entity.projectile.Bubble;
 import edu.uwb.ii.bubble_bobble.game.rendering.Animations;
 import edu.uwb.ii.bubble_bobble.game.rendering.ResourceManager;
 import edu.uwb.ii.bubble_bobble.scenes.game.Game;
+
+import java.util.ArrayList;
 
 public class Player extends Entity {
 
@@ -13,7 +16,7 @@ public class Player extends Entity {
     private int _spawn_x;
     private int _spawn_y;
 
-    public Player(int x, int y, Inputs controls) {
+    public Player(int x, int y, Inputs controls, ArrayList<Projectile> projectile_output) {
 
         super(ResourceManager.get().placeholder, Animations.TMP_PLAYER, 2, 2);
 
@@ -23,6 +26,9 @@ public class Player extends Entity {
         _spawn_y = y;
 
         _speed = 7.0 / 60.0;
+        _fire_rate = 1.5;
+
+        _projectiles = projectile_output;
 
         spawn(x, y);
 
@@ -54,6 +60,11 @@ public class Player extends Entity {
 
         if (_grounded && _controls.jump) {
             _jump = 1.0;
+        }
+
+        if(_controls.action && _cooldown <= 0.0) {
+            _projectiles.add(new Bubble(front(), _y, _direction));
+            _cooldown = 1.0;
         }
 
     }

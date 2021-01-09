@@ -1,10 +1,6 @@
 package edu.uwb.ii.bubble_bobble.scenes.game;
 
 import edu.uwb.ii.bubble_bobble.App;
-import edu.uwb.ii.bubble_bobble.game.entity.Enemy;
-import edu.uwb.ii.bubble_bobble.game.entity.Player;
-import edu.uwb.ii.bubble_bobble.game.entity.Wall;
-import edu.uwb.ii.bubble_bobble.game.entity.enemy.Walker;
 import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -13,18 +9,12 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
-import org.w3c.dom.Document;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import java.io.File;
 import java.io.IOException;
-import java.net.URL;
-import java.util.ArrayList;
 
 public class GameSceneController {
 
-    //    -- utility
+//    -- utility
     private final static long INTERVAL = 1000000000L / 60;
     private static long last_update = System.nanoTime();
 
@@ -59,7 +49,7 @@ public class GameSceneController {
             }
         };
 
-//        waits for fxml elements to load properly
+//        -- waits for fxml elements to load properly
         Platform.runLater(()-> {
 
             board.requestFocus();
