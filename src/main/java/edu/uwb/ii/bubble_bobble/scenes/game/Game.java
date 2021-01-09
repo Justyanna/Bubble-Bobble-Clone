@@ -48,12 +48,19 @@ public class Game {
 
             String [] enemy_data = enemy.split(" ");
 
-            System.out.println(enemy_data[0]);
             x = Integer.parseInt(enemy_data[1]);
             y = Integer.parseInt(enemy_data[2]);
             direction = Integer.parseInt(enemy_data[3]);
 
-            _enemies.add(new Errant(x, y, direction, _level));
+            try {
+                Class enemy_type = Class.forName("edu.uwb.ii.bubble_bobble.game.entity.enemy." + enemy_data[0]);
+                _enemies.add((Enemy) enemy_type.getDeclaredConstructor(int.class, int.class, int.class, Map.class)
+                        .newInstance(x, y, direction, _level));
+            }
+            catch(Exception e) {
+                System.out.println("Enemy type not found");
+                continue;
+            }
 
         }
 
