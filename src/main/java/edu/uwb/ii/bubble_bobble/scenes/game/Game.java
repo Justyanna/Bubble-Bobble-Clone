@@ -18,6 +18,8 @@ public class Game {
     private String _level_name;
     private Map _level;
 
+    private int _score;
+
     private Player _player;
     private ArrayList<Enemy> _enemies;
     private ArrayList<Projectile> _bubbles;
@@ -76,7 +78,9 @@ public class Game {
 
             }
 
+            _score = 0;
             _started = true;
+
         } catch (Exception e) {
             _quit = true;
             return;
@@ -119,6 +123,7 @@ public class Game {
                     }
 
                 } else if (b.collide(_player)) {
+                    _score += b.isEmpty() ? 10 : 150;
                     it.remove();
                 }
             }
