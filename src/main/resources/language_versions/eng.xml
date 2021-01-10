@@ -17,6 +17,8 @@
     </Leaderboard>
     <Game>
         <goToMenu>Go to menu</goToMenu>
+        <saveScore>Save score</saveScore>
+        <menuAfterGame>Go to menu</menuAfterGame>
     </Game>
     <AboutUs>
         <goToMenu>Go to menu</goToMenu>

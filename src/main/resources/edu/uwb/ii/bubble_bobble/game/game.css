@@ -10,3 +10,50 @@
     -fx-width: 100;
     -fx-height: 100;
 }
+
+.score-label
+{
+  -fx-font-size: 28px;
+  -fx-text-fill: "#31ff0d";
+  -fx-font-family: "Barcade Brawl";
+}
+
+.score-row
+{
+  -fx-font-size: 14px;
+  -fx-text-fill:  "#31ff0d";
+  -fx-font-family: "Barcade Brawl";
+}
+
+.score-row-you
+{
+  -fx-font-size: 14px;
+  -fx-text-fill:  "#fbff00";
+  -fx-font-family: "Barcade Brawl";
+}
+
+.button,
+.button-menu,
+.button-play
+{
+   -fx-background-color: black;
+     -fx-font-size: 12px;
+  -fx-text-fill: "#31ff0d";
+  -fx-font-family: "Barcade Brawl";
+}
+
+
+.button-save:hover,
+.button-menu:hover{
+   -fx-font-size: 16px;
+}
+
+.name-input{
+    -fx-border-style: solid  solid  solid  solid;
+    -fx-border-color: white white white white;
+    -fx-border-width: 1;
+    -fx-background-color: black;
+    -fx-font-size: 14px;
+    -fx-text-fill: "#31ff0d";
+    -fx-font-family: "Barcade Brawl";
+}

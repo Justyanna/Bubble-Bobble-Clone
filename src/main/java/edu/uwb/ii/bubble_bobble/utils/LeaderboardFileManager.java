@@ -24,7 +24,36 @@ public class LeaderboardFileManager {
         leaderboardPath = appPath + "/leaderboard.txt";
     }
 
+    public boolean isSavable(int score, Collection<LeaderBoardData> data) {
+        if (score > 0) {
+            if (data != null) {
+                if (data.size() < 20) {
+                    return true;
+                } else {
+
+                    int min = Integer.MAX_VALUE;
+
+                    for (LeaderBoardData row : data) {
+                        if (row.getScore() < min) {
+                            min = row.getScore();
+                        }
+                    }
+                    return score > min;
+                }
+            } else {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public void saveScore(String name, String score, String date) {
+        try {
+            Files.createDirectories(Path.of(appPath));
+            Files.createFile(Path.of(leaderboardPath));
+        } catch (IOException e) {
+            LOGGER.info("Leaderboard directory already exist");
+        }
         try {
             File file = new File(leaderboardPath);
             EncryptionProvider.decrypt(ENCRYPTION_KEY, file, file);
@@ -87,7 +116,7 @@ public class LeaderboardFileManager {
         list = Arrays.stream(lines).sequential().map(line -> {
             if (!line.isEmpty()) {
                 String[] details = line.split(" ");
-                return new LeaderBoardData(details[0], details[1], details[2]);
+                return new LeaderBoardData(details[0].replaceAll("_", " "), details[1], details[2]);
             }
 
             throw new NullPointerException();
@@ -96,16 +125,18 @@ public class LeaderboardFileManager {
     }
 
     private Collection<LeaderBoardData> takeSublist(Collection<LeaderBoardData> list) {
-        if (list.size() < 31) {
-            list = list.stream()
-                    .sorted(Comparator.comparingInt(LeaderBoardData::getScore).reversed())
-                    .collect(Collectors.toList())
-                    .subList(0, list.size());
-        } else {
-            list = list.stream()
-                    .sorted(Comparator.comparingInt(LeaderBoardData::getScore).reversed())
-                    .collect(Collectors.toList())
-                    .subList(0, 20);
+        if (list != null) {
+            if (list.size() < 10) {
+                list = list.stream()
+                        .sorted(Comparator.comparingInt(LeaderBoardData::getScore).reversed())
+                        .collect(Collectors.toList())
+                        .subList(0, list.size());
+            } else {
+                list = list.stream()
+                        .sorted(Comparator.comparingInt(LeaderBoardData::getScore).reversed())
+                        .collect(Collectors.toList())
+                        .subList(0, 10);
+            }
         }
         return list;
     }

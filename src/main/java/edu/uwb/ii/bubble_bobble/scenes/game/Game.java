@@ -42,7 +42,7 @@ public class Game {
     private boolean _paused;
     private boolean _quit;
 
-    private Game() {
+    public Game() {
 
         _started = false;
         _paused = false;
@@ -231,4 +231,7 @@ public class Game {
 
     }
 
+    public int get_score() {
+        return _score;
+    }
 }

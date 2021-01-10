@@ -109,7 +109,7 @@ public class EditorSceneController {
         grid = new GridPane();
         grid.prefWidthProperty().bind(boardWindow.widthProperty());
         grid.prefHeightProperty().bind(boardWindow.heightProperty());
-
+        Platform.setImplicitExit(false);
         Platform.runLater(() -> {
             for (int r = 0; r < ROWS; r++) {
                 for (int c = 0; c < COLUMNS; c++) {

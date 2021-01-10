@@ -10,13 +10,15 @@
     <Options>
         <boardEditor>Editeur du conseil</boardEditor>
         <goToMenu>Aller au menu</goToMenu>
-        <languageVersion>Linguistique version </languageVersion>
+        <languageVersion>Linguistique version</languageVersion>
     </Options>
     <Leaderboard>
         <goToMenu>Aller au menu</goToMenu>
     </Leaderboard>
     <Game>
         <goToMenu>Aller au menu</goToMenu>
+        <saveScore>Sauve le but</saveScore>
+        <menuAfterGame>Aller au menu</menuAfterGame>
     </Game>
     <AboutUs>
         <goToMenu>Aller au menu</goToMenu>
@@ -24,7 +26,7 @@
     <Editor>
         <saveButton>Sauver</saveButton>
         <importButton>Charge</importButton>
-        <resetButton> Clair</resetButton>
+        <resetButton>Clair</resetButton>
         <fullFrame>Plein cadre</fullFrame>
         <oneGapFrame>Lunette a un trou</oneGapFrame>
         <twoGapFrame>Lunette a deux trous</twoGapFrame>

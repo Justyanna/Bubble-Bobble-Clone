@@ -43,4 +43,8 @@ public class LeaderBoardData {
     public StringProperty dateProperty() {
         return date;
     }
+
+    public String getDate() {
+        return date.get();
+    }
 }

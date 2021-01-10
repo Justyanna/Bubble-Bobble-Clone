@@ -17,6 +17,8 @@
     </Leaderboard>
     <Game>
         <goToMenu>Przejdz do menu</goToMenu>
+        <saveScore>Zapisz wynik</saveScore>
+        <menuAfterGame>Przejdz do menu</menuAfterGame>
     </Game>
     <AboutUs>
         <goToMenu>Przejdz do menu</goToMenu>

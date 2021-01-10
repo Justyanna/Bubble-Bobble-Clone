@@ -1,19 +1,28 @@
 package edu.uwb.ii.bubble_bobble.scenes.game;
 
 import edu.uwb.ii.bubble_bobble.App;
+import edu.uwb.ii.bubble_bobble.scenes.leaderboard.LeaderBoardData;
 import edu.uwb.ii.bubble_bobble.utils.CurrentLanguageVersionProvider;
+import edu.uwb.ii.bubble_bobble.utils.LeaderboardFileManager;
 import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Collection;
+import java.util.Date;
 
 public class GameSceneController {
 
@@ -29,7 +38,12 @@ public class GameSceneController {
     @FXML
     BorderPane root;
     @FXML
-    Button goToMenu;
+    private Button goToMenu;
+    private Button saveScore;
+    private Button menuAfterGame;
+    private TextField name;
+    private int current_i;
+    private LeaderboardFileManager fileManager;
     private Game _game;
 
     public void initialize() {
@@ -37,6 +51,11 @@ public class GameSceneController {
         gc = board.getGraphicsContext2D();
         board.widthProperty().bind(gameWindow.widthProperty());
         board.heightProperty().bind(gameWindow.heightProperty());
+
+        saveScore = new Button();
+        menuAfterGame = new Button();
+        fileManager = new LeaderboardFileManager();
+        name = new TextField();
 
         timer = new AnimationTimer() {
             @Override
@@ -47,13 +66,12 @@ public class GameSceneController {
                     _game.update(gc, cellSize());
                     last_update += INTERVAL;
                     if (_game.quit()) {
-                        try {
-                            switchToPrimary();
-                        } catch (IOException e) {
-                        }
+                        timer.stop();
+                        App.get_inputs().clear();
+                        gc.clearRect(0, 0, gc.getCanvas().getWidth(), gc.getCanvas().getHeight());
+                        handleQuit();
                     }
                 }
-
             }
         };
 
@@ -67,9 +85,128 @@ public class GameSceneController {
             _game.update(gc, cellSize());
 
             timer.start();
-
         });
         loadLanguageVersion();
+    }
+
+    private void handleQuit() {
+        if (!(gameWindow.getChildren().contains(saveScore) || gameWindow.getChildren().contains(menuAfterGame))) {
+
+            int score = _game.get_score();
+            addStyleClasses();
+            addMenuAfterGameOnAction();
+            DateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
+            Collection<LeaderBoardData> data = fileManager.getLeaderBoardData();
+            saveScore.setOnAction(event -> handleSave(score));
+
+            if (fileManager.isSavable(score, data)) {
+                displayIfSavable(score, formatter, data);
+            } else {
+
+                displayIfNotSavable(score, formatter, data);
+            }
+        }
+    }
+
+    private void handleSave(int score) {
+        name.getStyleClass().add("name-input");
+        name.setText("Player 1");
+        name.setMaxWidth(200);
+        gameWindow.getChildren().add(name);
+        Button confirm = new Button("OK");
+        confirm.getStyleClass().add("button-save");
+        confirm.setOnAction(actionEvent -> {
+            DateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
+            String input = name.getText().replaceAll(" ", "_");
+
+            fileManager.saveScore(input, String.valueOf(score), formatter.format(new Date()));
+            try {
+                switchToPrimary();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+        gameWindow.getChildren().add(confirm);
+        gameWindow.setMargin(name, new Insets(current_i * 2 * 100, 0, 0, 0));
+        gameWindow.setMargin(confirm, new Insets(current_i * 2 * 100, 0, 0, 260));
+    }
+
+    private void displayIfNotSavable(int score, DateFormat formatter, Collection<LeaderBoardData> data) {
+        int i = 1;
+        i = fillWithScoresGraterThanYour(score, data, i);
+        displayYourScore(score, formatter, i);
+        current_i = i;
+        gameWindow.getChildren().add(menuAfterGame);
+        gameWindow.setMargin(menuAfterGame, new Insets(i * 2 * 100, 0, 0, 0));
+    }
+
+    private void displayIfSavable(int score, DateFormat formatter, Collection<LeaderBoardData> data) {
+        int i = 1;
+
+        i = fillWithScoresGraterThanYour(score, data, i);
+        displayYourScore(score, formatter, i);
+        i = fillWithScoreLessThanYou(score, data, i);
+        current_i = i;
+        addButtons(i);
+    }
+
+    private void addButtons(int i) {
+        gameWindow.getChildren().add(saveScore);
+        gameWindow.getChildren().add(menuAfterGame);
+        gameWindow.setMargin(saveScore, new Insets(i * 3 * 100, 200, 0, 0));
+        gameWindow.setMargin(menuAfterGame, new Insets(i * 3 * 100, 0, 0, 200));
+    }
+
+    private int fillWithScoreLessThanYou(int score, Collection<LeaderBoardData> data, int i) {
+        if (data != null) {
+            for (LeaderBoardData row : data) {
+                if (row.getScore() <= score) {
+                    i++;
+                    Label rowLabel = new Label(i + ". " + row.getName() + " " + row.getScore() + " " + row.getDate());
+                    gameWindow.getChildren().add(rowLabel);
+                    rowLabel.getStyleClass().add("score-row");
+                    gameWindow.setMargin(rowLabel, new Insets(-300 + (i - 1) * 100, 0, 0, 0));
+                }
+            }
+        }
+        return i;
+    }
+
+    private int fillWithScoresGraterThanYour(int score, Collection<LeaderBoardData> data, int i) {
+        if (data != null) {
+            for (LeaderBoardData row : data) {
+                if (row.getScore() > score) {
+                    Label rowLabel = new Label(i + ". " + row.getName() + " " + row.getScore() + " " + row.getDate());
+                    gameWindow.getChildren().add(rowLabel);
+                    rowLabel.getStyleClass().add("score-row");
+                    gameWindow.setMargin(rowLabel, new Insets(-300 + (i - 1) * 100, 0, 0, 0));
+                    i++;
+                }
+            }
+        }
+        return i;
+    }
+
+    private void displayYourScore(int score, DateFormat formatter, int i) {
+        Label yourScore = new Label(i + ". " + "You" + " " + score + " " + formatter.format(new Date()));
+        yourScore.getStyleClass().add("score-row-you");
+        gameWindow.getChildren().add(yourScore);
+        gameWindow.setMargin(yourScore, new Insets(-300 + (i - 1) * 100, 0, 0, 0));
+    }
+
+    private void addMenuAfterGameOnAction() {
+        menuAfterGame.setOnAction(actionEvent -> {
+            try {
+                switchToPrimary();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+    }
+
+    private void addStyleClasses() {
+        menuAfterGame.getStyleClass().add("button-menu");
+        saveScore.getStyleClass().add("button-save");
     }
 
     public int cellSize() {
@@ -98,6 +235,10 @@ public class GameSceneController {
 
                 if ("goToMenu".equals(id)) {
                     goToMenu.setText(text);
+                } else if ("menuAfterGame".equals(id)) {
+                    menuAfterGame.setText(text);
+                } else if ("saveScore".equals(id)) {
+                    saveScore.setText(text);
                 }
             }
         }
@@ -113,6 +254,5 @@ public class GameSceneController {
         gc.clearRect(0, 0, gc.getCanvas().getWidth(), gc.getCanvas().getHeight());
 
         App.setRoot("menu");
-
     }
 }
