@@ -97,7 +97,7 @@ public class GameSceneController {
             addMenuAfterGameOnAction();
             DateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
             Collection<LeaderBoardData> data = fileManager.getLeaderBoardData();
-            saveScore.setOnAction(event -> handleSave(score));
+            saveScore.setOnAction(event -> handleSave(score, data != null ? -data.size() : 0));
 
             if (fileManager.isSavable(score, data)) {
                 displayIfSavable(score, formatter, data);
@@ -108,7 +108,7 @@ public class GameSceneController {
         }
     }
 
-    private void handleSave(int score) {
+    private void handleSave(int score, int offset) {
         name.getStyleClass().add("name-input");
         name.setText("Player 1");
         name.setMaxWidth(200);
@@ -131,34 +131,36 @@ public class GameSceneController {
             gameWindow.getChildren().add(name);
             gameWindow.getChildren().add(confirm);
         }
-        gameWindow.setMargin(name, new Insets(current_i * 100, 0, 0, 0));
-        gameWindow.setMargin(confirm, new Insets(current_i * 100, 0, 0, 260));
+        gameWindow.setMargin(name, new Insets(offset * 70 + current_i * 100, 0, 0, 0));
+        gameWindow.setMargin(confirm, new Insets(offset * 70 + current_i * 100, 0, 0, 260));
     }
 
     private void displayIfNotSavable(int score, DateFormat formatter, Collection<LeaderBoardData> data) {
         int i = 1;
         i = fillWithScoresGraterThanYour(score, data, i);
-        displayYourScore(score, formatter, i);
+        int offset = data != null ? -data.size() : 0;
+        displayYourScore(score, formatter, i, offset);
         current_i = i;
         gameWindow.getChildren().add(menuAfterGame);
-        gameWindow.setMargin(menuAfterGame, new Insets(i * 2 * 100, 0, 0, 0));
+        gameWindow.setMargin(menuAfterGame, new Insets(offset * 70 + (i + 1) * 100, 0, 0, 0));
     }
 
     private void displayIfSavable(int score, DateFormat formatter, Collection<LeaderBoardData> data) {
         int i = 1;
 
         i = fillWithScoresGraterThanYour(score, data, i);
-        displayYourScore(score, formatter, i);
+        int offset = data != null ? -data.size() : 0;
+        displayYourScore(score, formatter, i, offset);
         i = fillWithScoreLessThanYou(score, data, i);
         current_i = i;
-        addButtons(i);
+        addButtons(i, offset);
     }
 
-    private void addButtons(int i) {
+    private void addButtons(int i, int offset) {
         gameWindow.getChildren().add(saveScore);
         gameWindow.getChildren().add(menuAfterGame);
-        gameWindow.setMargin(saveScore, new Insets(i * 2 * 100, 200, 0, 0));
-        gameWindow.setMargin(menuAfterGame, new Insets(i * 2 * 100, 0, 0, 200));
+        gameWindow.setMargin(saveScore, new Insets(offset * 70 + (i + 1) * 100, 200, 0, 0));
+        gameWindow.setMargin(menuAfterGame, new Insets(offset * 70 + (i + 1) * 100, 0, 0, 200));
     }
 
     private int fillWithScoreLessThanYou(int score, Collection<LeaderBoardData> data, int i) {
@@ -169,7 +171,7 @@ public class GameSceneController {
                     Label rowLabel = new Label(i + ". " + row.getName() + " " + row.getScore() + " " + row.getDate());
                     gameWindow.getChildren().add(rowLabel);
                     rowLabel.getStyleClass().add("score-row");
-                    gameWindow.setMargin(rowLabel, new Insets(-300 + (i - 1) * 100, 0, 0, 0));
+                    gameWindow.setMargin(rowLabel, new Insets(-data.size() * 70 + (i - 1) * 100, 0, 0, 0));
                 }
             }
         }
@@ -183,7 +185,7 @@ public class GameSceneController {
                     Label rowLabel = new Label(i + ". " + row.getName() + " " + row.getScore() + " " + row.getDate());
                     gameWindow.getChildren().add(rowLabel);
                     rowLabel.getStyleClass().add("score-row");
-                    gameWindow.setMargin(rowLabel, new Insets(-300 + (i - 1) * 100, 0, 0, 0));
+                    gameWindow.setMargin(rowLabel, new Insets(-data.size() * 70 + (i - 1) * 100, 0, 0, 0));
                     i++;
                 }
             }
@@ -191,11 +193,11 @@ public class GameSceneController {
         return i;
     }
 
-    private void displayYourScore(int score, DateFormat formatter, int i) {
+    private void displayYourScore(int score, DateFormat formatter, int i, int offset) {
         Label yourScore = new Label(i + ". " + "You" + " " + score + " " + formatter.format(new Date()));
         yourScore.getStyleClass().add("score-row-you");
         gameWindow.getChildren().add(yourScore);
-        gameWindow.setMargin(yourScore, new Insets(-300 + (i - 1) * 100, 0, 0, 0));
+        gameWindow.setMargin(yourScore, new Insets(offset * 70 + (i - 1) * 100, 0, 0, 0));
     }
 
     private void addMenuAfterGameOnAction() {
