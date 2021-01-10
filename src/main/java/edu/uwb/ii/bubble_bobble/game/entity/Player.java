@@ -18,7 +18,7 @@ public class Player extends Entity {
 
         super(ResourceManager.get().placeholder, Animations.TMP_PLAYER, 2, 2);
 
-        _controls = App.getInputs();
+        _controls = App.get_inputs();
         _projectiles = projectile_output;
 
         _speed = 7.0 / 60.0;

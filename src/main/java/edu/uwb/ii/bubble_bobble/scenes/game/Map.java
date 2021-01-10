@@ -3,16 +3,18 @@ package edu.uwb.ii.bubble_bobble.scenes.game;
 import edu.uwb.ii.bubble_bobble.game.Collider;
 import edu.uwb.ii.bubble_bobble.game.collider.MapCollider;
 import edu.uwb.ii.bubble_bobble.game.rendering.SpriteSheet;
-import edu.uwb.ii.bubble_bobble.game.utils.Position;
 import javafx.scene.canvas.GraphicsContext;
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -107,7 +109,7 @@ public class Map {
                 Node y = enemy_data.getNamedItem("y");
                 Node direction = enemy_data.getNamedItem("facing");
 
-                if(x != null && y != null && direction != null) {
+                if (x != null && y != null && direction != null) {
                     _enemies.add(enemy.getNodeName()
                             + " " + x.getNodeValue()
                             + " " + y.getNodeValue()
@@ -115,9 +117,8 @@ public class Map {
                 }
 
             }
-        }
-        catch (Exception e) {
-            e.printStackTrace();
+        } catch (IndexOutOfBoundsException | IOException | NullPointerException
+                | ParserConfigurationException | SAXException e) {
         }
 
     }

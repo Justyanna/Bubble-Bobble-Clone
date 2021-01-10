@@ -13,7 +13,6 @@ import javafx.scene.text.Font;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.logging.Logger;
@@ -25,86 +24,22 @@ public class App extends Application {
 
     private static final Logger LOGGER = Logger.getLogger(App.class.getName());
     private static final String FONT_PATH = "fonts/Barcade Brawl.ttf";
-    private static Scene scene;
-    private static boolean in_game;
-    private static Inputs inputs;
 
-    public static Inputs getInputs() {
-        return inputs;
-    }
+    private static Stage _primary_stage;
+    private static Scene _active_scene;
 
-    public static void setRoot(String fxml) throws IOException {
-        scene.setRoot(loadFXML(fxml));
-    }
-
-    private static Parent loadFXML(String fxml) throws IOException {
-        FXMLLoader fxmlLoader =
-                new FXMLLoader(edu.uwb.ii.bubble_bobble.App.class.getResource(fxml + "/" + fxml + ".fxml"));
-        in_game = fxml.equals("game");
-        return fxmlLoader.load();
-    }
-
-    private static void loadFont() {
-        try {
-            InputStream inputStream = App.class.getClassLoader().getResourceAsStream(FONT_PATH);
-            Font.loadFont(inputStream, 20);
-        } catch (NullPointerException e) {
-            LOGGER.warning("Cannot find font file");
-        }
-    }
-
-    public static void handleKeyDown(KeyEvent key) {
-
-        if (!in_game) {
-            return;
-        }
-
-        if (key.getCode() == KeyCode.LEFT) {
-            inputs.left = true;
-        } else if (key.getCode() == KeyCode.RIGHT) {
-            inputs.right = true;
-        } else if (key.getCode() == KeyCode.UP) {
-            inputs.jump = true;
-        } else if (key.getCode() == KeyCode.SPACE) {
-            inputs.action = true;
-        }
-
-        key.consume();
-    }
-
-    public static void handleKeyUp(KeyEvent key) {
-
-        if (!in_game) {
-            return;
-        }
-
-        if (key.getCode() == KeyCode.LEFT) {
-            inputs.left = false;
-        } else if (key.getCode() == KeyCode.RIGHT) {
-            inputs.right = false;
-        } else if (key.getCode() == KeyCode.UP) {
-            inputs.jump = false;
-        } else if (key.getCode() == KeyCode.SPACE) {
-            inputs.action = false;
-        } else if (key.getCode() == KeyCode.ESCAPE) {
-            inputs.pause = true;
-        }
-
-        key.consume();
-    }
-
-    public static void main(String[] args) {
-        launch();
-    }
+    private static boolean _in_game;
+    private static Inputs _inputs;
 
     @Override
     public void start(Stage stage) throws IOException {
 
-        inputs = new Inputs();
-        in_game = false;
+        _inputs = new Inputs();
+        _in_game = false;
 
-        scene = new Scene(loadFXML("menu"));
-        stage.setScene(scene);
+        _primary_stage = stage;
+        _active_scene = new Scene(loadFXML("menu"));
+        stage.setScene(_active_scene);
 
         loadFont();
 
@@ -120,8 +55,80 @@ public class App extends Application {
 
         stage.show();
 
-        scene.addEventHandler(KeyEvent.KEY_PRESSED, App::handleKeyDown);
+        _active_scene.addEventHandler(KeyEvent.KEY_PRESSED, App::handleKeyDown);
 
-        scene.addEventHandler(KeyEvent.KEY_RELEASED, App::handleKeyUp);
+        _active_scene.addEventHandler(KeyEvent.KEY_RELEASED, App::handleKeyUp);
+    }
+
+    public static Stage get_primary_stage() {
+        return _primary_stage;
+    }
+
+    public static Inputs get_inputs() {
+        return _inputs;
+    }
+
+    public static void setRoot(String fxml) throws IOException {
+        _active_scene.setRoot(loadFXML(fxml));
+    }
+
+    private static Parent loadFXML(String fxml) throws IOException {
+        FXMLLoader fxmlLoader =
+                new FXMLLoader(edu.uwb.ii.bubble_bobble.App.class.getResource(fxml + "/" + fxml + ".fxml"));
+        _in_game = fxml.equals("game");
+        return fxmlLoader.load();
+    }
+
+    private static void loadFont() {
+        try {
+            InputStream inputStream = App.class.getClassLoader().getResourceAsStream(FONT_PATH);
+            Font.loadFont(inputStream, 20);
+        } catch (NullPointerException e) {
+            LOGGER.warning("Cannot find font file");
+        }
+    }
+
+    public static void handleKeyDown(KeyEvent key) {
+
+        if (!_in_game) {
+            return;
+        }
+
+        if (key.getCode() == KeyCode.LEFT) {
+            _inputs.left = true;
+        } else if (key.getCode() == KeyCode.RIGHT) {
+            _inputs.right = true;
+        } else if (key.getCode() == KeyCode.UP) {
+            _inputs.jump = true;
+        } else if (key.getCode() == KeyCode.SPACE) {
+            _inputs.action = true;
+        }
+
+        key.consume();
+    }
+
+    public static void handleKeyUp(KeyEvent key) {
+
+        if (!_in_game) {
+            return;
+        }
+
+        if (key.getCode() == KeyCode.LEFT) {
+            _inputs.left = false;
+        } else if (key.getCode() == KeyCode.RIGHT) {
+            _inputs.right = false;
+        } else if (key.getCode() == KeyCode.UP) {
+            _inputs.jump = false;
+        } else if (key.getCode() == KeyCode.SPACE) {
+            _inputs.action = false;
+        } else if (key.getCode() == KeyCode.ESCAPE) {
+            _inputs.pause = true;
+        }
+
+        key.consume();
+    }
+
+    public static void main(String[] args) {
+        launch();
     }
 }

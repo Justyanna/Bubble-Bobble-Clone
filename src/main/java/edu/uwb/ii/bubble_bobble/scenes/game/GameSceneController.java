@@ -10,7 +10,6 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
@@ -31,24 +30,30 @@ public class GameSceneController {
     BorderPane root;
     @FXML
     Button goToMenu;
-    private int cell_size;
     private Game _game;
 
     public void initialize() {
 
         gc = board.getGraphicsContext2D();
-        gc.setFill(Color.GREEN);
         board.widthProperty().bind(gameWindow.widthProperty());
         board.heightProperty().bind(gameWindow.heightProperty());
 
         timer = new AnimationTimer() {
             @Override
             public void handle(long now) {
+
                 while (now - last_update > INTERVAL) {
                     gc.clearRect(0, 0, board.getWidth(), board.getHeight());
-                    _game.update(gc, cell_size);
+                    _game.update(gc, cellSize());
                     last_update += INTERVAL;
+                    if (_game.quit()) {
+                        try {
+                            switchToPrimary();
+                        } catch (IOException e) {
+                        }
+                    }
                 }
+
             }
         };
 
@@ -56,13 +61,19 @@ public class GameSceneController {
         Platform.runLater(() -> {
 
             board.requestFocus();
-            cell_size = (int) (board.getHeight() / Map.ROWS);
+
             _game = new Game();
-            gc.clearRect(0, 0, board.getWidth(), board.getHeight());
-            _game.update(gc, cell_size);
+            _game.start();
+            _game.update(gc, cellSize());
+
             timer.start();
+
         });
         loadLanguageVersion();
+    }
+
+    public int cellSize() {
+        return (int) board.getHeight() / Map.ROWS;
     }
 
     private void loadLanguageVersion() {
@@ -96,8 +107,12 @@ public class GameSceneController {
 
     @FXML
     private void switchToPrimary() throws IOException {
+
         timer.stop();
+        App.get_inputs().clear();
         gc.clearRect(0, 0, gc.getCanvas().getWidth(), gc.getCanvas().getHeight());
+
         App.setRoot("menu");
+
     }
 }

@@ -20,7 +20,13 @@ public class Bubble extends Projectile {
 
     }
 
-    public boolean isActive() { return _active; }
+    public boolean isActive() {
+        return _active;
+    }
+
+    public boolean isEmpty() {
+        return _captive == null;
+    }
 
     public void capture(Enemy enemy) {
 

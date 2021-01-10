@@ -31,7 +31,7 @@ public class MapCollider implements Collider {
                 for(int j = 0; j <= w; j++) {
                     if(_host.check(x + j, y)) {
 
-                        ec.bottom = _host.check(x, y) || _host.check(x + w, y);
+                        ec.bottom = _host.check(x, y) || _host.check(x + 1, y) || _host.check(x + w, y);
                         ec.left = _host.check(x, y) && (_host.check(x, y - 1) || _host.check(x, y - 1));
                         ec.right = _host.check(x + w, y) && (_host.check(x + w, y - 1) || _host.check(x + w, y - 1));
 
