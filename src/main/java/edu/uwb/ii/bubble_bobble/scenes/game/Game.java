@@ -78,7 +78,6 @@ public class Game {
 
             }
 
-            _score = 0;
             _started = true;
 
         } catch (Exception e) {
@@ -90,6 +89,7 @@ public class Game {
 
     public void start() {
 
+        _score = 0;
         this.start("StoryMode#1");
 
     }
