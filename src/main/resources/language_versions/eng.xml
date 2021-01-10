@@ -1,36 +1,36 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <Language>
     <Menu>
-        <playGame>Play Game</playGame>
-        <leaderboard>Leaderboard</leaderboard>
+        <playGame>Play</playGame>
+        <leaderboard>High-scores</leaderboard>
         <options>Options</options>
-        <aboutUsButton>About us</aboutUsButton>
+        <aboutUsButton>About</aboutUsButton>
         <exitButton>Exit</exitButton>
     </Menu>
     <Options>
-        <boardEditor>Board editor</boardEditor>
-        <goToMenu>Go to menu</goToMenu>
-        <languageVersion>Language version</languageVersion>
+        <boardEditor>Map editor</boardEditor>
+        <goToMenu>Main menu</goToMenu>
+        <languageVersion>Game language</languageVersion>
     </Options>
     <Leaderboard>
-        <goToMenu>Go to menu</goToMenu>
+        <goToMenu>Menu</goToMenu>
     </Leaderboard>
     <Game>
-        <goToMenu>Go to menu</goToMenu>
+        <goToMenu>Menu</goToMenu>
         <saveScore>Save score</saveScore>
-        <menuAfterGame>Go to menu</menuAfterGame>
+        <menuAfterGame>Menu</menuAfterGame>
     </Game>
     <AboutUs>
-        <goToMenu>Go to menu</goToMenu>
+        <goToMenu>Menu</goToMenu>
     </AboutUs>
     <Editor>
         <saveButton>Save</saveButton>
-        <importButton>Import</importButton>
+        <importButton>Load map</importButton>
         <resetButton>Reset</resetButton>
         <fullFrame>Full frame</fullFrame>
         <oneGapFrame>One gap frame</oneGapFrame>
         <twoGapFrame>Two gaps center</twoGapFrame>
         <threeGapFrame>Two gaps edges</threeGapFrame>
-        <goToMenu>Go to menu</goToMenu>
+        <goToMenu>Menu</goToMenu>
     </Editor>
 </Language>
