@@ -2,35 +2,35 @@
 <Language>
     <Menu>
         <playGame>Zagraj</playGame>
-        <leaderboard>Tablica wynikow</leaderboard>
+        <leaderboard>Najlepsze wyniki</leaderboard>
         <options>Opcje</options>
-        <aboutUsButton>O zespole</aboutUsButton>
+        <aboutUsButton>O grze</aboutUsButton>
         <exitButton>Wyjscie</exitButton>
     </Menu>
     <Options>
-        <boardEditor>Edytor planszy</boardEditor>
-        <goToMenu>Przejdz do menu</goToMenu>
-        <languageVersion>Wersja jezykowa</languageVersion>
+        <boardEditor>Edytor map</boardEditor>
+        <goToMenu>Menu glowne</goToMenu>
+        <languageVersion>Jezyk gry</languageVersion>
     </Options>
     <Leaderboard>
         <goToMenu>Przejdz do menu</goToMenu>
     </Leaderboard>
     <Game>
-        <goToMenu>Przejdz do menu</goToMenu>
+        <goToMenu>Menu</goToMenu>
         <saveScore>Zapisz wynik</saveScore>
-        <menuAfterGame>Przejdz do menu</menuAfterGame>
+        <menuAfterGame>Menu</menuAfterGame>
     </Game>
     <AboutUs>
-        <goToMenu>Przejdz do menu</goToMenu>
+        <goToMenu>Menu</goToMenu>
     </AboutUs>
     <Editor>
         <saveButton>Zapisz</saveButton>
-        <importButton>Wczytaj</importButton>
+        <importButton>Wczytaj mape</importButton>
         <resetButton>Wyczysc</resetButton>
         <fullFrame>Pełna ramka</fullFrame>
-        <oneGapFrame>Jedno dziurowa ramka</oneGapFrame>
-        <twoGapFrame>Pusta na srodku</twoGapFrame>
-        <threeGapFrame>Pusta na koncach</threeGapFrame>
-        <goToMenu>Przejdz do menu</goToMenu>
+        <oneGapFrame>Jeden otwor</oneGapFrame>
+        <twoGapFrame>Dwa otwory</twoGapFrame>
+        <threeGapFrame>Otwory na brzegach</threeGapFrame>
+        <goToMenu>Menu</goToMenu>
     </Editor>
 </Language>

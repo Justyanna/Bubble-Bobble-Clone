@@ -2,14 +2,14 @@
 <Language>
     <Menu>
         <playGame>Jouer</playGame>
-        <leaderboard>Tableau de score</leaderboard>
+        <leaderboard>Scores eleves</leaderboard>
         <options>Options</options>
-        <aboutUsButton>A propos de nous</aboutUsButton>
+        <aboutUsButton>A propos du jeu</aboutUsButton>
         <exitButton>Quitter</exitButton>
     </Menu>
     <Options>
-        <boardEditor>Editeur du conseil</boardEditor>
-        <goToMenu>Aller au menu</goToMenu>
+        <boardEditor>Editeur de carte</boardEditor>
+        <goToMenu>Menu principal</goToMenu>
         <languageVersion>Linguistique version</languageVersion>
     </Options>
     <Leaderboard>
@@ -18,19 +18,19 @@
     <Game>
         <goToMenu>Aller au menu</goToMenu>
         <saveScore>Sauve le but</saveScore>
-        <menuAfterGame>Aller au menu</menuAfterGame>
+        <menuAfterGame>Menu</menuAfterGame>
     </Game>
     <AboutUs>
-        <goToMenu>Aller au menu</goToMenu>
+        <goToMenu>Menu</goToMenu>
     </AboutUs>
     <Editor>
         <saveButton>Sauver</saveButton>
-        <importButton>Charge</importButton>
+        <importButton>Charger la carte</importButton>
         <resetButton>Clair</resetButton>
         <fullFrame>Plein cadre</fullFrame>
         <oneGapFrame>Lunette a un trou</oneGapFrame>
         <twoGapFrame>Lunette a deux trous</twoGapFrame>
         <threeGapFrame>Lunette aux extremites</threeGapFrame>
-        <goToMenu>Aller au menu</goToMenu>
+        <goToMenu>Menu</goToMenu>
     </Editor>
 </Language>
