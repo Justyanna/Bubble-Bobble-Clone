@@ -1,13 +1,34 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <Language>
     <Menu>
-        <Button id="playGame">Play Game</Button>
-        <Button id="leaderboard">Leaderboard</Button>
-        <Button id="options">Options</Button>
-        <Button id="aboutUsButton">About us</Button>
-        <Button id="exitButton">Exit</Button>
+        <playGame>Play Game</playGame>
+        <leaderboard>Leaderboard</leaderboard>
+        <options>Options</options>
+        <aboutUsButton>About us</aboutUsButton>
+        <exitButton>Exit</exitButton>
     </Menu>
     <Options>
-        <Button id="boardEditor">Board editor</Button>
+        <boardEditor>Board editor</boardEditor>
+        <goToMenu>Go to menu</goToMenu>
+        <languageVersion>Language version</languageVersion>
     </Options>
+    <Leaderboard>
+        <goToMenu>Go to menu</goToMenu>
+    </Leaderboard>
+    <Game>
+        <goToMenu>Go to menu</goToMenu>
+    </Game>
+    <AboutUs>
+        <goToMenu>Go to menu</goToMenu>
+    </AboutUs>
+    <Editor>
+        <saveButton>Save</saveButton>
+        <importButton>Import</importButton>
+        <resetButton>Reset</resetButton>
+        <fullFrame>Full frame</fullFrame>
+        <oneGapFrame>One gap frame</oneGapFrame>
+        <twoGapFrame>Two gaps center</twoGapFrame>
+        <threeGapFrame>Two gaps edges</threeGapFrame>
+        <goToMenu>Go to menu</goToMenu>
+    </Editor>
 </Language>

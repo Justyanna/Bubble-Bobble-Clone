@@ -1,15 +1,34 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <Language>
     <Menu>
-        <Button id="playGame">Jouer</Button>
-        <Button id="leaderboard">Tableau de score</Button>
-        <Button id="options">Options</Button>
-        <Button id="aboutUsButton">À propos de nous</Button>
-        <Button id="exitButton">Quitter</Button>
+        <playGame>Jouer</playGame>
+        <leaderboard>Tableau de score</leaderboard>
+        <options>Options</options>
+        <aboutUsButton>A propos de nous</aboutUsButton>
+        <exitButton>Quitter</exitButton>
     </Menu>
     <Options>
-        <Button id="boardEditor">
-            Éditeur du conseil
-        </Button>
+        <boardEditor>Editeur du conseil</boardEditor>
+        <goToMenu>Aller au menu</goToMenu>
+        <languageVersion>Linguistique version </languageVersion>
     </Options>
+    <Leaderboard>
+        <goToMenu>Aller au menu</goToMenu>
+    </Leaderboard>
+    <Game>
+        <goToMenu>Aller au menu</goToMenu>
+    </Game>
+    <AboutUs>
+        <goToMenu>Aller au menu</goToMenu>
+    </AboutUs>
+    <Editor>
+        <saveButton>Sauver</saveButton>
+        <importButton>Charge</importButton>
+        <resetButton> Clair</resetButton>
+        <fullFrame>Plein cadre</fullFrame>
+        <oneGapFrame>Lunette a un trou</oneGapFrame>
+        <twoGapFrame>Lunette a deux trous</twoGapFrame>
+        <threeGapFrame>Lunette aux extremites</threeGapFrame>
+        <goToMenu>Aller au menu</goToMenu>
+    </Editor>
 </Language>

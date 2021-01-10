@@ -1,14 +1,18 @@
 package edu.uwb.ii.bubble_bobble.scenes.game;
 
 import edu.uwb.ii.bubble_bobble.App;
+import edu.uwb.ii.bubble_bobble.utils.CurrentLanguageVersionProvider;
 import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
 
 import java.io.IOException;
 
@@ -25,6 +29,8 @@ public class GameSceneController {
     public AnimationTimer timer;
     @FXML
     BorderPane root;
+    @FXML
+    Button goToMenu;
     private int cell_size;
     private Game _game;
 
@@ -56,6 +62,34 @@ public class GameSceneController {
             _game.update(gc, cell_size);
             timer.start();
         });
+        loadLanguageVersion();
+    }
+
+    private void loadLanguageVersion() {
+        Document doc = CurrentLanguageVersionProvider.loadXml();
+        processXml(doc);
+    }
+
+    private void processXml(Document doc) {
+        if (doc != null) {
+            doc.getDocumentElement().normalize();
+            Node menu = doc.getElementsByTagName("Game").item(0);
+
+            for (int i = 0; i < menu.getChildNodes().getLength(); i++) {
+
+                Node node = menu.getChildNodes().item(i);
+                String id = node.getNodeName();
+                var text = node.getTextContent();
+
+                if (id == null || text == null) {
+                    continue;
+                }
+
+                if ("goToMenu".equals(id)) {
+                    goToMenu.setText(text);
+                }
+            }
+        }
     }
 
     //    Actions

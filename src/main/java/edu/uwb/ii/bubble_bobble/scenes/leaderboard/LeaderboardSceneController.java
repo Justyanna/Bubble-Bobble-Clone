@@ -1,14 +1,18 @@
 package edu.uwb.ii.bubble_bobble.scenes.leaderboard;
 
 import edu.uwb.ii.bubble_bobble.App;
+import edu.uwb.ii.bubble_bobble.utils.CurrentLanguageVersionProvider;
 import edu.uwb.ii.bubble_bobble.utils.LeaderboardFileManager;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.VBox;
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
 
 import java.io.IOException;
 import java.util.Collection;
@@ -17,26 +21,56 @@ import java.util.logging.Logger;
 public class LeaderboardSceneController {
 
     private static final Logger LOGGER = Logger.getLogger(LeaderboardSceneController.class.getName());
+    private LeaderboardFileManager leaderboardFileManager;
     @FXML
-    TableView<LeaderBoardData> tableView;
+    private TableView<LeaderBoardData> tableView;
     @FXML
-    TableColumn<LeaderBoardData, String> colName;
+    private TableColumn<LeaderBoardData, String> colName;
     @FXML
-    TableColumn<LeaderBoardData, Number> colScore;
+    private TableColumn<LeaderBoardData, Number> colScore;
     @FXML
-    TableColumn<LeaderBoardData, String> colDate;
+    private TableColumn<LeaderBoardData, String> colDate;
     @FXML
-    VBox vbox;
-    LeaderboardFileManager leaderboardFileManager;
-
+    private VBox vbox;
     @FXML
-    private void switchToMenu() throws IOException {
-        App.setRoot("menu");
-    }
+    private Button goToMenu;
 
     public void initialize() {
         leaderboardFileManager = new LeaderboardFileManager();
         prepareTableView();
+        loadLanguageVersion();
+    }
+
+    private void loadLanguageVersion() {
+        Document doc = CurrentLanguageVersionProvider.loadXml();
+        processXml(doc);
+    }
+
+    private void processXml(Document doc) {
+        if (doc != null) {
+            doc.getDocumentElement().normalize();
+            Node menu = doc.getElementsByTagName("Leaderboard").item(0);
+
+            for (int i = 0; i < menu.getChildNodes().getLength(); i++) {
+
+                Node node = menu.getChildNodes().item(i);
+                String id = node.getNodeName();
+                var text = node.getTextContent();
+
+                if (id == null || text == null) {
+                    continue;
+                }
+
+                if ("goToMenu".equals(id)) {
+                    goToMenu.setText(text);
+                }
+            }
+        }
+    }
+
+    @FXML
+    private void switchToMenu() throws IOException {
+        App.setRoot("menu");
     }
 
     private TableView<LeaderBoardData> prepareTableView() {

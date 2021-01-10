@@ -7,12 +7,9 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import org.w3c.dom.Document;
-import org.w3c.dom.NodeList;
+import org.w3c.dom.Node;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.IOException;
-import java.io.InputStream;
 
 public class MenuSceneController {
 
@@ -23,55 +20,43 @@ public class MenuSceneController {
     public Button exitButton;
 
     public void initialize() {
-        Document doc = loadXml();
-        processXml(doc);
+        loadLanguageVersion();
     }
 
-    private Document loadXml() {
-        Document doc = null;
-        try {
-            InputStream in = MenuSceneController.class.getClassLoader().getResourceAsStream(CurrentLanguageVersionProvider.currentLanguageVersion);
-
-            DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-            DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-            doc = dBuilder.parse(in);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return doc;
+    private void loadLanguageVersion() {
+        Document doc = CurrentLanguageVersionProvider.loadXml();
+        processXml(doc);
     }
 
     private void processXml(Document doc) {
         if (doc != null) {
             doc.getDocumentElement().normalize();
-            NodeList buttons = doc.getElementsByTagName("Button");
+            Node menu = doc.getElementsByTagName("Menu").item(0);
 
-            for (int i = 0; i < buttons.getLength(); i++) {
+            for (int i = 0; i < menu.getChildNodes().getLength(); i++) {
 
-                var attr = buttons.item(i).getAttributes();
-                var id = attr.getNamedItem("id");
-                var text = buttons.item(i).getTextContent();
+                Node node = menu.getChildNodes().item(i);
+                String id = node.getNodeName();
+                var text = node.getTextContent();
 
-                if (id == null || text == null) continue;
-
-                if ("playGame".equals(id.getNodeValue())) {
-                    playGame.setText(text);
-                } else if ("leaderboard".equals(id.getNodeValue())) {
-                    leaderboard.setText(text);
-                } else if ("options".equals(id.getNodeValue())) {
-                    options.setText(text);
-                } else if ("aboutUsButton".equals(id.getNodeValue())) {
-                    aboutUsButton.setText(text);
-                } else if ("exitButton".equals(id.getNodeValue())) {
-                    exitButton.setText(text);
+                if (id == null || text == null) {
+                    continue;
                 }
 
-
+                if ("playGame".equals(id)) {
+                    playGame.setText(text);
+                } else if ("leaderboard".equals(id)) {
+                    leaderboard.setText(text);
+                } else if ("options".equals(id)) {
+                    options.setText(text);
+                } else if ("aboutUsButton".equals(id)) {
+                    aboutUsButton.setText(text);
+                } else if ("exitButton".equals(id)) {
+                    exitButton.setText(text);
+                }
             }
         }
     }
-
 
     @FXML
     private void switchToGame() throws IOException {

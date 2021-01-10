@@ -13,8 +13,8 @@
     <top>
         <HBox alignment="CENTER_RIGHT">
             <children>
-                <Button fx:id="secondaryButton" styleClass="menu__button"
-                        text="Menu" onAction="#switchToPrimary" />
+                <Button fx:id="goToMenu" styleClass="menu__button"
+                        text="Go to menu" onAction="#switchToPrimary" />
             </children>
             <padding>
                 <Insets topRightBottomLeft="5"/>

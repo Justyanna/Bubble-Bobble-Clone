@@ -1,13 +1,34 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <Language>
     <Menu>
-        <Button id="playGame">Zagraj</Button>
-        <Button id="leaderboard">Tablica wyników</Button>
-        <Button id="options">Opcje</Button>
-        <Button id="aboutUsButton">O zespole</Button>
-        <Button id="exitButton">Wyjście</Button>
+        <playGame>Zagraj</playGame>
+        <leaderboard>Tablica wynikow</leaderboard>
+        <options>Opcje</options>
+        <aboutUsButton>O zespole</aboutUsButton>
+        <exitButton>Wyjscie</exitButton>
     </Menu>
     <Options>
-        <Button id="boardEditor">Edytor planszy</Button>
+        <boardEditor>Edytor planszy</boardEditor>
+        <goToMenu>Przejdz do menu</goToMenu>
+        <languageVersion>Wersja jezykowa</languageVersion>
     </Options>
+    <Leaderboard>
+        <goToMenu>Przejdz do menu</goToMenu>
+    </Leaderboard>
+    <Game>
+        <goToMenu>Przejdz do menu</goToMenu>
+    </Game>
+    <AboutUs>
+        <goToMenu>Przejdz do menu</goToMenu>
+    </AboutUs>
+    <Editor>
+        <saveButton>Zapisz</saveButton>
+        <importButton>Wczytaj</importButton>
+        <resetButton>Wyczysc</resetButton>
+        <fullFrame>Pełna ramka</fullFrame>
+        <oneGapFrame>Jedno dziurowa ramka</oneGapFrame>
+        <twoGapFrame>Pusta na srodku</twoGapFrame>
+        <threeGapFrame>Pusta na koncach</threeGapFrame>
+        <goToMenu>Przejdz do menu</goToMenu>
+    </Editor>
 </Language>

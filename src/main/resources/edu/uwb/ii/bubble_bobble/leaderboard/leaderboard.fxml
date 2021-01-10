@@ -20,7 +20,7 @@
                   <Insets bottom="100.0" />
                </VBox.margin>
             </TableView>
-                <Button onAction="#switchToMenu" styleClass="button" text="Go to menu" prefHeight="70.0">
+                <Button fx:id="goToMenu" onAction="#switchToMenu" styleClass="button" text="Go to menu" prefHeight="70.0" >
                 </Button>
             </children>
         </VBox>

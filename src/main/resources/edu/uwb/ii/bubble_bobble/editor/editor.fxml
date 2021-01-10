@@ -50,7 +50,7 @@
             <right>
                 <HBox alignment="CENTER_RIGHT" styleClass="header">
                     <children>
-                        <Button fx:id="secondaryButton" onAction="#switchToOptions" prefHeight="30"
+                        <Button fx:id="goToMenu" onAction="#switchToOptions" prefHeight="30"
                                 styleClass="options__button" text="Go to options">
                             <HBox.margin>
                                 <Insets right="20.0"/>

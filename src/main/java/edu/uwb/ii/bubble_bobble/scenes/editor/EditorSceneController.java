@@ -1,10 +1,12 @@
 package edu.uwb.ii.bubble_bobble.scenes.editor;
 
 import edu.uwb.ii.bubble_bobble.App;
+import edu.uwb.ii.bubble_bobble.utils.CurrentLanguageVersionProvider;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Rectangle2D;
+import javafx.scene.control.Button;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.GridPane;
@@ -13,6 +15,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Screen;
 import org.w3c.dom.Document;
+import org.w3c.dom.Node;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -41,7 +44,15 @@ public class EditorSceneController {
     private static final int COLUMNS_CORNER = COLUMNS - 1;
     private static final String MAPS_PATH = System.getProperty("user.home") + "/AppData/Local/Bubble Bobble Clone/maps";
     @FXML
-    ToggleButton threeGapFrame;
+    Button goToMenu;
+    @FXML
+    private ToggleButton threeGapFrame;
+    @FXML
+    private Button saveButton;
+    @FXML
+    private Button importButton;
+    @FXML
+    private Button resetButton;
     private String currentSelected;
     private Map map;
     @FXML
@@ -72,6 +83,7 @@ public class EditorSceneController {
                 oldVal.setSelected(true);
             }
         });
+        loadLanguageVersion();
     }
 
     private void createRightPanel() {
@@ -388,5 +400,46 @@ public class EditorSceneController {
                 }
             }
         });
+    }
+
+    private void loadLanguageVersion() {
+        Document doc = CurrentLanguageVersionProvider.loadXml();
+        processXml(doc);
+    }
+
+    private void processXml(Document doc) {
+        if (doc != null) {
+            doc.getDocumentElement().normalize();
+            Node menu = doc.getElementsByTagName("Editor").item(0);
+
+            for (int i = 0; i < menu.getChildNodes().getLength(); i++) {
+
+                Node node = menu.getChildNodes().item(i);
+                String id = node.getNodeName();
+                var text = node.getTextContent();
+
+                if (id == null || text == null) {
+                    continue;
+                }
+
+                if ("saveButton".equals(id)) {
+                    saveButton.setText(text);
+                } else if ("importButton".equals(id)) {
+                    importButton.setText(text);
+                } else if ("resetButton".equals(id)) {
+                    resetButton.setText(text);
+                } else if ("goToMenu".equals(id)) {
+                    goToMenu.setText(text);
+                } else if ("fullFrame".equals(id)) {
+                    fullFrame.setText(text);
+                } else if ("oneGapFrame".equals(id)) {
+                    oneGapFrame.setText(text);
+                } else if ("twoGapFrame".equals(id)) {
+                    twoGapFrame.setText(text);
+                } else if ("threeGapFrame".equals(id)) {
+                    threeGapFrame.setText(text);
+                }
+            }
+        }
     }
 }
