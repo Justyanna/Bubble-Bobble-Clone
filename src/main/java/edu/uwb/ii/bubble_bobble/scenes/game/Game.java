@@ -115,6 +115,11 @@ public class Game {
     public void start() {
 
         _score = 0;
+
+        _quit = false;
+        _paused = false;
+        _started = true;
+
         this.start("StoryMode#1");
 
     }
