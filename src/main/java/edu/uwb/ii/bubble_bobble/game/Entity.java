@@ -85,6 +85,18 @@ abstract public class Entity {
         return _y + 1;
     }
 
+    public void setPosition(double x, double y) {
+        _x = x;
+        _y = y;
+    }
+
+    public void setAnimation(Animation animation) {
+
+        _animation.set_frames(animation.getFrames());
+        _animation.reset();
+
+    }
+
     public Entity spawn(double x, double y) {
 
         _x = x;

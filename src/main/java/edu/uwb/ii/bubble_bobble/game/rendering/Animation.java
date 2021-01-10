@@ -23,7 +23,7 @@ public class Animation {
 
         _frames = new int[nframes];
 
-        for(int i = 0; i < nframes; i++)
+        for (int i = 0; i < nframes; i++)
             _frames[i] = offset + i;
 
         _speed = speed;
@@ -31,6 +31,14 @@ public class Animation {
 
         reset();
 
+    }
+
+    public int[] getFrames() {
+        return _frames.clone();
+    }
+
+    public void set_frames(int[] frames) {
+        _frames = frames;
     }
 
     public Animation copy(int speed) {

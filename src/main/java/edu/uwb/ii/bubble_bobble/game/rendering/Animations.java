@@ -2,9 +2,19 @@ package edu.uwb.ii.bubble_bobble.game.rendering;
 
 public interface Animations {
 
-    Animation IDLE = new Animation(0, 1, 0);
-    Animation WALK = new Animation(1, 2, 4);
-    Animation RUN = new Animation(1, 2, 8);
+    Animation IDLE = new Animation(0, 2, 4);
+    Animation WALK = new Animation(2, 2, 4);
+    Animation ANGRY = new Animation(4, 2, 6);
+    Animation CAPTURED = new Animation(6, 2, 4);
+    Animation HATCH = new Animation(8, 2, 6);
+    Animation DEAD = new Animation(10, 2, 2);
+
+    Animation SHOOT = new Animation(12, 2, 4);
+    Animation FALL = SHOOT.copy();
+    Animation ASCEND = WALK.copy();
+    Animation DESCEND = SHOOT.copy();
+    Animation TURN = SHOOT.copy();
+    Animation CRY = SHOOT.copy();
 
     Animation TMP_PLAYER = new Animation(8, 2, 4);
     Animation TMP_ENEMY = new Animation(16, 2, 4);

@@ -8,7 +8,7 @@ abstract public class Enemy extends Entity {
 
     public Enemy(SpriteSheet gfx, int w, int h, double speed, int x, int y, int direction) {
 
-        super(gfx, Animations.TMP_ENEMY, w, h);
+        super(gfx, Animations.WALK, w, h);
         _speed = speed / 60.0;
         spawn(x + (_direction - 1) / 2.0, y);
 

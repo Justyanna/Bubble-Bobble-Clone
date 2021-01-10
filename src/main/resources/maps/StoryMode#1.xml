@@ -149,13 +149,13 @@
         <Wall x="31" y="25"/>
     </Walls>
     <Players>
-        <Player facing="1" x="2" y="13"/>
+        <Player facing="1" x="1" y="24"/>
     </Players>
     <Enemies>
-        <Errant facing="1" x="20" y="23"/>
-        <Errant facing="1" x="4" y="13"/>
-        <Errant facing="1" x="3" y="3"/>
-
+        <Errant facing="1" x="1" y="6"/>
+        <Nimrod facing="1" x="30" y="6"/>
+        <Wisp facing="-1" x="1" y="18"/>
+        <Specter facing="-1" x="30" y="18"/>
     </Enemies>
     <Rules/>
 </Map>

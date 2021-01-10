@@ -5,6 +5,7 @@ import edu.uwb.ii.bubble_bobble.game.entity.Projectile;
 import edu.uwb.ii.bubble_bobble.game.rendering.Animations;
 import edu.uwb.ii.bubble_bobble.game.rendering.ResourceManager;
 import edu.uwb.ii.bubble_bobble.scenes.game.Game;
+import javafx.scene.canvas.GraphicsContext;
 
 public class Bubble extends Projectile {
 
@@ -31,6 +32,7 @@ public class Bubble extends Projectile {
     public void capture(Enemy enemy) {
 
         _captive = enemy;
+        _captive.setAnimation(Animations.CAPTURED);
 
     }
 
@@ -39,7 +41,7 @@ public class Bubble extends Projectile {
 
         if(_active && (_traveled >= _max_distance || _dx == 0 || _captive != null)) {
 
-            if(_captive == null) _animation = Animations.TMP_BUBBLE_FLY;
+            if (_captive == null) _animation = Animations.TMP_BUBBLE_FLY;
             else _animation = Animations.TMP_ENEMY_CAPTURED;
 
             _dx = 0;
@@ -48,7 +50,19 @@ public class Bubble extends Projectile {
 
         }
 
+        if (!isEmpty()) {
+            _captive.setPosition(_x, _y);
+        }
+
         _traveled += Math.sqrt(_dx * _dx + _dy * _dy);
+
+    }
+
+    @Override
+    public void draw(GraphicsContext gc, int scale) {
+
+        if (isEmpty()) super.draw(gc, scale);
+        else _captive.draw(gc, scale);
 
     }
 

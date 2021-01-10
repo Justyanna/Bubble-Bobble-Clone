@@ -13,7 +13,7 @@ public class Specter extends Enemy {
 
     public Specter(int x, int y, int direction, Map level) {
 
-        super(ResourceManager.get().placeholder, 2, 2, 6.2, x, y, direction);
+        super(ResourceManager.get().specter, 2, 2, 6.2, x, y, direction);
         _level = level;
         _jumped = false;
         _up = 1;

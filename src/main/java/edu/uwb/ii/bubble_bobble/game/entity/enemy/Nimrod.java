@@ -12,7 +12,7 @@ public class Nimrod extends Enemy {
 
     public Nimrod (int x, int y, int direction, Map level) {
 
-        super(ResourceManager.get().placeholder, 2, 2, 6.0, x, y, direction);
+        super(ResourceManager.get().nimrod, 2, 2, 6.0, x, y, direction);
         _level = level;
         _jumped = false;
     }

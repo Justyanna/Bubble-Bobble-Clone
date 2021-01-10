@@ -12,7 +12,7 @@ public class Wisp extends Enemy {
 
     public Wisp (int x, int y, int direction, Map level) {
 
-        super(ResourceManager.get().placeholder, 2, 2, 6.0, x, y, direction);
+        super(ResourceManager.get().wisp, 2, 2, 6.0, x, y, direction);
         _level = level;
         _jumped = false;
     }

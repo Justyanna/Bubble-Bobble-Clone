@@ -20,7 +20,7 @@ public class Errant extends Enemy {
 
     public Errant(int x, int y, int direction, Map level) {
 
-        super(ResourceManager.get().placeholder, 2, 2, 5.0, x, y, direction);
+        super(ResourceManager.get().errant, 2, 2, 5.0, x, y, direction);
         _level = level;
         _jumped = false;
         _probability = 0.40;
