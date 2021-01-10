@@ -127,8 +127,8 @@ public class GameSceneController {
             }
         });
         gameWindow.getChildren().add(confirm);
-        gameWindow.setMargin(name, new Insets(current_i * 2 * 100, 0, 0, 0));
-        gameWindow.setMargin(confirm, new Insets(current_i * 2 * 100, 0, 0, 260));
+        gameWindow.setMargin(name, new Insets(current_i * 100, 0, 0, 0));
+        gameWindow.setMargin(confirm, new Insets(current_i  * 100, 0, 0, 260));
     }
 
     private void displayIfNotSavable(int score, DateFormat formatter, Collection<LeaderBoardData> data) {
@@ -153,8 +153,8 @@ public class GameSceneController {
     private void addButtons(int i) {
         gameWindow.getChildren().add(saveScore);
         gameWindow.getChildren().add(menuAfterGame);
-        gameWindow.setMargin(saveScore, new Insets(i * 3 * 100, 200, 0, 0));
-        gameWindow.setMargin(menuAfterGame, new Insets(i * 3 * 100, 0, 0, 200));
+        gameWindow.setMargin(saveScore, new Insets(i * 2 * 100, 200, 0, 0));
+        gameWindow.setMargin(menuAfterGame, new Insets(i * 2 * 100, 0, 0, 200));
     }
 
     private int fillWithScoreLessThanYou(int score, Collection<LeaderBoardData> data, int i) {
