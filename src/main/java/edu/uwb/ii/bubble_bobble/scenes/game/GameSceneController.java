@@ -112,7 +112,7 @@ public class GameSceneController {
         name.getStyleClass().add("name-input");
         name.setText("Player 1");
         name.setMaxWidth(200);
-        gameWindow.getChildren().add(name);
+
         Button confirm = new Button("OK");
         confirm.getStyleClass().add("button-save");
         confirm.setOnAction(actionEvent -> {
@@ -126,9 +126,13 @@ public class GameSceneController {
                 e.printStackTrace();
             }
         });
-        gameWindow.getChildren().add(confirm);
+
+        if (!(gameWindow.getChildren().contains(name) || gameWindow.getChildren().contains(confirm))) {
+            gameWindow.getChildren().add(name);
+            gameWindow.getChildren().add(confirm);
+        }
         gameWindow.setMargin(name, new Insets(current_i * 100, 0, 0, 0));
-        gameWindow.setMargin(confirm, new Insets(current_i  * 100, 0, 0, 260));
+        gameWindow.setMargin(confirm, new Insets(current_i * 100, 0, 0, 260));
     }
 
     private void displayIfNotSavable(int score, DateFormat formatter, Collection<LeaderBoardData> data) {
