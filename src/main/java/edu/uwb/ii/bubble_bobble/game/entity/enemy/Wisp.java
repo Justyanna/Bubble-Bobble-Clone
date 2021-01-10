@@ -1,14 +1,15 @@
 package edu.uwb.ii.bubble_bobble.game.entity.enemy;
 
 import edu.uwb.ii.bubble_bobble.game.entity.Enemy;
+import edu.uwb.ii.bubble_bobble.game.rendering.Animations;
 import edu.uwb.ii.bubble_bobble.game.rendering.ResourceManager;
 import edu.uwb.ii.bubble_bobble.scenes.game.Game;
 import edu.uwb.ii.bubble_bobble.scenes.game.Map;
 
 public class Wisp extends Enemy {
 
-    private boolean _jumped;
     private Map _level;
+    private boolean _jumped;
 
     public Wisp (int x, int y, int direction, Map level) {
 
@@ -20,16 +21,32 @@ public class Wisp extends Enemy {
     @Override
     public void movementRules() {
 
-        _dx = _direction * _speed;
+        if (_jump <= 0 && _dy < 0) {
+            setAnimation(Animations.DESCEND);
+        }
 
-        boolean wall_ahead = _grounded && _level.check(_x + (1 + _direction) / 2.0 * _width + _dx, _y);
+        _dx = _direction * _speed;
+        _dy = Game.GRAVITY;
+
+        if (_jump > 0) {
+            double jh = 8.0 / 60.0;
+            _dy = _jump * _jump_height < jh ? -_jump * _jump_height : -jh;
+            _jump -= jh / _jump_height;
+        }
+
+        boolean wall_ahead = _level.check(_x + front() + _dx, _y)
+                && (_level.check(front() + _dx, _y - 1) || _level.check(front() + _dx, _y + 1));
 
         if (wall_ahead) {
             _direction *= -1;
         }
 
-        _dx = _grounded ? _direction * _speed : 0.0;
-        _dy = Game.GRAVITY;
+        if (_grounded && _jump <= 0.0) {
+            _jump = 1.0;
+            setAnimation(Animations.ASCEND);
+        }
+
+        _dx = _direction * _speed;
 
     }
 

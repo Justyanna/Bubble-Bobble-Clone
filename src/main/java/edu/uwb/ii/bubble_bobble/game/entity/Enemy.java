@@ -9,7 +9,9 @@ abstract public class Enemy extends Entity {
     public Enemy(SpriteSheet gfx, int w, int h, double speed, int x, int y, int direction) {
 
         super(gfx, Animations.WALK, w, h);
+
         _speed = speed / 60.0;
+        _direction = direction;
         spawn(x + (_direction - 1) / 2.0, y);
 
     }

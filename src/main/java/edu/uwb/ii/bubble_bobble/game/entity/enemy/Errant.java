@@ -1,6 +1,7 @@
 package edu.uwb.ii.bubble_bobble.game.entity.enemy;
 
 import edu.uwb.ii.bubble_bobble.game.entity.Enemy;
+import edu.uwb.ii.bubble_bobble.game.rendering.Animations;
 import edu.uwb.ii.bubble_bobble.game.rendering.ResourceManager;
 import edu.uwb.ii.bubble_bobble.scenes.game.Game;
 import edu.uwb.ii.bubble_bobble.scenes.game.Map;
@@ -13,14 +14,13 @@ public class Errant extends Enemy {
     private Map _level;
     private double _probability;
     private Random _roll;
-    private boolean _stop;
     private double _fallen;
     private int _steps;
     private double _sleep;
 
     public Errant(int x, int y, int direction, Map level) {
 
-        super(ResourceManager.get().errant, 2, 2, 5.0, x, y, direction);
+        super(ResourceManager.get().errant, 2, 2, 6.0, x, y, direction);
         _level = level;
         _jumped = false;
         _probability = 0.40;
@@ -40,11 +40,18 @@ public class Errant extends Enemy {
             _direction *= -1;
         }
 
-        if (_steps == 0) {
-            _stop = _roll.nextDouble() < _probability;
-            _fallen = _stop ? 1 : 0;
+        if (_steps <= 0.0) {
+            if (_roll.nextDouble() < _probability) {
+                _fallen = 1.0;
+                setAnimation(Animations.FALL);
+            }
             _steps = 60 * 10;
         }
+
+        if (_fallen > 0.0 && _fallen < 1.0 / _sleep) {
+            setAnimation(Animations.WALK);
+        }
+
         _fallen -= 1.0 / _sleep;
 
         _dx = _fallen > 0 ? 0.0 : _grounded ? _direction * _speed : 0.0;

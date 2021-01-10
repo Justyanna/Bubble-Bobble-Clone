@@ -62,7 +62,7 @@ public class GameSceneController {
 
             board.requestFocus();
 
-            _game = new Game();
+            _game = Game.getInstance();
             _game.start();
             _game.update(gc, cellSize());
 

@@ -153,9 +153,9 @@
     </Players>
     <Enemies>
         <Errant facing="1" x="1" y="6"/>
-        <Nimrod facing="1" x="30" y="6"/>
-        <Wisp facing="-1" x="1" y="18"/>
-        <Specter facing="-1" x="30" y="18"/>
+        <Errant facing="-1" x="30" y="6"/>
+        <Errant facing="1" x="1" y="18"/>
+        <Errant facing="-1" x="30" y="18"/>
     </Enemies>
     <Rules/>
 </Map>

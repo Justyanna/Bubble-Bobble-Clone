@@ -5,6 +5,7 @@ import edu.uwb.ii.bubble_bobble.game.entity.Player;
 import edu.uwb.ii.bubble_bobble.game.entity.Projectile;
 import edu.uwb.ii.bubble_bobble.game.entity.projectile.Bubble;
 import edu.uwb.ii.bubble_bobble.game.rendering.ResourceManager;
+import edu.uwb.ii.bubble_bobble.game.utils.Position;
 import javafx.scene.canvas.GraphicsContext;
 
 import java.util.ArrayList;
@@ -15,6 +16,18 @@ public class Game {
     public final static double FRAME_RATE = 60.0;
     public final static double GRAVITY = 10.0 / Game.FRAME_RATE;
 
+    private static Game __instance__;
+
+    public static Game getInstance() {
+
+        if (__instance__ == null) {
+            __instance__ = new Game();
+        }
+
+        return __instance__;
+
+    }
+
     private String _level_name;
     private Map _level;
 
@@ -23,13 +36,13 @@ public class Game {
     private Player _player;
     private ArrayList<Enemy> _enemies;
     private ArrayList<Projectile> _bubbles;
-    private ArrayList<Projectile> _projectiles;
+    private ArrayList<Projectile> _hostile_projectiles;
 
     private boolean _started;
     private boolean _paused;
     private boolean _quit;
 
-    public Game() {
+    private Game() {
 
         _started = false;
         _paused = false;
@@ -37,8 +50,18 @@ public class Game {
 
     }
 
+    public ArrayList<Projectile> get_hostile_projectiles() {
+        return _hostile_projectiles;
+    }
+
     public boolean quit() {
         return _quit;
+    }
+
+    public Position getPlayerPosition() {
+
+        return new Position(_player.get_x(), _player.get_y());
+
     }
 
     public void start(String level) {
@@ -49,13 +72,15 @@ public class Game {
 
             _enemies = new ArrayList<>();
             _bubbles = new ArrayList<>();
-            _projectiles = new ArrayList<>();
+            _hostile_projectiles = new ArrayList<>();
 
             String[] player_data = _level.get_spawn_points().get(0).split(" ");
 
             int x = Integer.parseInt(player_data[0]);
             int y = Integer.parseInt(player_data[1]);
             int direction = Integer.parseInt(player_data[2]);
+
+            x = direction < 0 ? x - 1 : x;
 
             _player = new Player(x, y, direction, _bubbles);
 
@@ -128,6 +153,20 @@ public class Game {
                 }
             }
 
+            for (Iterator<Projectile> it = _hostile_projectiles.iterator(); it.hasNext(); ) {
+
+                Projectile p = it.next();
+
+                if (p.collide(_player)) {
+                    _quit = true;
+                    return;
+                }
+
+                if (p.isWasted())
+                    it.remove();
+
+            }
+
 //            -- moving
 
             for (Enemy e : _enemies)
@@ -136,7 +175,7 @@ public class Game {
 
             for (Projectile b : _bubbles)
                 b.move(_level);
-            for (Projectile p : _projectiles)
+            for (Projectile p : _hostile_projectiles)
                 p.move(_level);
 
         }
@@ -151,7 +190,7 @@ public class Game {
 
         for (Projectile b : _bubbles)
             b.draw(gc, scale);
-        for (Projectile p : _projectiles)
+        for (Projectile p : _hostile_projectiles)
             p.draw(gc, scale);
 
 //        -- win condition

@@ -32,6 +32,7 @@ public class Bubble extends Projectile {
     public void capture(Enemy enemy) {
 
         _captive = enemy;
+        setPosition(enemy.get_x(), enemy.get_y());
         _captive.setAnimation(Animations.CAPTURED);
 
     }
@@ -41,8 +42,7 @@ public class Bubble extends Projectile {
 
         if(_active && (_traveled >= _max_distance || _dx == 0 || _captive != null)) {
 
-            if (_captive == null) _animation = Animations.TMP_BUBBLE_FLY;
-            else _animation = Animations.TMP_ENEMY_CAPTURED;
+            if (_captive == null) setAnimation(Animations.TMP_BUBBLE_FLY);
 
             _dx = 0;
             _dy = -Game.GRAVITY / 4.0;
