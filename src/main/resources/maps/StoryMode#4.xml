@@ -111,10 +111,10 @@
         <Player facing="-1" x="29" y="24"/>
     </Players>
     <Enemies>
-        <Specter facing="1" x="7" y="5"/>
-        <Specter facing="1" x="11" y="5"/>
-        <Specter facing="-1" x="20" y="5"/>
-        <Specter facing="-1" x="24" y="5"/>
+        <Errant facing="1" x="7" y="5"/>
+        <Errant facing="1" x="11" y="5"/>
+        <Errant facing="-1" x="20" y="5"/>
+        <Errant facing="-1" x="24" y="5"/>
         <Specter facing="1" x="6" y="13"/>
         <Specter facing="-1" x="25" y="13"/>
         <Specter facing="1" x="6" y="18"/>

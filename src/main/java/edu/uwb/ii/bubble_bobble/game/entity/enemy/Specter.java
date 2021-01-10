@@ -1,6 +1,7 @@
 package edu.uwb.ii.bubble_bobble.game.entity.enemy;
 
 import edu.uwb.ii.bubble_bobble.game.entity.Enemy;
+import edu.uwb.ii.bubble_bobble.game.rendering.Animations;
 import edu.uwb.ii.bubble_bobble.game.rendering.ResourceManager;
 import edu.uwb.ii.bubble_bobble.scenes.game.Game;
 import edu.uwb.ii.bubble_bobble.scenes.game.Map;
@@ -16,7 +17,7 @@ public class Specter extends Enemy {
         super(ResourceManager.get().specter, 2, 2, 6.2, x, y, direction);
         _level = level;
         _jumped = false;
-        _up = 1;
+        _up = -1;
     }
 
     @Override
@@ -33,6 +34,7 @@ public class Specter extends Enemy {
 
         if (wall_uphead) {
             _up *= -1;
+            setAnimation(_up < 0 ? Animations.ASCEND : Animations.DESCEND);
         }
 
         _dx = _grounded ? _direction * _speed : _direction * _speed;
