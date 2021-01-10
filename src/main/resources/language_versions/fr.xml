@@ -2,21 +2,21 @@
 <Language>
     <Menu>
         <playGame>Jouer</playGame>
-        <leaderboard>Scores eleves</leaderboard>
+        <leaderboard>Scores élevés</leaderboard>
         <options>Options</options>
         <aboutUsButton>A propos du jeu</aboutUsButton>
         <exitButton>Quitter</exitButton>
     </Menu>
     <Options>
-        <boardEditor>Editeur de carte</boardEditor>
+        <boardEditor>Éditeur de carte</boardEditor>
         <goToMenu>Menu principal</goToMenu>
-        <languageVersion>Linguistique version</languageVersion>
+        <languageVersion>Langue du jeu</languageVersion>
     </Options>
     <Leaderboard>
-        <goToMenu>Aller au menu</goToMenu>
+        <goToMenu>Menu</goToMenu>
     </Leaderboard>
     <Game>
-        <goToMenu>Aller au menu</goToMenu>
+        <goToMenu>Menu</goToMenu>
         <saveScore>Sauve le but</saveScore>
         <menuAfterGame>Menu</menuAfterGame>
     </Game>

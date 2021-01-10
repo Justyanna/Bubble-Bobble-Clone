@@ -5,15 +5,15 @@
         <leaderboard>Najlepsze wyniki</leaderboard>
         <options>Opcje</options>
         <aboutUsButton>O grze</aboutUsButton>
-        <exitButton>Wyjscie</exitButton>
+        <exitButton>Wyjście</exitButton>
     </Menu>
     <Options>
         <boardEditor>Edytor map</boardEditor>
-        <goToMenu>Menu glowne</goToMenu>
-        <languageVersion>Jezyk gry</languageVersion>
+        <goToMenu>Menu główne</goToMenu>
+        <languageVersion>Język gry</languageVersion>
     </Options>
     <Leaderboard>
-        <goToMenu>Przejdz do menu</goToMenu>
+        <goToMenu>Menu</goToMenu>
     </Leaderboard>
     <Game>
         <goToMenu>Menu</goToMenu>
@@ -25,10 +25,10 @@
     </AboutUs>
     <Editor>
         <saveButton>Zapisz</saveButton>
-        <importButton>Wczytaj mape</importButton>
-        <resetButton>Wyczysc</resetButton>
+        <importButton>Wczytaj mapę</importButton>
+        <resetButton>Wyczyść</resetButton>
         <fullFrame>Pełna ramka</fullFrame>
-        <oneGapFrame>Jeden otwor</oneGapFrame>
+        <oneGapFrame>Jeden otwór</oneGapFrame>
         <twoGapFrame>Dwa otwory</twoGapFrame>
         <threeGapFrame>Otwory na brzegach</threeGapFrame>
         <goToMenu>Menu</goToMenu>
