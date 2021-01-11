@@ -18,7 +18,7 @@ Compiling the source code requires following tools:
 2. **JavaFX 11**
 3. **Maven**
 
-It is also necessary to set `PATH_TO_FX` system variable containing the absolute path to the JavaFX `lib/` directory, as **Maven** uses it's value when attaching dependencies to the *.jar*.
+It is also necessary to set `PATH_TO_FX` system variable containing the absolute path to the JavaFX `lib/` directory, as **Maven** uses its value when attaching dependencies to the *.jar*.
 
 ### Installation
 
