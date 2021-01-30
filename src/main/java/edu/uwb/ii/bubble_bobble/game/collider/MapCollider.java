@@ -47,9 +47,14 @@ public class MapCollider implements Collider
                             break;
                         }
                     }
-                    boolean wall_over = _host.check(e.getFront(), e.getY() - 1.0);
-                    boolean wall_ahead = _host.check(e.getFront(), e.getY());
-                    boolean wall_below = _host.check(e.getFront(), e.getY() - 1.0);
+
+                    boolean wall_over = _host.check(e.getFront(), e.getY() - 1.0) &&
+                                        !_host.check(e.getFront() - vel.x, e.getY() - 1.0);
+                    boolean wall_ahead = _host.check(e.getFront(), e.getY()) &&
+                                         !_host.check(e.getFront() - vel.x, e.getY());
+                    boolean wall_below = _host.check(e.getFront(), e.getY() + 1.0) &&
+                                         !_host.check(e.getFront() - vel.x, e.getY() + 1.0);
+
                     if(vel.x != 0 && wall_ahead && (wall_over || wall_below))
                     {
                         ec.right = e.get_direction() == 1;

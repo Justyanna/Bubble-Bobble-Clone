@@ -146,8 +146,14 @@ abstract public class Entity
                 _grounded = false;
             }
 
-            if(_collider.left || _collider.right)
+            if(_collider.left)
             {
+                _position.x = Math.ceil(_position.x);
+                _velocity.x = 0.0;
+            }
+            if(_collider.right)
+            {
+                _position.x = Math.floor(_position.x);
                 _velocity.x = 0.0;
             }
 
