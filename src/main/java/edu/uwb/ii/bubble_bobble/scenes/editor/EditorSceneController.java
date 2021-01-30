@@ -92,6 +92,7 @@ public class EditorSceneController {
         initImportComboBox();
 
         loadLanguageVersion();
+        resetBoard();
     }
 
     private void initImportComboBox() {
@@ -114,6 +115,9 @@ public class EditorSceneController {
                 mapName.getStyleClass().clear();
                 mapName.getStyleClass().add("map_name_blank");
             } else {
+                if (newValue.length() > 12) {
+                    mapName.setText(oldValue);
+                }
                 mapName.getStyleClass().clear();
                 mapName.getStyleClass().add("map_name");
             }

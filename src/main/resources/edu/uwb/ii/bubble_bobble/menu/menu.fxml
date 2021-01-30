@@ -16,6 +16,12 @@
                     </VBox.margin>
                 </Button>
 
+                <Button fx:id="userLevels" mnemonicParsing="false" onAction="#switchToLevelSelect" prefHeight="50.0" prefWidth="750.0"  styleClass="button" >
+                    <VBox.margin>
+                        <Insets bottom="10.0" />
+                    </VBox.margin>
+                </Button>
+
                 <Button fx:id="leaderboard" mnemonicParsing="false" onAction="#switchToLeaderboardAbout" prefHeight="50.0" prefWidth="750.0" styleClass="button">
                     <VBox.margin>
                         <Insets bottom="10.0" />

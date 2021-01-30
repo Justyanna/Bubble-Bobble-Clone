@@ -1,0 +1,30 @@
+.root
+{
+    -fx-background-color: black;
+}
+
+.button-menu,
+.button-play{
+   -fx-background-color: black;
+   -fx-font-size: 16px;
+  -fx-text-fill: "#31ff0d";
+  -fx-font-family: "Barcade Brawl";
+}
+
+.button-delete{
+   -fx-background-color: black;
+   -fx-font-size: 16px;
+  -fx-text-fill: "#ff1818";
+  -fx-font-family: "Barcade Brawl";
+}
+
+
+.button:hover{
+   -fx-font-size: 20px;
+}
+
+.label{
+  -fx-font-size: 16px;
+  -fx-text-fill: "#31ff0d";
+  -fx-font-family: "Barcade Brawl";
+}

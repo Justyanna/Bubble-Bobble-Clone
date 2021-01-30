@@ -18,6 +18,8 @@ public class MenuSceneController {
     public Button options;
     public Button aboutUsButton;
     public Button exitButton;
+    @FXML
+    Button userLevels;
 
     public void initialize() {
         loadLanguageVersion();
@@ -53,6 +55,8 @@ public class MenuSceneController {
                     aboutUsButton.setText(text);
                 } else if ("exitButton".equals(id)) {
                     exitButton.setText(text);
+                } else if ("userLevels".equals(id)) {
+                    userLevels.setText(text);
                 }
             }
         }
@@ -80,5 +84,10 @@ public class MenuSceneController {
 
     public void switchToAboutUs(ActionEvent actionEvent) throws IOException {
         App.setRoot("about_us");
+    }
+
+    @FXML
+    void switchToLevelSelect(ActionEvent actionEvent) throws IOException {
+        App.setRoot("user_levels");
     }
 }

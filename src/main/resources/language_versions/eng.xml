@@ -3,6 +3,7 @@
     <Menu>
         <playGame>Play</playGame>
         <leaderboard>High-scores</leaderboard>
+        <userLevels>Select level</userLevels>
         <options>Options</options>
         <aboutUsButton>About</aboutUsButton>
         <exitButton>Exit</exitButton>
@@ -33,4 +34,9 @@
         <threeGapFrame>Two gaps edges</threeGapFrame>
         <goToMenu>Menu</goToMenu>
     </Editor>
+    <UserLevels>
+        <goToMenu>Menu</goToMenu>
+        <next>Next</next>
+        <previous>Prev</previous>
+    </UserLevels>
 </Language>

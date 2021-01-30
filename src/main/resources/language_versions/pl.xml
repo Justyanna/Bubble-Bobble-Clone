@@ -3,6 +3,7 @@
     <Menu>
         <playGame>Zagraj</playGame>
         <leaderboard>Najlepsze wyniki</leaderboard>
+        <userLevels>Wybór poziomu</userLevels>
         <options>Opcje</options>
         <aboutUsButton>O grze</aboutUsButton>
         <exitButton>Wyjście</exitButton>
@@ -33,4 +34,9 @@
         <threeGapFrame>Otwory na brzegach</threeGapFrame>
         <goToMenu>Menu</goToMenu>
     </Editor>
+    <UserLevels>
+        <goToMenu>Menu</goToMenu>
+        <next>Następna</next>
+        <previous>Poprzednia</previous>
+    </UserLevels>
 </Language>
