@@ -139,8 +139,15 @@ public class Game {
                         i++;
                     }
                 } else if (b.collide(_player)) {
-                    _score += b.isEmpty() ? 10 : 150;
-                    it.remove();
+                    if(_player.get_controls().jump && _player.getBottom() < b.getY())
+                    {
+                        _player.jump();
+                    }
+                    else
+                    {
+                        _score += b.isEmpty() ? 10 : 150;
+                        it.remove();
+                    }
                 } else if (b.isWasted()) {
                     if (b.isWasted()) {
                         Enemy e = b.get_captive();

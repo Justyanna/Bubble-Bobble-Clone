@@ -15,10 +15,11 @@ public class Player extends Entity
 {
 
     private final Inputs _controls;
+    private boolean _moved;
 
     public Player(double x, double y, int direction, ArrayList<Projectile> projectile_output)
     {
-        super(ResourceManager.get().placeholder, Animations.TMP_PLAYER, 2, 2, CollisionMode.REGULAR);
+        super(ResourceManager.get().player, Animations.IDLE, 2, 2, CollisionMode.REGULAR);
 
         _controls = App.get_inputs();
         _projectiles = projectile_output;
@@ -26,9 +27,19 @@ public class Player extends Entity
         _speed = 7.0 / 60.0;
         _fire_rate = 1.5;
 
+        _animation.set_speed(6);
+
         _direction = direction;
+        _moved = false;
 
         spawn(x + (_direction - 1) / 2.0, y);
+    }
+
+    public Inputs get_controls() { return _controls; }
+
+    public void jump()
+    {
+        _jump = 1.0;
     }
 
     @Override
@@ -58,9 +69,20 @@ public class Player extends Entity
             _velocity.x += _speed;
         }
 
+        if(_moved && !_controls.left && !_controls.right)
+        {
+            setAnimation(Animations.IDLE);
+        }
+        else if(!_moved && (_controls.left || _controls.right))
+        {
+            setAnimation(Animations.WALK);
+        }
+
+        _moved = _controls.left || _controls.right;
+
         if(_grounded && _controls.jump)
         {
-            _jump = 1.0;
+            jump();
         }
 
         if(_controls.action && _cooldown <= 0.0)
