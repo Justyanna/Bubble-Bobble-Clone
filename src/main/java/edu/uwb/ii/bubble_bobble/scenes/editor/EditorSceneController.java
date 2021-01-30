@@ -251,7 +251,21 @@ public class EditorSceneController {
         if (!(mapName.getText().isEmpty() || mapName.getText().isBlank() ||
                 Arrays.stream(listOfFiles).anyMatch(x -> x.getName().equals(mapName.getText() + ".xml")))) {
 
+            TransformerFactory transformerFactory = TransformerFactory.newInstance();
+            Transformer transformer;
+            try {
+                File file = new File(MAPS_PATH + "/" + mapName.getText() + ".xml");
+                transformer = transformerFactory.newTransformer();
+                DOMSource domSource = new DOMSource(map.generateFxml());
+                StreamResult streamResult = new StreamResult(file);
+                transformer.transform(domSource, streamResult);
+            } catch (ParserConfigurationException | TransformerException | NullPointerException e) {
+                e.printStackTrace();
+            }
+            switchToOptions();
+        }
 
+        if (mapName.getText().equals(importButton.getValue().toString())) {
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
             Transformer transformer;
             try {
@@ -269,11 +283,13 @@ public class EditorSceneController {
 
     @FXML
     void importMap() {
-        if (importButton.getValue() != null ) {
+        if (importButton.getValue() != null) {
             resetBoard();
             try {
                 File file = new File(MAPS_PATH + "/" + importButton.getValue().toString() + ".xml");
-
+                mapName.setText(importButton.getValue().toString());
+                mapName.getStyleClass().clear();
+                mapName.getStyleClass().add("map_name");
                 DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
                 DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
                 Document doc = dBuilder.parse(file);
