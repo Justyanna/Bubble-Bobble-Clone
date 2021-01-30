@@ -3,8 +3,7 @@
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<BorderPane fx:id="root" styleClass="root" stylesheets="@./editor.css" xmlns="http://javafx.com/javafx/11.0.1"
-            xmlns:fx="http://javafx.com/fxml/1"
+<BorderPane fx:id="root" styleClass="root" stylesheets="@./editor.css"  xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="edu.uwb.ii.bubble_bobble.scenes.editor.EditorSceneController">
     <fx:define>
         <ToggleGroup fx:id="modes"/>
@@ -30,12 +29,12 @@
                             <Insets topRightBottomLeft="10"/>
                         </padding>
                     </HBox>
-                    <HBox alignment="CENTER_LEFT" styleClass="header">
+                    <HBox fx:id="mapNameHbox" alignment="CENTER_LEFT" styleClass="header">
                         <children>
                             <Label fx:id="mapNameLabel" prefHeight="30" prefWidth="100" styleClass="map_name_label">Map
                                 name:
                             </Label>
-                            <TextField fx:id="mapName" prefHeight="30" prefWidth="100" styleClass="map_name">name
+                            <TextField fx:id="mapName" prefHeight="30" prefWidth="100" styleClass="map_name">
                             </TextField>
                         </children>
                         <padding>

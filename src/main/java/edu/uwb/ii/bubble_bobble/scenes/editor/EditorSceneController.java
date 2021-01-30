@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Screen;
@@ -46,6 +47,8 @@ public class EditorSceneController {
     TextField mapName;
     File mapDir;
     File[] listOfFiles;
+    @FXML
+    HBox mapNameHbox;
     @FXML
     private ToggleButton threeGapFrame;
     @FXML
@@ -89,7 +92,7 @@ public class EditorSceneController {
         listOfFiles = mapDir.listFiles();
 
         mapName.getStyleClass().clear();
-        mapName.getStyleClass().add("map_name");
+        mapName.getStyleClass().add("map_name_blank");
         mapName.textProperty().addListener((ob, oldValue, newValue) -> {
             if (mapName.getText().isEmpty() || mapName.getText().isBlank() ||
                     Arrays.stream(listOfFiles).anyMatch(x -> x.getName().equals(mapName.getText() + ".xml"))) {
@@ -240,6 +243,7 @@ public class EditorSceneController {
         if (!(mapName.getText().isEmpty() || mapName.getText().isBlank() ||
                 Arrays.stream(listOfFiles).anyMatch(x -> x.getName().equals(mapName.getText() + ".xml")))) {
 
+
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
             Transformer transformer;
             try {
@@ -257,15 +261,17 @@ public class EditorSceneController {
 
     @FXML
     void importMap() {
-        if (importButton.getValue() != null || importButton.getValue() != "Import") {
+        if (importButton.getValue() != null ) {
             resetBoard();
             try {
-                File file = new File(MAPS_PATH + "/" + importButton.getValue() + ".xml");
+                File file = new File(MAPS_PATH + "/" + importButton.getValue().toString() + ".xml");
+
                 DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
                 DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
                 Document doc = dBuilder.parse(file);
                 doc.getDocumentElement().normalize();
                 map.importFormDocument(doc);
+
                 updateBoard();
             } catch (ParserConfigurationException | IOException | SAXException | IllegalArgumentException e) {
                 e.printStackTrace();
@@ -292,7 +298,7 @@ public class EditorSceneController {
         try {
             Files.createDirectories(Path.of(MAPS_PATH));
         } catch (IOException e) {
-            LOGGER.info("Maps directory already exist");
+//            LOGGER.info("Maps directory already exist");
         }
     }
 
