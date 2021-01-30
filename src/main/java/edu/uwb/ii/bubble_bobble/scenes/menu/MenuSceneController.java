@@ -64,6 +64,7 @@ public class MenuSceneController {
 
     @FXML
     private void switchToGame() throws IOException {
+        App.customMapName = new String();
         App.setRoot("game");
     }
 

@@ -6,7 +6,6 @@ import edu.uwb.ii.bubble_bobble.utils.CurrentLanguageVersionProvider;
 import edu.uwb.ii.bubble_bobble.utils.LeaderboardFileManager;
 import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.canvas.Canvas;
@@ -91,22 +90,33 @@ public class GameSceneController {
     }
 
     private void handleQuit() {
-        if (!(gameWindow.getChildren().contains(saveScore) || gameWindow.getChildren().contains(menuAfterGame))) {
+        if (App.customMapName.isEmpty()) {
+            if (!(gameWindow.getChildren().contains(saveScore) || gameWindow.getChildren().contains(menuAfterGame))) {
 
-            int score = _game.get_score();
-            addStyleClasses();
-            addMenuAfterGameOnAction();
-            DateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
-            Collection<LeaderBoardData> data = fileManager.getLeaderBoardData();
-            saveScore.setOnAction(event -> handleSave(score, data != null ? -data.size() : 0));
+                int score = _game.get_score();
+                addStyleClasses();
+                addMenuAfterGameOnAction();
+                DateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
+                Collection<LeaderBoardData> data = fileManager.getLeaderBoardData();
+                saveScore.setOnAction(event -> handleSave(score, data != null ? -data.size() : 0));
 
-            if (fileManager.isSavable(score, data)) {
-                displayIfSavable(score, formatter, data);
-            } else {
+                if (fileManager.isSavable(score, data)) {
+                    displayIfSavable(score, formatter, data);
+                } else {
 
-                displayIfNotSavable(score, formatter, data);
+                    displayIfNotSavable(score, formatter, data);
+                }
             }
+        } else {
+            try {
+                switchToUserLevel();
+            }catch (IOException e)
+            {}
         }
+    }
+
+    private void switchToUserLevel() throws IOException {
+        App.setRoot("user_levels");
     }
 
     private void handleSave(int score, int offset) {
@@ -262,6 +272,4 @@ public class GameSceneController {
 
         App.setRoot("menu");
     }
-
-
 }

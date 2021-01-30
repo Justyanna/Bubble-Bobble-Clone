@@ -24,41 +24,11 @@ public class App extends Application {
 
     private static final Logger LOGGER = Logger.getLogger(App.class.getName());
     private static final String FONT_PATH = "fonts/Barcade Brawl.ttf";
-
+    public static String customMapName = new String();
     private static Stage _primary_stage;
     private static Scene _active_scene;
-
     private static boolean _in_game;
     private static Inputs _inputs;
-
-    @Override
-    public void start(Stage stage) throws IOException {
-
-        _inputs = new Inputs();
-        _in_game = false;
-
-        _primary_stage = stage;
-        _active_scene = new Scene(loadFXML("menu"));
-        stage.setScene(_active_scene);
-
-        loadFont();
-
-        Screen screen = Screen.getPrimary();
-        Rectangle2D bounds = screen.getVisualBounds();
-
-        stage.setX(bounds.getMinX());
-        stage.setY(bounds.getMinY());
-        stage.setWidth(bounds.getWidth());
-        stage.setHeight(bounds.getHeight());
-        stage.setFullScreen(true);
-        stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
-
-        stage.show();
-
-        _active_scene.addEventHandler(KeyEvent.KEY_PRESSED, App::handleKeyDown);
-
-        _active_scene.addEventHandler(KeyEvent.KEY_RELEASED, App::handleKeyUp);
-    }
 
     public static Stage get_primary_stage() {
         return _primary_stage;
@@ -130,5 +100,34 @@ public class App extends Application {
 
     public static void main(String[] args) {
         launch();
+    }
+
+    @Override
+    public void start(Stage stage) throws IOException {
+
+        _inputs = new Inputs();
+        _in_game = false;
+
+        _primary_stage = stage;
+        _active_scene = new Scene(loadFXML("menu"));
+        stage.setScene(_active_scene);
+
+        loadFont();
+
+        Screen screen = Screen.getPrimary();
+        Rectangle2D bounds = screen.getVisualBounds();
+
+        stage.setX(bounds.getMinX());
+        stage.setY(bounds.getMinY());
+        stage.setWidth(bounds.getWidth());
+        stage.setHeight(bounds.getHeight());
+        stage.setFullScreen(true);
+        stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
+
+        stage.show();
+
+        _active_scene.addEventHandler(KeyEvent.KEY_PRESSED, App::handleKeyDown);
+
+        _active_scene.addEventHandler(KeyEvent.KEY_RELEASED, App::handleKeyUp);
     }
 }

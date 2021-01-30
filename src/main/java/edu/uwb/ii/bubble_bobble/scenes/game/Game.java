@@ -123,7 +123,11 @@ public class Game
         _paused = false;
         _started = true;
 
-        this.start("StoryMode#1");
+        if (App.customMapName.isEmpty()) {
+            this.start("StoryMode#1", true);
+        } else {
+            this.start(App.customMapName, false);
+        }
     }
 
     public void update(GraphicsContext gc, int scale)
@@ -239,9 +243,13 @@ public class Game
         for(Projectile b : _bubbles)
         { captured_enemies += ((Bubble) b).isEmpty() ? 0 : 1; }
 
-        if(_enemies.size() < 1 && captured_enemies < 1)
-        {
-            nextLevel();
+        if (_enemies.size() < 1 && captured_enemies < 1) {
+            if (App.customMapName.isEmpty()) {
+                nextLevel();
+            } else {
+                _quit = true;
+                quit();
+            }
         }
     }
 
@@ -264,5 +272,8 @@ public class Game
         start(level_data[0] + "#" + id);
     }
 
-    public int get_score() { return _score; }
+    public int get_score()
+    {
+        return _score;
+    }
 }

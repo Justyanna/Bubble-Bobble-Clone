@@ -13,35 +13,28 @@ import org.xml.sax.SAXException;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.util.ArrayList;
 
-public class Map
-{
+public class Map {
 
     public static final int ROWS = 26;
     public static final int COLUMNS = 32;
-
+    private static final String MAPS_PATH = System.getProperty("user.home") + "/AppData/Local/Bubble Bobble Clone/maps";
     private SpriteSheet _skin;
-
     private boolean[][] _body;
     private MapCollider _collider;
-
     private ArrayList<String> _spawn_points;
     private ArrayList<String> _enemies;
 
-    public Map(String source, SpriteSheet skin)
-    {
+    public Map(String source, SpriteSheet skin, boolean isResource) {
         _skin = skin;
         _body = new boolean[COLUMNS][ROWS];
         _collider = new MapCollider(this);
         _spawn_points = new ArrayList<>();
         _enemies = new ArrayList<>();
 
-        load(source);
+        load(source, isResource);
     }
 
     public Collider get_collider() { return _collider; }
@@ -50,16 +43,18 @@ public class Map
 
     public ArrayList<String> get_enemies() { return _enemies; }
 
-    public boolean check(double x, double y)
-    {
+    public boolean check(double x, double y) {
         return _body[((int) x + COLUMNS) % COLUMNS][((int) y + ROWS) % ROWS];
     }
 
-    private void load(String name)
-    {
-        try
-        {
-            InputStream in = GameSceneController.class.getClassLoader().getResourceAsStream("maps/" + name + ".xml");
+    private void load(String name, boolean isResource) {
+        try {
+            InputStream in;
+            if (isResource) {
+                in = GameSceneController.class.getClassLoader().getResourceAsStream("maps/" + name + ".xml");
+            } else {
+                in = new FileInputStream(new File(MAPS_PATH + "/" + name));
+            }
             BufferedReader reader = new BufferedReader(new InputStreamReader(in));
 
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
@@ -69,73 +64,67 @@ public class Map
 
             NodeList walls = doc.getElementsByTagName("Walls").item(0).getChildNodes();
 
-            for(Node node = walls.item(0); node != null; node = node.getNextSibling())
-            {
+            for (Node node = walls.item(0); node != null; node = node.getNextSibling()) {
 
-                if(node.getNodeType() != Node.ELEMENT_NODE) { continue; }
+                if (node.getNodeType() != Node.ELEMENT_NODE) {
+                    continue;
+                }
 
                 NamedNodeMap attr = node.getAttributes();
                 Node x = attr.getNamedItem("x");
                 Node y = attr.getNamedItem("y");
 
-                if(x == null || y == null) { continue; }
+                if (x == null || y == null) {
+                    continue;
+                }
 
                 _body[Integer.parseInt(x.getNodeValue())][Integer.parseInt(y.getNodeValue())] = true;
             }
 
             NodeList players = doc.getElementsByTagName("Players").item(0).getChildNodes();
 
-            for(Node player = players.item(0); player != null; player = player.getNextSibling())
-            {
+            for (Node player = players.item(0); player != null; player = player.getNextSibling()) {
 
-                if(player.getNodeType() != Node.ELEMENT_NODE) { continue; }
+                if (player.getNodeType() != Node.ELEMENT_NODE) {
+                    continue;
+                }
 
                 NamedNodeMap player_data = player.getAttributes();
                 Node x = player_data.getNamedItem("x");
                 Node y = player_data.getNamedItem("y");
                 Node direction = player_data.getNamedItem("facing");
 
-                if(x != null && y != null && direction != null)
-                {
+                if (x != null && y != null && direction != null) {
                     _spawn_points.add(x.getNodeValue() + " " + y.getNodeValue() + " " + direction.getNodeValue());
                 }
             }
 
             NodeList enemies = doc.getElementsByTagName("Enemies").item(0).getChildNodes();
 
-            for(Node enemy = enemies.item(0); enemy != null; enemy = enemy.getNextSibling())
-            {
+            for (Node enemy = enemies.item(0); enemy != null; enemy = enemy.getNextSibling()) {
 
-                if(enemy.getNodeType() != Node.ELEMENT_NODE) { continue; }
+                if (enemy.getNodeType() != Node.ELEMENT_NODE) {
+                    continue;
+                }
 
                 NamedNodeMap enemy_data = enemy.getAttributes();
                 Node x = enemy_data.getNamedItem("x");
                 Node y = enemy_data.getNamedItem("y");
                 Node direction = enemy_data.getNamedItem("facing");
 
-                if(x != null && y != null && direction != null)
-                {
-                    _enemies.add(enemy.getNodeName()
-                                 + " " + x.getNodeValue()
-                                 + " " + y.getNodeValue()
-                                 + " " + direction.getNodeValue());
+                if (x != null && y != null && direction != null) {
+                    _enemies.add(enemy.getNodeName() + " " + x.getNodeValue() + " " + y.getNodeValue() + " " +
+                                         direction.getNodeValue());
                 }
             }
-        }
-        catch(IndexOutOfBoundsException | IOException | NullPointerException
-                | ParserConfigurationException | SAXException e)
-        {
+        } catch (IndexOutOfBoundsException | IOException | NullPointerException | ParserConfigurationException | SAXException e) {
         }
     }
 
-    public void draw(GraphicsContext gc, int scale)
-    {
-        for(int x = 0; x < COLUMNS; x++)
-        {
-            for(int y = 0; y < ROWS; y++)
-            {
-                if(_body[x][y])
-                {
+    public void draw(GraphicsContext gc, int scale) {
+        for (int x = 0; x < COLUMNS; x++) {
+            for (int y = 0; y < ROWS; y++) {
+                if (_body[x][y]) {
                     _skin.draw(gc, 0, x * scale, y * scale, scale, scale);
                 }
             }

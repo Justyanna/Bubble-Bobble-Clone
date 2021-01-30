@@ -47,12 +47,13 @@ public class UserLevelsController {
         listOfFiles = mapDir.listFiles();
         previous.setVisible(false);
         if (listOfFiles.length > maxPerPage) {
-
+            getSlice();
+            reload();
         } else {
             next.setVisible(false);
+            filesSlice = listOfFiles;
+            reload();
         }
-        getSlice();
-        reload();
     }
 
     void reload() {
@@ -64,6 +65,7 @@ public class UserLevelsController {
             mapname.getStyleClass().add("label");
             mapname.minWidth(150);
             Button playButton = getButton("Play", "button-play");
+            playButton.setOnMouseClicked(event -> handlePlayMap(event));
             Button deleteButton = getButton("Delete", "button-delete");
             deleteButton.setOnMouseClicked(event -> handleDeleteMap(event));
 
@@ -73,6 +75,23 @@ public class UserLevelsController {
             rowBox.setSpacing(40);
 
             centerBox.getChildren().add(rowBox);
+        }
+    }
+
+    private void handlePlayMap(MouseEvent event) {
+        Button self = (Button) event.getSource();
+        Optional<javafx.scene.Node> mapname = self.getParent()
+                .getChildrenUnmodifiable()
+                .stream()
+                .filter(x -> x.getClass().equals(Label.class))
+                .findFirst();
+        Label label = (Label) mapname.get();
+        String filename = label.getText().trim() + ".xml";
+        App.customMapName = filename;
+        try {
+            switchToGame();
+        } catch (IOException e) {
+
         }
     }
 
@@ -101,6 +120,11 @@ public class UserLevelsController {
     @FXML
     void switchToPrimary(ActionEvent actionEvent) throws IOException {
         App.setRoot("menu");
+    }
+
+    @FXML
+    void switchToGame() throws IOException {
+        App.setRoot("game");
     }
 
     private void loadLanguageVersion() {
