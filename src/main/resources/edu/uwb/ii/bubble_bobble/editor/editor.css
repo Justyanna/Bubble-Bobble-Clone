@@ -3,7 +3,7 @@
 }
 
 .header{
-    -fx-background-color: red;
+    -fx-background-color: "#754fd6";
 }
 
 .board-window {
@@ -74,3 +74,26 @@
     -fx-border-width: 1;
 }
 
+
+.map_name_label
+{
+  -fx-font-size: 8px;
+  -fx-text-fill:  "#31ff0d";
+  -fx-font-family: "Barcade Brawl";
+}
+
+.map_name_blank
+{
+    -fx-border-style: solid  solid  solid  solid;
+    -fx-border-color: red red red red;
+    -fx-border-width: 3;
+    -fx-background-color: "#8cc9ff";
+}
+
+.map_name
+{
+    -fx-border-style: solid  solid  solid  solid;
+    -fx-border-color: black black black black;
+    -fx-border-width: 1;
+    -fx-background-color: "#8cc9ff";
+}
