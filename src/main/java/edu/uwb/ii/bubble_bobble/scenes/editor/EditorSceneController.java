@@ -6,13 +6,10 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Rectangle2D;
-import javafx.scene.control.Button;
-import javafx.scene.control.ToggleButton;
-import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.stage.FileChooser;
 import javafx.stage.Screen;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -46,11 +43,15 @@ public class EditorSceneController {
     @FXML
     Button goToMenu;
     @FXML
+    TextField mapName;
+    File mapDir;
+    File[] listOfFiles;
+    @FXML
     private ToggleButton threeGapFrame;
     @FXML
     private Button saveButton;
     @FXML
-    private Button importButton;
+    private ComboBox importButton;
     @FXML
     private Button resetButton;
     private String currentSelected;
@@ -83,6 +84,28 @@ public class EditorSceneController {
                 oldVal.setSelected(true);
             }
         });
+
+        mapDir = new File(MAPS_PATH);
+        listOfFiles = mapDir.listFiles();
+
+        mapName.getStyleClass().clear();
+        mapName.getStyleClass().add("map_name");
+        mapName.textProperty().addListener((ob, oldValue, newValue) -> {
+            if (mapName.getText().isEmpty() || mapName.getText().isBlank() ||
+                    Arrays.stream(listOfFiles).anyMatch(x -> x.getName().equals(mapName.getText() + ".xml"))) {
+                mapName.getStyleClass().clear();
+                mapName.getStyleClass().add("map_name_blank");
+            } else {
+                mapName.getStyleClass().clear();
+                mapName.getStyleClass().add("map_name");
+            }
+        });
+        importButton.setPromptText("Import");
+
+        for (File file : listOfFiles) {
+            importButton.getItems().add(file.getName().replace(".xml", ""));
+        }
+
         loadLanguageVersion();
     }
 
@@ -212,45 +235,41 @@ public class EditorSceneController {
     }
 
     @FXML
-    void saveMap() {
+    void saveMap() throws IOException {
         tryCreateMapsDirectory();
+        if (!(mapName.getText().isEmpty() || mapName.getText().isBlank() ||
+                Arrays.stream(listOfFiles).anyMatch(x -> x.getName().equals(mapName.getText() + ".xml")))) {
 
-        FileChooser fileChooser = new FileChooser();
-        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("xml files (*.xml)", "*.xml");
-        fileChooser.getExtensionFilters().add(extFilter);
-        fileChooser.setInitialDirectory(new File(MAPS_PATH));
-
-        TransformerFactory transformerFactory = TransformerFactory.newInstance();
-        Transformer transformer;
-        try {
-            File file = fileChooser.showSaveDialog(boardWindow.getScene().getWindow());
-            transformer = transformerFactory.newTransformer();
-            DOMSource domSource = new DOMSource(map.generateFxml());
-            StreamResult streamResult = new StreamResult(file);
-            transformer.transform(domSource, streamResult);
-        } catch (ParserConfigurationException | TransformerException | NullPointerException e) {
-            e.printStackTrace();
+            TransformerFactory transformerFactory = TransformerFactory.newInstance();
+            Transformer transformer;
+            try {
+                File file = new File(MAPS_PATH + "/" + mapName.getText() + ".xml");
+                transformer = transformerFactory.newTransformer();
+                DOMSource domSource = new DOMSource(map.generateFxml());
+                StreamResult streamResult = new StreamResult(file);
+                transformer.transform(domSource, streamResult);
+            } catch (ParserConfigurationException | TransformerException | NullPointerException e) {
+                e.printStackTrace();
+            }
+            switchToOptions();
         }
     }
 
     @FXML
     void importMap() {
-        tryCreateMapsDirectory();
-        FileChooser fileChooser = new FileChooser();
-        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("xml files (*.xml)", "*.xml");
-        fileChooser.getExtensionFilters().add(extFilter);
-        fileChooser.setInitialDirectory(new File(MAPS_PATH));
-
-        try {
-            File file = fileChooser.showOpenDialog(boardWindow.getScene().getWindow());
-            DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-            DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-            Document doc = dBuilder.parse(file);
-            doc.getDocumentElement().normalize();
-            map.importFormDocument(doc);
-            updateBoard();
-        } catch (ParserConfigurationException | IOException | SAXException | IllegalArgumentException e) {
-            e.printStackTrace();
+        if (importButton.getValue() != null || importButton.getValue() != "Import") {
+            resetBoard();
+            try {
+                File file = new File(MAPS_PATH + "/" + importButton.getValue() + ".xml");
+                DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+                DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+                Document doc = dBuilder.parse(file);
+                doc.getDocumentElement().normalize();
+                map.importFormDocument(doc);
+                updateBoard();
+            } catch (ParserConfigurationException | IOException | SAXException | IllegalArgumentException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -425,7 +444,7 @@ public class EditorSceneController {
                 if ("saveButton".equals(id)) {
                     saveButton.setText(text);
                 } else if ("importButton".equals(id)) {
-                    importButton.setText(text);
+                    importButton.setPromptText(text);
                 } else if ("resetButton".equals(id)) {
                     resetButton.setText(text);
                 } else if ("goToMenu".equals(id)) {
