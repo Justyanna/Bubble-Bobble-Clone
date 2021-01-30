@@ -167,6 +167,16 @@ public class Game
                     _score += b.isEmpty() ? 10 : 150;
                     it.remove();
                 }
+                else if(b.isWasted())
+                {
+                    if(b.isWasted())
+                    {
+                        Enemy e = b.get_captive();
+                        e.getAngry();
+                        _enemies.add(e);
+                        it.remove();
+                    }
+                }
             }
 
             for(Iterator<Projectile> it = _hostile_projectiles.iterator(); it.hasNext(); )
@@ -254,8 +264,5 @@ public class Game
         start(level_data[0] + "#" + id);
     }
 
-    public int get_score()
-    {
-        return _score;
-    }
+    public int get_score() { return _score; }
 }

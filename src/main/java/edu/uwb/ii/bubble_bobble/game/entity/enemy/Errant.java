@@ -44,14 +44,14 @@ public class Errant extends Enemy
             if(_roll.nextDouble() < _fall_chance)
             {
                 _fallen = 1.0;
-                setAnimation(Animations.FALL);
+                setAnimation(_angry ? Animations.DIVE : Animations.FALL);
             }
             _steps = 60 * (_roll.nextInt(15) + 5);
         }
 
         if(_fallen > 0.0 && _fallen < 1.0 / _sleep)
         {
-            setAnimation(Animations.WALK);
+            setAnimation(_angry ? Animations.ANGRY : Animations.WALK);
         }
 
         _fallen -= 1.0 / _sleep;

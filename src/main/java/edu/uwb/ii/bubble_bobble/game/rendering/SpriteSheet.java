@@ -5,7 +5,7 @@ import javafx.scene.image.Image;
 
 public class SpriteSheet {
 
-    private static final String imgPath = "file:src/main/resources/img/";
+    private static final String imgPath = "file:src/main/resources/img/beta/";
 
     private Image _source;
     private int _rows;

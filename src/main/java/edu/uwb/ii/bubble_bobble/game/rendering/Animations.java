@@ -13,6 +13,7 @@ public interface Animations {
     Animation FALL = SHOOT.copy();
     Animation ASCEND = WALK.copy();
     Animation DESCEND = SHOOT.copy();
+    Animation DIVE = new Animation(14, 2, 6);
     Animation TURN = SHOOT.copy();
     Animation CRY = SHOOT.copy();
 

@@ -4,7 +4,6 @@ import edu.uwb.ii.bubble_bobble.game.collider.CollisionMode;
 import edu.uwb.ii.bubble_bobble.game.entity.Enemy;
 import edu.uwb.ii.bubble_bobble.game.rendering.Animations;
 import edu.uwb.ii.bubble_bobble.game.rendering.ResourceManager;
-import edu.uwb.ii.bubble_bobble.scenes.game.Game;
 import edu.uwb.ii.bubble_bobble.scenes.game.Map;
 
 public class Specter extends Enemy
@@ -26,8 +25,9 @@ public class Specter extends Enemy
         if(_collider.top || _collider.bottom)
         {
             _fly_direction *= -1;
-
-            setAnimation(_fly_direction == -1 ? Animations.ASCEND : Animations.DESCEND);
+            setAnimation(_angry
+                         ? _fly_direction == -1 ? Animations.ANGRY : Animations.DIVE
+                         : _fly_direction == -1 ? Animations.ASCEND : Animations.DESCEND);
         }
 
         if(_collider.left || _collider.right)
@@ -36,6 +36,6 @@ public class Specter extends Enemy
         }
 
         _velocity.x = _direction * _speed;
-        _velocity.y = Game.GRAVITY * _fly_direction;
+        _velocity.y = _fly_direction * _speed;
     }
 }

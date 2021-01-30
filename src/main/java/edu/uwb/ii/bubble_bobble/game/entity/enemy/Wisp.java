@@ -37,14 +37,14 @@ public class Wisp extends Enemy
             _jump -= jh / _jump_height;
             if(_jump <= 0)
             {
-                setAnimation(Animations.DESCEND);
+                setAnimation(_angry ? Animations.DIVE : Animations.DESCEND);
             }
         }
 
         if(_grounded && _jump <= 0.0)
         {
             _jump = 1.0;
-            setAnimation(Animations.ASCEND);
+            setAnimation(_angry ? Animations.ANGRY : Animations.ASCEND);
         }
 
         _velocity.x = _direction * _speed;
