@@ -39,5 +39,6 @@
         <goToMenu>Menu</goToMenu>
         <next>Suivante</next>
         <previous>Précédente</previous>
+        <empty>Vous n'avez pas encore créé de cartes. Si vous le souhaitez, visitez l'éditeur de carte.</empty>
     </UserLevels>
 </Language>

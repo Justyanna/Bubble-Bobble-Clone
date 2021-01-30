@@ -25,6 +25,7 @@ public class UserLevelsController {
     Button goToMenu;
     @FXML
     VBox centerBox;
+    Label empty;
     File[] listOfFiles;
     File[] filesSlice;
     int maxPerPage = 12;
@@ -41,18 +42,26 @@ public class UserLevelsController {
     }
 
     public void initialize() {
-
+        empty = new Label();
         loadLanguageVersion();
         File mapDir = new File(MAPS_PATH);
         listOfFiles = mapDir.listFiles();
         previous.setVisible(false);
-        if (listOfFiles.length > maxPerPage) {
-            getSlice();
-            reload();
+
+        if (listOfFiles.length > 0) {
+            if (listOfFiles.length > maxPerPage) {
+                getSlice();
+                reload();
+            } else {
+                next.setVisible(false);
+                filesSlice = listOfFiles;
+                reload();
+            }
         } else {
             next.setVisible(false);
-            filesSlice = listOfFiles;
-            reload();
+            previous.setVisible(false);
+            empty.getStyleClass().add("label");
+            centerBox.getChildren().add(empty);
         }
     }
 
@@ -153,6 +162,8 @@ public class UserLevelsController {
                     next.setText(text);
                 } else if ("previous".equals(id)) {
                     previous.setText(text);
+                } else if ("empty".equals(id)) {
+                    empty.setText(text);
                 }
             }
         }

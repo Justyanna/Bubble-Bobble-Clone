@@ -252,36 +252,38 @@ public class EditorSceneController {
     @FXML
     void saveMap() throws IOException {
         tryCreateMapsDirectory();
-        if (!(mapName.getText().isEmpty() || mapName.getText().isBlank() ||
-                Arrays.stream(listOfFiles).anyMatch(x -> x.getName().equals(mapName.getText() + ".xml")))) {
+        if (!mapName.getText().isEmpty()) {
+            if (!(mapName.getText().isBlank() ||
+                    Arrays.stream(listOfFiles).anyMatch(x -> x.getName().equals(mapName.getText() + ".xml")))) {
 
-            TransformerFactory transformerFactory = TransformerFactory.newInstance();
-            Transformer transformer;
-            try {
-                File file = new File(MAPS_PATH + "/" + mapName.getText() + ".xml");
-                transformer = transformerFactory.newTransformer();
-                DOMSource domSource = new DOMSource(map.generateFxml());
-                StreamResult streamResult = new StreamResult(file);
-                transformer.transform(domSource, streamResult);
-            } catch (ParserConfigurationException | TransformerException | NullPointerException e) {
-                e.printStackTrace();
+                TransformerFactory transformerFactory = TransformerFactory.newInstance();
+                Transformer transformer;
+                try {
+                    File file = new File(MAPS_PATH + "/" + mapName.getText() + ".xml");
+                    transformer = transformerFactory.newTransformer();
+                    DOMSource domSource = new DOMSource(map.generateFxml());
+                    StreamResult streamResult = new StreamResult(file);
+                    transformer.transform(domSource, streamResult);
+                } catch (ParserConfigurationException | TransformerException | NullPointerException e) {
+                    e.printStackTrace();
+                }
+                switchToOptions();
             }
-            switchToOptions();
-        }
 
-        if (mapName.getText().equals(importButton.getValue().toString())) {
-            TransformerFactory transformerFactory = TransformerFactory.newInstance();
-            Transformer transformer;
-            try {
-                File file = new File(MAPS_PATH + "/" + mapName.getText() + ".xml");
-                transformer = transformerFactory.newTransformer();
-                DOMSource domSource = new DOMSource(map.generateFxml());
-                StreamResult streamResult = new StreamResult(file);
-                transformer.transform(domSource, streamResult);
-            } catch (ParserConfigurationException | TransformerException | NullPointerException e) {
-                e.printStackTrace();
+            if (mapName.getText().equals(importButton.getValue().toString())) {
+                TransformerFactory transformerFactory = TransformerFactory.newInstance();
+                Transformer transformer;
+                try {
+                    File file = new File(MAPS_PATH + "/" + mapName.getText() + ".xml");
+                    transformer = transformerFactory.newTransformer();
+                    DOMSource domSource = new DOMSource(map.generateFxml());
+                    StreamResult streamResult = new StreamResult(file);
+                    transformer.transform(domSource, streamResult);
+                } catch (ParserConfigurationException | TransformerException | NullPointerException e) {
+                    e.printStackTrace();
+                }
+                switchToOptions();
             }
-            switchToOptions();
         }
     }
 

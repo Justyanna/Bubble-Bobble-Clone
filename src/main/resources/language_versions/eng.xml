@@ -39,5 +39,6 @@
         <goToMenu>Menu</goToMenu>
         <next>Next</next>
         <previous>Prev</previous>
+        <empty>You haven't created any maps yet. If you want, visit the map editor.</empty>
     </UserLevels>
 </Language>
