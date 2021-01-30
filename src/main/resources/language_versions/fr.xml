@@ -12,6 +12,7 @@
         <boardEditor>Éditeur de carte</boardEditor>
         <goToMenu>Menu principal</goToMenu>
         <languageVersion>Langue du jeu</languageVersion>
+        <graphicVersion>Version graphique</graphicVersion>
     </Options>
     <Leaderboard>
         <goToMenu>Menu</goToMenu>

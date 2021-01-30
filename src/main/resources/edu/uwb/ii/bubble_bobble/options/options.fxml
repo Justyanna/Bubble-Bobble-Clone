@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.*?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
 <AnchorPane prefHeight="400.0" prefWidth="600.0" stylesheets="@./options.css" xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml/1"
@@ -13,7 +13,7 @@
             <children>
 
                 <Button fx:id="boardEditor" mnemonicParsing="false" onAction="#switchToBoardEditor" prefHeight="50.0"
-                        prefWidth="750.0"  styleClass="button" text="Board Editor">
+                        prefWidth="750.0" styleClass="button" text="Board Editor">
                     <VBox.margin>
                         <Insets bottom="10.0"/>
                     </VBox.margin>
@@ -31,7 +31,32 @@
                         <Insets/>
                     </VBox.margin>
                 </VBox>
-                <Button fx:id="goToMenu" mnemonicParsing="false" onAction="#switchToMenu" prefHeight="50.0" prefWidth="750.0"
+                <VBox fx:id="spinnerGraphics" alignment="CENTER">
+                    <children>
+                        <Label fx:id="graphicsVersion" styleClass="label" text="Graphics version">
+                            <VBox.margin>
+                                <Insets top="30.0" right="10.0"/>
+                            </VBox.margin>
+                        </Label>
+                        <HBox alignment="CENTER" prefWidth="300">
+                            <VBox alignment="CENTER_LEFT">
+                                <Button fx:id="left">🢀</Button>
+                            </VBox>
+                            <VBox prefHeight="170" alignment="CENTER">
+                                <ImageView fx:id="graphic"></ImageView>
+                            </VBox>
+                            <VBox alignment="CENTER_RIGHT">
+                                <Button fx:id="right">🡺</Button>
+                            </VBox>
+                        </HBox>
+
+                    </children>
+                    <VBox.margin>
+                        <Insets/>
+                    </VBox.margin>
+                </VBox>
+                <Button fx:id="goToMenu" mnemonicParsing="false" onAction="#switchToMenu" prefHeight="50.0"
+                        prefWidth="750.0"
                         styleClass="button" text="Go to menu">
                     <VBox.margin>
                         <Insets bottom="10.0" top="50.0"/>

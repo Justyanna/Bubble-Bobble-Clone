@@ -1,14 +1,19 @@
 package edu.uwb.ii.bubble_bobble.scenes.options;
 
 import edu.uwb.ii.bubble_bobble.App;
+import edu.uwb.ii.bubble_bobble.game.rendering.ResourceManager;
+import edu.uwb.ii.bubble_bobble.game.rendering.SpriteSheet;
 import edu.uwb.ii.bubble_bobble.utils.CurrentLanguageVersionProvider;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Spinner;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -21,6 +26,8 @@ public class OptionsSceneController {
 
     private static final ObservableList<String> languages = FXCollections.observableArrayList("ENG", "PL", "FR");
     private static final List<String> languagesArr = Arrays.asList("ENG", "PL", "FR");
+    private static final String[] graphics = {"img/beta/errant.png", "img/legacy/player.png"};
+    private static final String[] paths = {"file:src/main/resources/img/beta/", "file:src/main/resources/img/legacy/"};
     @FXML
     Button goToMenu;
     @FXML
@@ -28,8 +35,19 @@ public class OptionsSceneController {
     @FXML
     Label languageVersion;
     @FXML
+    Label graphicsVersion;
+    @FXML
+    VBox spinnerGraphics;
+    @FXML
+    Button left;
+    @FXML
+    ImageView graphic;
+    @FXML
+    Button right;
+    @FXML
     private VBox spinnerBox;
     private Spinner languageSpinner;
+    private int imageNumber;
 
     public void initialize() {
         loadLanguageVersion();
@@ -65,7 +83,45 @@ public class OptionsSceneController {
                 languageSpinner.increment(2);
                 break;
         }
+
+        if (SpriteSheet.imgPath.equals(paths[0])) {
+            imageNumber = 0;
+        }
+        if (SpriteSheet.imgPath.equals(paths[1])) {
+            imageNumber = 1;
+        }
+        Image image = new Image(graphics[imageNumber]);
+        graphic.setImage(image);
+        Rectangle2D imagePart = new Rectangle2D(0, 0, image.getWidth() / 6, image.getHeight() / 4);
+        graphic.setViewport(imagePart);
+
+        right.setOnMouseClicked(event -> handleImageRight());
+        left.setOnMouseClicked(event -> handleImageLeft());
         spinnerBox.getChildren().add(languageSpinner);
+    }
+
+    private void handleImageLeft() {
+        if (imageNumber > 0) {
+            imageNumber--;
+            handleImageChange();
+        }
+    }
+
+    private void handleImageRight() {
+        if (imageNumber < 1) {
+            imageNumber++;
+            handleImageChange();
+        }
+    }
+
+    private void handleImageChange() {
+
+        SpriteSheet.imgPath = paths[imageNumber];
+        Image image = new Image(graphics[imageNumber]);
+        graphic.setImage(image);
+        Rectangle2D imagePart = new Rectangle2D(0, 0, image.getWidth() / 6, image.getHeight() / 4);
+        ResourceManager.manager = new ResourceManager();
+        graphic.setViewport(imagePart);
     }
 
     private void loadLanguageVersion() {
@@ -94,6 +150,8 @@ public class OptionsSceneController {
                     goToMenu.setText(text);
                 } else if ("languageVersion".equals(id)) {
                     languageVersion.setText(text);
+                } else if ("graphicVersion".equals(id)) {
+                    graphicsVersion.setText(text);
                 }
             }
         }

@@ -12,6 +12,7 @@
         <boardEditor>Map editor</boardEditor>
         <goToMenu>Main menu</goToMenu>
         <languageVersion>Game language</languageVersion>
+        <graphicVersion>Graphics version</graphicVersion>
     </Options>
     <Leaderboard>
         <goToMenu>Menu</goToMenu>

@@ -2,7 +2,7 @@ package edu.uwb.ii.bubble_bobble.game.rendering;
 
 public class ResourceManager {
 
-    private static ResourceManager manager;
+    public static ResourceManager manager;
 
     public SpriteSheet placeholder;
     public SpriteSheet player;
@@ -11,7 +11,7 @@ public class ResourceManager {
     public SpriteSheet wisp;
     public SpriteSheet specter;
 
-    private ResourceManager() {
+    public ResourceManager() {
 
         placeholder = new SpriteSheet("placeholder", 8, 8);
 
