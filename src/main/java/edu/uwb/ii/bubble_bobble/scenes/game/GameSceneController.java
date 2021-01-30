@@ -12,7 +12,6 @@ import javafx.geometry.Insets;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
@@ -20,7 +19,6 @@ import javafx.scene.layout.StackPane;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
-import java.io.File;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -31,7 +29,6 @@ public class GameSceneController {
 
     //    -- utility
     private final static long INTERVAL = 1000000000L / 60;
-    private static final String MAPS_PATH = System.getProperty("user.home") + "/AppData/Local/Bubble Bobble Clone/maps";
     private static long last_update = System.nanoTime();
     @FXML
     public StackPane gameWindow;
@@ -41,8 +38,6 @@ public class GameSceneController {
     public AnimationTimer timer;
     @FXML
     BorderPane root;
-    @FXML
-    ComboBox importComboBox;
     @FXML
     private Button goToMenu;
     private Button saveScore;
@@ -92,21 +87,7 @@ public class GameSceneController {
 
             timer.start();
         });
-
-        initImportComboBox();
-
         loadLanguageVersion();
-    }
-
-    private void initImportComboBox() {
-        File mapDir = new File(MAPS_PATH);
-        File[] listOfFiles = mapDir.listFiles();
-
-        importComboBox.setPromptText("Import");
-
-        for (File file : listOfFiles) {
-            importComboBox.getItems().add(file.getName().replace(".xml", ""));
-        }
     }
 
     private void handleQuit() {
@@ -282,7 +263,5 @@ public class GameSceneController {
         App.setRoot("menu");
     }
 
-    @FXML
-    void importMap(ActionEvent actionEvent) {
-    }
+
 }
