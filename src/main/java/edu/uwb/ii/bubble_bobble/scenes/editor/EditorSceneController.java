@@ -88,6 +88,21 @@ public class EditorSceneController {
             }
         });
 
+        initMapNameTextField();
+        initImportComboBox();
+
+        loadLanguageVersion();
+    }
+
+    private void initImportComboBox() {
+        importButton.setPromptText("Import");
+
+        for (File file : listOfFiles) {
+            importButton.getItems().add(file.getName().replace(".xml", ""));
+        }
+    }
+
+    private void initMapNameTextField() {
         mapDir = new File(MAPS_PATH);
         listOfFiles = mapDir.listFiles();
 
@@ -103,13 +118,6 @@ public class EditorSceneController {
                 mapName.getStyleClass().add("map_name");
             }
         });
-        importButton.setPromptText("Import");
-
-        for (File file : listOfFiles) {
-            importButton.getItems().add(file.getName().replace(".xml", ""));
-        }
-
-        loadLanguageVersion();
     }
 
     private void createRightPanel() {

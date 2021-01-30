@@ -1,29 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.HBox?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.canvas.Canvas?>
-<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.layout.*?>
 <BorderPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="edu.uwb.ii.bubble_bobble.scenes.game.GameSceneController" stylesheets="@./game.css"
             fx:id="root" styleClass="root">
     <top>
-        <HBox alignment="CENTER_RIGHT">
-            <children>
-                <Button fx:id="goToMenu" styleClass="menu__button"
-                        text="Go to menu" onAction="#switchToPrimary" />
-            </children>
-            <padding>
-                <Insets topRightBottomLeft="5"/>
-            </padding>
-        </HBox>
+
+        <BorderPane>
+            <left>
+
+                <HBox alignment="CENTER_LEFT">
+                    <children>
+                        <ComboBox fx:id="importComboBox" onAction="#importMap" prefHeight="30" prefWidth="120"
+                                  styleClass="options__button"/>
+                    </children>
+                    <padding>
+                        <Insets topRightBottomLeft="5"/>
+                    </padding>
+                </HBox>
+            </left>
+            <right>
+                <HBox alignment="CENTER_RIGHT">
+                    <children>
+                        <Button fx:id="goToMenu" styleClass="menu__button"
+                                text="Go to menu" onAction="#switchToPrimary"/>
+                    </children>
+                    <padding>
+                        <Insets topRightBottomLeft="5"/>
+                    </padding>
+                </HBox>
+            </right>
+
+
+        </BorderPane>
+
+
     </top>
     <center>
         <StackPane fx:id="gameWindow" styleClass="game-window">
-            <Canvas fx:id="board" styleClass="board" />
+            <Canvas fx:id="board" styleClass="board"/>
         </StackPane>
     </center>
 </BorderPane>
