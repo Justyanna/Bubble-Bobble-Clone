@@ -5,32 +5,30 @@ import edu.uwb.ii.bubble_bobble.game.entity.Player;
 import edu.uwb.ii.bubble_bobble.game.entity.Projectile;
 import edu.uwb.ii.bubble_bobble.game.entity.projectile.Bubble;
 import edu.uwb.ii.bubble_bobble.game.rendering.ResourceManager;
-import edu.uwb.ii.bubble_bobble.game.utils.Position;
+import edu.uwb.ii.bubble_bobble.game.utils.Vec2;
 import javafx.scene.canvas.GraphicsContext;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class Game {
-
+public class Game
+{
     public final static double FRAME_RATE = 60.0;
     public final static double GRAVITY = 10.0 / Game.FRAME_RATE;
-
     private static Game __instance__;
 
-    public static Game getInstance() {
-
-        if (__instance__ == null) {
+    public static Game getInstance()
+    {
+        if(__instance__ == null)
+        {
             __instance__ = new Game();
         }
 
         return __instance__;
-
     }
 
     private String _level_name;
     private Map _level;
-
     private int _score;
 
     private Player _player;
@@ -42,31 +40,33 @@ public class Game {
     private boolean _paused;
     private boolean _quit;
 
-    public Game() {
-
+    public Game()
+    {
         _started = false;
         _paused = false;
         _quit = false;
-
     }
 
-    public ArrayList<Projectile> get_hostile_projectiles() {
+    public ArrayList<Projectile> get_hostile_projectiles()
+    {
         return _hostile_projectiles;
     }
 
-    public boolean quit() {
+    public boolean quit()
+    {
         return _quit;
     }
 
-    public Position getPlayerPosition() {
-
-        return new Position(_player.get_x(), _player.get_y());
-
+    public Vec2 getPlayerPosition()
+    {
+        return new Vec2(_player.getX(), _player.getY());
     }
 
-    public void start(String level) {
+    public void start(String level)
+    {
 
-        try {
+        try
+        {
             _level_name = level;
             _level = new Map(_level_name, ResourceManager.get().placeholder);
 
@@ -84,7 +84,8 @@ public class Game {
 
             _player = new Player(x, y, direction, _bubbles);
 
-            for (String enemy : _level.get_enemies()) {
+            for(String enemy : _level.get_enemies())
+            {
 
                 String[] enemy_data = enemy.split(" ");
 
@@ -92,28 +93,30 @@ public class Game {
                 y = Integer.parseInt(enemy_data[2]);
                 direction = Integer.parseInt(enemy_data[3]);
 
-                try {
+                try
+                {
                     Class enemy_type = Class.forName("edu.uwb.ii.bubble_bobble.game.entity.enemy." + enemy_data[0]);
                     _enemies.add((Enemy) enemy_type.getDeclaredConstructor(int.class, int.class, int.class, Map.class)
-                            .newInstance(x, y, direction, _level));
-                } catch (Exception e) {
+                                                   .newInstance(x, y, direction, _level));
+                }
+                catch(Exception e)
+                {
                     System.out.println("Enemy type not found");
                     continue;
                 }
-
             }
 
             _started = true;
-
-        } catch (Exception e) {
+        }
+        catch(Exception e)
+        {
             _quit = true;
             return;
         }
-
     }
 
-    public void start() {
-
+    public void start()
+    {
         _score = 0;
 
         _quit = false;
@@ -121,117 +124,138 @@ public class Game {
         _started = true;
 
         this.start("StoryMode#1");
-
     }
 
-    public void update(GraphicsContext gc, int scale) {
+    public void update(GraphicsContext gc, int scale)
+    {
+        if(!_started || _quit)
+        {
+            return;
+        }
 
-        if (!_started || _quit) return;
-
-        if (!_paused) {
-
+        if(!_paused)
+        {
 //            -- collisions
-
-            for (Enemy e : _enemies)
-                if (e.collide(_player)) {
+            for(Enemy e : _enemies)
+            {
+                if(e.collide(_player))
+                {
                     _quit = true;
                     return;
                 }
+            }
 
-            for (Iterator<Projectile> it = _bubbles.iterator(); it.hasNext(); ) {
-
+            for(Iterator<Projectile> it = _bubbles.iterator(); it.hasNext(); )
+            {
                 Bubble b = (Bubble) it.next();
-                if (b.isActive()) {
+                if(b.isActive())
+                {
 
                     int i = 0;
-                    for (Enemy e : _enemies) {
-                        if (b.collide(e)) {
+                    for(Enemy e : _enemies)
+                    {
+                        if(b.collide(e))
+                        {
                             b.capture(_enemies.remove(i));
                             break;
                         }
                         i++;
                     }
-
-                } else if (b.collide(_player)) {
+                }
+                else if(b.collide(_player))
+                {
                     _score += b.isEmpty() ? 10 : 150;
                     it.remove();
                 }
             }
 
-            for (Iterator<Projectile> it = _hostile_projectiles.iterator(); it.hasNext(); ) {
-
+            for(Iterator<Projectile> it = _hostile_projectiles.iterator(); it.hasNext(); )
+            {
                 Projectile p = it.next();
 
-                if (p.collide(_player)) {
+                if(p.collide(_player))
+                {
                     _quit = true;
                     return;
                 }
 
-                if (p.isWasted())
+                if(p.isWasted())
+                {
                     it.remove();
-
+                }
             }
 
 //            -- moving
 
-            for (Enemy e : _enemies)
+            for(Enemy e : _enemies)
+            {
                 e.move(_level);
+            }
             _player.move(_level);
 
-            for (Projectile b : _bubbles)
+            for(Projectile b : _bubbles)
+            {
                 b.move(_level);
-            for (Projectile p : _hostile_projectiles)
+            }
+            for(Projectile p : _hostile_projectiles)
+            {
                 p.move(_level);
-
+            }
         }
 
 //        -- drawing
 
         _level.draw(gc, scale);
 
-        for (Enemy e : _enemies)
+        for(Enemy e : _enemies)
+        {
             e.draw(gc, scale);
+        }
         _player.draw(gc, scale);
 
-        for (Projectile b : _bubbles)
+        for(Projectile b : _bubbles)
+        {
             b.draw(gc, scale);
-        for (Projectile p : _hostile_projectiles)
+        }
+        for(Projectile p : _hostile_projectiles)
+        {
             p.draw(gc, scale);
+        }
 
 //        -- win condition
 
         int captured_enemies = 0;
 
-        for (Projectile b : _bubbles)
-            captured_enemies += ((Bubble) b).isEmpty() ? 0 : 1;
+        for(Projectile b : _bubbles)
+        { captured_enemies += ((Bubble) b).isEmpty() ? 0 : 1; }
 
-        if (_enemies.size() < 1 && captured_enemies < 1) {
+        if(_enemies.size() < 1 && captured_enemies < 1)
+        {
             nextLevel();
         }
-
     }
 
-    public void togglePause() {
-
+    public void togglePause()
+    {
         _paused = !_paused;
-
     }
 
-    private void nextLevel() {
-
+    private void nextLevel()
+    {
         String[] level_data = _level_name.split("#");
 
-        if (level_data.length < 1) {
+        if(level_data.length < 1)
+        {
             _quit = true;
             return;
         }
 
         int id = Integer.parseInt(level_data[1]) + 1;
         start(level_data[0] + "#" + id);
-
     }
 
-    public int get_score() {
+    public int get_score()
+    {
         return _score;
     }
 }
