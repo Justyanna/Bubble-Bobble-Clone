@@ -19,7 +19,7 @@ public class BoxCollider implements Collider
 
     public BoxCollider(EntityCollider ec)
     {
-        this(ec.getX(), ec.getY(), ec.getWidth(), ec.getHeight());
+        this(ec.get_host().getX(), ec.get_host().getY(), ec.get_host().get_width(), ec.get_host().get_height());
     }
 
     @Override

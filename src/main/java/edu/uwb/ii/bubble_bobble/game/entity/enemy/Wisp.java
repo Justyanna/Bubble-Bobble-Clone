@@ -38,9 +38,9 @@ public class Wisp extends Enemy
             _jump -= jh / _jump_height;
         }
 
-        boolean wall_ahead = _level.check(_position.x + front() + _velocity.x, _position.y)
-                             && (_level.check(front() + _velocity.x, _position.y - 1) ||
-                                 _level.check(front() + _velocity.x, _position.y + 1));
+        boolean wall_ahead = _level.check(_position.x + getFront() + _velocity.x, _position.y)
+                             && (_level.check(getFront() + _velocity.x, _position.y - 1) ||
+                                 _level.check(getFront() + _velocity.x, _position.y + 1));
 
         if(wall_ahead)
         {

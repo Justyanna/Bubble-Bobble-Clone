@@ -16,13 +16,9 @@ public class EntityCollider implements Collider
         _mode = mode;
     }
 
-    public double getX() { return _host.getX(); }
+    public Entity get_host() { return _host; }
 
-    public double getY() { return _host.getY() - 1.0 + _host.get_height(); }
-
-    public int getWidth() { return _host.get_width(); }
-
-    public int getHeight() { return _host.get_height(); }
+    public CollisionMode get_mode() { return _mode; }
 
     public void clearContactData()
     {

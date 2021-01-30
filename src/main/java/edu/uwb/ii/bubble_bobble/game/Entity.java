@@ -50,7 +50,7 @@ abstract public class Entity
         _collider = new EntityCollider(this, mode);
 
         _speed = 0.0;
-        _jump_height = 5.5;
+        _jump_height = 5.0;
         _fire_rate = 0.0;
 
         _direction = 1;
@@ -66,6 +66,8 @@ abstract public class Entity
 
     public Vec2 get_velocity() { return new Vec2(_velocity); }
 
+    public int get_direction() { return _direction; }
+
     public double getX() { return _position.x; }
 
     public double getY() { return _position.y; }
@@ -76,13 +78,17 @@ abstract public class Entity
 
     public Collider get_collider() { return _collider; }
 
-    public double front() { return _position.x + (1 + _direction) / 2.0 * _width; }
+    public double getTop() { return _position.y + 1.0 - _height; }
 
-    public double back() { return _position.x - (_direction - 1) / 2.0 * _width; }
+    public double getBottom() { return _position.y + 1.0; }
 
-    public double top() { return _position.y + 1 - _height; }
+    public double getLeft() { return _position.x; }
 
-    public double bottom() { return _position.y + 1; }
+    public double getRight() { return _position.x + _width; }
+
+    public double getFront() { return _direction > 0 ? getRight() : getLeft(); }
+
+    public double getBack() { return _direction > 0 ? getLeft() : getRight(); }
 
     public void set_position(double x, double y) { _position = new Vec2(x, y); }
 
@@ -127,40 +133,28 @@ abstract public class Entity
     {
         movementRules();
 
-        _position.add(_velocity);
-
         if(_collider.test(map.get_collider()))
         {
-            boolean stopped = false;
-
-            if(_collider.left && _velocity.x < 0)
-            {
-                _position.x = Math.ceil(_position.x);
-                _velocity.x = 0;
-                stopped = true;
-            }
-
-            if(_collider.right && _velocity.x > 0)
-            {
-                _position.x = Math.floor(_position.x);
-                _velocity.x = 0;
-                stopped = true;
-            }
-
-            _grounded = _collider.bottom && _velocity.y > 0 && (!stopped || _grounded);
-
-            if(_grounded)
+            if(_collider.top || _collider.bottom)
             {
                 _position.y = Math.floor(_position.y);
                 _velocity.y = 0.0;
+                _grounded = true;
+            }
+            else
+            {
+                _grounded = false;
+            }
+
+            if(_collider.left || _collider.right)
+            {
+                _velocity.x = 0.0;
             }
 
             _collider.clearContactData();
         }
-        else
-        {
-            _grounded = false;
-        }
+
+        _position.add(_velocity);
 
         if(_position.x < -1.0) { _position.x = Map.COLUMNS; }
         if(_position.x > Map.COLUMNS - 1.0 + _width) { _position.x = 1.0 - _width; }

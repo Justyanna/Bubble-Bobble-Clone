@@ -20,19 +20,40 @@ public class Vec2
         this(0.0, 0.0);
     }
 
-    public void add(double x, double y)
+    public int ix() { return (int) x; }
+
+    public int iy() { return (int) y; }
+
+    public Vec2 add(double x, double y)
     {
         this.x += x;
         this.y += y;
+        return this;
     }
 
-    public void add(Vec2 v)
+    public Vec2 add(Vec2 v)
     {
-        add(v.x, v.y);
+        return add(v.x, v.y);
+    }
+
+    public Vec2 sum(Vec2 v)
+    {
+        return new Vec2(this.x + v.x, this.y + v.y);
+    }
+
+    public Vec2 difference(Vec2 v)
+    {
+        return new Vec2(this.x - v.x, this.y - v.y);
     }
 
     public double length()
     {
         return Math.sqrt(x * x + y * y);
+    }
+
+    @Override
+    public String toString()
+    {
+        return "(" + x + ", " + y + ")";
     }
 }

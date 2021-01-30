@@ -29,7 +29,7 @@ public class Nimrod extends Enemy
     {
         _velocity.x = _direction * _speed;
 
-        boolean wall_ahead = _grounded && _level.check(front() + _velocity.x, _position.y);
+        boolean wall_ahead = _grounded && _level.check(getFront() + _velocity.x, _position.y);
 
         if(wall_ahead)
         {
@@ -45,7 +45,7 @@ public class Nimrod extends Enemy
 
         if(can_see_player && _cooldown <= 0.0)
         {
-            _projectiles.add(new Arrow(front() - _direction, _position.y, _direction));
+            _projectiles.add(new Arrow(getFront() - _direction, _position.y, _direction));
             _cooldown = 1.0;
         }
     }
