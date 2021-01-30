@@ -10,38 +10,32 @@ import edu.uwb.ii.bubble_bobble.scenes.game.Map;
 public class Specter extends Enemy
 {
 
-    private boolean _jumped;
-    private int _up;
+    private int _fly_direction;
     private Map _level;
 
     public Specter(int x, int y, int direction, Map level)
     {
         super(ResourceManager.get().specter, 2, 2, 6.2, x, y, direction, CollisionMode.FLYING);
         _level = level;
-        _jumped = false;
-        _up = -1;
+        _fly_direction = -1;
     }
 
     @Override
     public void movementRules()
     {
-        _velocity.x = _direction * _speed;
+        if(_collider.top || _collider.bottom)
+        {
+            _fly_direction *= -1;
 
-        boolean wall_ahead = _level.check(_position.x + (1 + _direction) / 2.0 * _width + _velocity.x, _position.y);
-        boolean wall_uphead = _level.check(_position.x, _position.y + (1 + _up) / 2.0 * _height + 2 * _velocity.y);
+            setAnimation(_fly_direction == -1 ? Animations.ASCEND : Animations.DESCEND);
+        }
 
-        if(wall_ahead)
+        if(_collider.left || _collider.right)
         {
             _direction *= -1;
         }
 
-        if(wall_uphead)
-        {
-            _up *= -1;
-            setAnimation(_up < 0 ? Animations.ASCEND : Animations.DESCEND);
-        }
-
-        _velocity.x = _grounded ? _direction * _speed : _direction * _speed;
-        _velocity.y = Game.GRAVITY * _up;
+        _velocity.x = _direction * _speed;
+        _velocity.y = Game.GRAVITY * _fly_direction;
     }
 }

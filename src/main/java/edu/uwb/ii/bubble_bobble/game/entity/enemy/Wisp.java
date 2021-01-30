@@ -11,21 +11,20 @@ public class Wisp extends Enemy
 {
 
     private Map _level;
-    private boolean _jumped;
 
     public Wisp(int x, int y, int direction, Map level)
     {
         super(ResourceManager.get().wisp, 2, 2, 6.0, x, y, direction, CollisionMode.REGULAR);
         _level = level;
-        _jumped = false;
+        setAnimation(Animations.DESCEND);
     }
 
     @Override
     public void movementRules()
     {
-        if(_jump <= 0 && _velocity.y < 0)
+        if(_direction == 1 && _collider.right || _direction == -1 && _collider.left)
         {
-            setAnimation(Animations.DESCEND);
+            _direction *= -1;
         }
 
         _velocity.x = _direction * _speed;
@@ -36,15 +35,10 @@ public class Wisp extends Enemy
             double jh = 8.0 / 60.0;
             _velocity.y = _jump * _jump_height < jh ? -_jump * _jump_height : -jh;
             _jump -= jh / _jump_height;
-        }
-
-        boolean wall_ahead = _level.check(_position.x + getFront() + _velocity.x, _position.y)
-                             && (_level.check(getFront() + _velocity.x, _position.y - 1) ||
-                                 _level.check(getFront() + _velocity.x, _position.y + 1));
-
-        if(wall_ahead)
-        {
-            _direction *= -1;
+            if(_jump <= 0)
+            {
+                setAnimation(Animations.DESCEND);
+            }
         }
 
         if(_grounded && _jump <= 0.0)

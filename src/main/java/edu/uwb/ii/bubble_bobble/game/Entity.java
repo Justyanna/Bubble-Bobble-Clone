@@ -132,10 +132,11 @@ abstract public class Entity
     public final void move(Map map)
     {
         movementRules();
+        _collider.clearContactData();
 
         if(_collider.test(map.get_collider()))
         {
-            if(_collider.top || _collider.bottom)
+            if(_collider.bottom)
             {
                 _position.y = Math.floor(_position.y);
                 _velocity.y = 0.0;
@@ -144,6 +145,12 @@ abstract public class Entity
             else
             {
                 _grounded = false;
+            }
+
+            if(_collider.top)
+            {
+                _position.y = Math.ceil(_position.y);
+                _velocity.y = 0.0;
             }
 
             if(_collider.left)
@@ -156,8 +163,6 @@ abstract public class Entity
                 _position.x = Math.floor(_position.x);
                 _velocity.x = 0.0;
             }
-
-            _collider.clearContactData();
         }
 
         _position.add(_velocity);
