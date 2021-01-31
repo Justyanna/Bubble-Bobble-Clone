@@ -48,7 +48,7 @@ public class Lunatic extends Enemy
                                          _direction * (enemy.x - _position.x) > 0 &&
                                          _direction * (enemy.x - _position.x) < 3))
             {
-                if(_level.check(_position.x - _direction, _position.y))
+                if(_level.check(getBack() - _direction, _position.y))
                 {
                     _panic = (int) Game.FRAME_RATE * 2;
                     setAnimation(_angry ? Animations.PANIC : Animations.CRY);
