@@ -148,18 +148,15 @@ abstract public class Entity
             {
                 _position.y = Math.floor(_position.y);
                 _velocity.y = 0.0;
-                _grounded = true;
-            }
-            else
-            {
-                _grounded = false;
             }
 
             if(_collider.top)
             {
-                _position.y = Math.ceil(_position.y);
+                _position.y = Math.ceil(_position.y) - 0.01;
                 _velocity.y = 0.0;
             }
+
+            _grounded = _collider.top || _collider.bottom;
 
             if(_collider.left || _collider.right)
             {

@@ -34,7 +34,7 @@ public class Beast extends Enemy
             _direction *= -1;
         }
 
-        _velocity.x = _direction * _speed;
+        _velocity.x = _grounded ? _direction * _speed : 0.0;
         _velocity.y = _floor * Game.GRAVITY;
 
         if(--_time_to_jump < 1)
