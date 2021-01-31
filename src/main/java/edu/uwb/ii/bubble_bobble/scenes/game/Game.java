@@ -231,10 +231,17 @@ public class Game
             {
                 Projectile p = it.next();
 
-                if(p.collide(_player))
+                if(p.collide(_player) && !_player.isInvincible() && !_player.isMourning())
                 {
-                    _quit = true;
-                    return;
+                    if(--_lives > 0)
+                    {
+                        _player.die();
+                    }
+                    else
+                    {
+                        _quit = true;
+                        return;
+                    }
                 }
 
                 if(p.isWasted())
