@@ -9,21 +9,41 @@
       -fx-font-size: 36px;
 }
 
-.text-area .content {
-    -fx-background-color: text-area-background;
-    -fx-border-style: none;
+.pagination > .pagination-control > .control-box {
+    -fx-spacing: 0;
 }
 
-.text-area{
-    -fx-font-size: 20px;
-    text-area-background: black;
-    -fx-border-style: none;
+/* You can control the actual button sizes here */
+.pagination > .pagination-control > .control-box > .number-button,
+.pagination > .pagination-control > .control-box > .bullet-button,
+.pagination > .pagination-control > .control-box > .left-arrow-button,
+.pagination > .pagination-control > .control-box > .right-arrow-button {
+    -fx-background-insets: 0, 1;
+    -fx-min-width: 30;
+    -fx-min-height: 50;
+    -fx-font-size: 10px;
+    -fx-background-color: black;
     -fx-text-fill: "#31ff0d";
     -fx-font-family: "Barcade Brawl";
 }
 
-.text-area .text {
-     -fx-line-spacing: 10px;
+/* Colors on hover */
+.pagination > .pagination-control > .control-box > .number-button:hover,
+.pagination > .pagination-control > .control-box > .bullet-button:hover,
+.pagination > .pagination-control > .control-box > .left-arrow-button:hover,
+.pagination > .pagination-control > .control-box > .right-arrow-button:hover {
+    -fx-background-color: "#111822";
+     -fx-text-fill: black;
+}
+
+/* Selected toggle color */
+.pagination > .pagination-control > .control-box > .number-button:selected,
+.pagination > .pagination-control > .control-box > .bullet-button:selected{
+   -fx-background-color: "#31ff0d";
+   -fx-text-fill: black;
+   -fx-border-style: solid  solid  solid  solid;
+     -fx-border-color: "#111822" "#111822" "#111822" "#111822";
+     -fx-border-width: 1;
 }
 
 .anchor{
