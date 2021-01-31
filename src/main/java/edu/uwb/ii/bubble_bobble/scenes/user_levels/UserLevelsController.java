@@ -72,8 +72,9 @@ public class UserLevelsController {
 
         for (File file : filesSlice) {
 
-            String mapName = String.format("%12s", file.getName().replace(".xml", ""));
+            String mapName = String.format("%s", file.getName().replace(".xml", ""));
             Label mapname = new Label(mapName);
+            mapname.setPrefWidth(400);
             mapname.getStyleClass().add("label");
             mapname.minWidth(150);
             Button playButton = getButton("Play", "button-play");
