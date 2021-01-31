@@ -62,7 +62,7 @@ public class MapCollider implements Collider
                     for(int i = 0; i < e.get_width() + 1; i++)
                     {
                         boolean floor_above = _host.check(e.getX() + i, e.getTop());
-                        boolean space_below = !_host.check(e.getX() + i, e.getTop() - vel.y);
+                        boolean space_below = !_host.check(e.getX() + i, e.getTop() - 2 * vel.y);
                         if(vel.y < 0 && floor_above && space_below)
                         {
                             ec.top = true;

@@ -13,7 +13,6 @@ import java.util.ArrayList;
 
 abstract public class Entity
 {
-
     //    -- dependencies
     protected SpriteSheet _gfx;
     protected Animation _animation;
@@ -162,14 +161,9 @@ abstract public class Entity
                 _velocity.y = 0.0;
             }
 
-            if(_collider.left)
+            if(_collider.left || _collider.right)
             {
-                _position.x = Math.ceil(_position.x);
-                _velocity.x = 0.0;
-            }
-            if(_collider.right)
-            {
-                _position.x = Math.floor(_position.x);
+                _position.x = Math.round(_position.x);
                 _velocity.x = 0.0;
             }
         }

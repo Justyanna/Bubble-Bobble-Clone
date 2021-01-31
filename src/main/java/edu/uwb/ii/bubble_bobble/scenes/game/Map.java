@@ -43,16 +43,28 @@ public class Map {
 
     public ArrayList<String> get_enemies() { return _enemies; }
 
-    public boolean check(double x, double y) {
+    public boolean check(double x, double y)
+    {
         return _body[((int) x + COLUMNS) % COLUMNS][((int) y + ROWS) % ROWS];
     }
 
-    private void load(String name, boolean isResource) {
-        try {
+    public boolean checkTest(double x, double y)
+    {
+        System.out.println(((int) x + COLUMNS) % COLUMNS + " " + ((int) y + ROWS) % ROWS);
+        return _body[((int) x + COLUMNS) % COLUMNS][((int) y + ROWS) % ROWS];
+    }
+
+    private void load(String name, boolean isResource)
+    {
+        try
+        {
             InputStream in;
-            if (isResource) {
+            if(isResource)
+            {
                 in = GameSceneController.class.getClassLoader().getResourceAsStream("maps/" + name + ".xml");
-            } else {
+            }
+            else
+            {
                 in = new FileInputStream(new File(MAPS_PATH + "/" + name));
             }
             BufferedReader reader = new BufferedReader(new InputStreamReader(in));
