@@ -14,7 +14,7 @@ public class Specter extends Enemy
 
     public Specter(int x, int y, int direction, Map level)
     {
-        super(ResourceManager.get().specter, 2, 2, 6.2, x, y, direction, CollisionMode.FLYING);
+        super(ResourceManager.get().specter, 2, 2, 6.0 / Math.sqrt(2.0), x, y, direction, CollisionMode.FLYING);
         _level = level;
         _fly_direction = -1;
     }

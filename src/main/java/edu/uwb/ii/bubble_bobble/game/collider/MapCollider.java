@@ -32,7 +32,6 @@ public class MapCollider implements Collider
             switch(ec.get_mode())
             {
                 case NONE:
-                case INVERTED:
                     return false;
 
                 case REGULAR:
@@ -53,6 +52,30 @@ public class MapCollider implements Collider
                     boolean wall_below = _host.check(e.getFront(), e.getY() + 1.0);
 
                     if(vel.x != 0 && wall_ahead && (wall_above || wall_below))
+                    {
+                        ec.left = e.get_direction() == -1;
+                        ec.right = e.get_direction() == 1;
+                    }
+                    return true;
+
+                case INVERTED:
+                    for(int i = 0; i < e.get_width() + 1; i++)
+                    {
+                        boolean floor_above = _host.check(e.getX() + i, e.getTop());
+                        boolean space_below = !_host.check(e.getX() + i, e.getTop() - vel.y);
+                        if(vel.y < 0 && floor_above && space_below)
+                        {
+                            ec.top = true;
+                            break;
+                        }
+                    }
+
+                    boolean wab = _host.check(e.getFront(), e.getY() - 1.0);
+                    boolean wah = _host.check(e.getFront(), e.getY()) &&
+                                  !_host.check(e.getFront() - vel.x, e.getY());
+                    boolean wbe = _host.check(e.getFront(), e.getY() + 1.0);
+
+                    if(vel.x != 0 && wah && (wab || wbe))
                     {
                         ec.left = e.get_direction() == -1;
                         ec.right = e.get_direction() == 1;

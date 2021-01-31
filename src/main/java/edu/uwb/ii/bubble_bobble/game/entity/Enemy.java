@@ -23,7 +23,6 @@ abstract public class Enemy extends Entity
     {
         _angry = true;
         setAnimation(Animations.ANGRY);
-
         _speed *= 1.5;
         _fire_rate *= 2.0;
     }

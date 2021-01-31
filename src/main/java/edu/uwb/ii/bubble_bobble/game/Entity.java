@@ -20,6 +20,7 @@ abstract public class Entity
     protected EntityCollider _collider;
 
     //    -- constants
+    protected boolean _map_locked;
     protected int _width;
     protected int _height;
     protected ArrayList<Projectile> _projectiles;
@@ -44,6 +45,7 @@ abstract public class Entity
     {
         _gfx = gfx;
         _animation = animation.copy();
+        _map_locked = true;
         _width = w;
         _height = h;
 
@@ -97,6 +99,13 @@ abstract public class Entity
     public void setAnimation(Animation animation)
     {
         _animation.set_frames(animation.getFrames());
+        _animation.reset();
+    }
+
+    public void setAnimation(Animation animation, int speed)
+    {
+        _animation.set_frames(animation.getFrames());
+        _animation.set_speed(speed);
         _animation.reset();
     }
 
@@ -167,10 +176,13 @@ abstract public class Entity
 
         _position.add(_velocity);
 
-        if(_position.x < -1.0) { _position.x = Map.COLUMNS; }
-        if(_position.x > Map.COLUMNS - 1.0 + _width) { _position.x = 1.0 - _width; }
-        if(_position.y < -1.0) { _position.y = Map.ROWS; }
-        if(_position.y > Map.ROWS - 1.0 + _height) { _position.y = 1.0 - _height; }
+        if(_map_locked)
+        {
+            if(_position.x < -1.0) { _position.x = Map.COLUMNS; }
+            if(_position.x > Map.COLUMNS - 1.0 + _width) { _position.x = 1.0 - _width; }
+            if(_position.y < -1.0) { _position.y = Map.ROWS; }
+            if(_position.y > Map.ROWS - 1.0 + _height) { _position.y = 1.0 - _height; }
+        }
 
         if(_fire_rate > 0.0 && _cooldown > 0.0)
         {

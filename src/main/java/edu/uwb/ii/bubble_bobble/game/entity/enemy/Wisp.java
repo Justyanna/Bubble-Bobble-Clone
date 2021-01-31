@@ -49,4 +49,11 @@ public class Wisp extends Enemy
 
         _velocity.x = _direction * _speed;
     }
+
+    @Override
+    public void getAngry()
+    {
+        super.getAngry();
+        setAnimation(Animations.DIVE);
+    }
 }

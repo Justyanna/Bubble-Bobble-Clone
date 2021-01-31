@@ -20,6 +20,8 @@ public class EntityCollider implements Collider
 
     public CollisionMode get_mode() { return _mode; }
 
+    public void set_mode(CollisionMode mode) { _mode = mode; }
+
     public void clearContactData()
     {
 

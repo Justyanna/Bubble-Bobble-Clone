@@ -18,7 +18,6 @@ public class Bubble extends Projectile
     public Bubble(double x, double y, int direction)
     {
         super(ResourceManager.get().placeholder, x, y, direction, CollisionMode.REGULAR, 10.0);
-
         _active = true;
         _velocity.x = _direction * 15.0 / Game.FRAME_RATE;
     }
@@ -39,8 +38,13 @@ public class Bubble extends Projectile
     {
         _captive = enemy;
         set_position(enemy.getX(), enemy.getY());
-        _captive.setAnimation(Animations.CAPTURED);
+        _captive.setAnimation(Animations.CAPTURED, 6);
         _timer = 8 * (int) Game.FRAME_RATE;
+    }
+
+    public void pop()
+    {
+        _wasted = true;
     }
 
     @Override

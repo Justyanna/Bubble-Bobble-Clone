@@ -36,6 +36,33 @@ public class Vec2
         return add(v.x, v.y);
     }
 
+    public Vec2 substract(double x, double y)
+    {
+        this.x -= x;
+        this.y -= y;
+        return this;
+    }
+
+    public Vec2 substract(Vec2 v)
+    {
+        return substract(v.x, v.y);
+    }
+
+    public Vec2 scale(double s)
+    {
+        this.x *= s;
+        this.y *= s;
+        return this;
+    }
+
+    public Vec2 normalize()
+    {
+        double length = this.length();
+        this.x /= length;
+        this.y /= length;
+        return this;
+    }
+
     public Vec2 sum(Vec2 v)
     {
         return new Vec2(this.x + v.x, this.y + v.y);

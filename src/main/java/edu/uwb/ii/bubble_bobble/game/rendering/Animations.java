@@ -10,12 +10,15 @@ public interface Animations {
     Animation DEAD = new Animation(10, 2, 2);
 
     Animation SHOOT = new Animation(12, 2, 4);
+    Animation BLAST = new Animation(14, 2, 4);
     Animation FALL = SHOOT.copy();
     Animation ASCEND = WALK.copy();
     Animation DESCEND = SHOOT.copy();
-    Animation DIVE = new Animation(14, 2, 6);
+    Animation DIVE = BLAST.copy();
     Animation TURN = SHOOT.copy();
+    Animation CLIMB = BLAST.copy();
     Animation CRY = SHOOT.copy();
+    Animation PANIC = BLAST.copy();
 
     Animation TMP_PLAYER = new Animation(8, 2, 4);
     Animation TMP_BUBBLE_FLY = new Animation(32, 1, 0);
