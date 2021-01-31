@@ -8,12 +8,16 @@ import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -28,6 +32,7 @@ public class GameSceneController {
 
     //    -- utility
     private final static long INTERVAL = 1000000000L / 60;
+    private static final String BUBBLE_PATH = "img/beta/placeholder.png";
     private static long last_update = System.nanoTime();
     @FXML
     public StackPane gameWindow;
@@ -38,6 +43,10 @@ public class GameSceneController {
     @FXML
     BorderPane root;
     @FXML
+    Label score;
+    @FXML
+    HBox bubblesNumber;
+    @FXML
     private Button goToMenu;
     private Button saveScore;
     private Button menuAfterGame;
@@ -45,6 +54,7 @@ public class GameSceneController {
     private int current_i;
     private LeaderboardFileManager fileManager;
     private Game _game;
+    private int prevScore;
 
     public void initialize() {
 
@@ -57,6 +67,21 @@ public class GameSceneController {
         fileManager = new LeaderboardFileManager();
         name = new TextField();
 
+        score.setText("0");
+        prevScore = 0;
+        Image bubble = new Image(BUBBLE_PATH);
+        ImageView imageView;
+
+        for (int i = 0; i < 6; i++) {
+            imageView = new ImageView(bubble);
+            imageView.setFitWidth(40);
+            imageView.setFitHeight(40);
+            Rectangle2D imagePart =
+                    new Rectangle2D(0, 3.5 * bubble.getHeight() / 7, bubble.getWidth() / 8, bubble.getHeight() / 8);
+            imageView.setViewport(imagePart);
+            bubblesNumber.getChildren().add(imageView);
+        }
+
         timer = new AnimationTimer() {
             @Override
             public void handle(long now) {
@@ -65,6 +90,10 @@ public class GameSceneController {
                     gc.clearRect(0, 0, board.getWidth(), board.getHeight());
                     _game.update(gc, cellSize());
                     last_update += INTERVAL;
+                    if (_game.get_score() != prevScore) {
+                        prevScore = _game.get_score();
+                        score.setText(String.valueOf(prevScore));
+                    }
                     if (_game.quit()) {
                         timer.stop();
                         App.get_inputs().clear();
@@ -89,6 +118,22 @@ public class GameSceneController {
         loadLanguageVersion();
     }
 
+    void updateBubbles(int number) {
+        bubblesNumber.getChildren().clear();
+        Image bubble = new Image(BUBBLE_PATH);
+        ImageView imageView;
+
+        for (int i = 0; i < number; i++) {
+            imageView = new ImageView(bubble);
+            imageView.setFitWidth(40);
+            imageView.setFitHeight(40);
+            Rectangle2D imagePart =
+                    new Rectangle2D(0, 3.5 * bubble.getHeight() / 7, bubble.getWidth() / 8, bubble.getHeight() / 8);
+            imageView.setViewport(imagePart);
+            bubblesNumber.getChildren().add(imageView);
+        }
+    }
+
     private void handleQuit() {
         if (App.customMapName.isEmpty()) {
             if (!(gameWindow.getChildren().contains(saveScore) || gameWindow.getChildren().contains(menuAfterGame))) {
@@ -110,8 +155,8 @@ public class GameSceneController {
         } else {
             try {
                 switchToUserLevel();
-            }catch (IOException e)
-            {}
+            } catch (IOException e) {
+            }
         }
     }
 

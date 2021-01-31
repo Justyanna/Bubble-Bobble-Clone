@@ -1,5 +1,5 @@
 .root {
-    -fx-background-color: goldenrod;
+    -fx-background-color: black;
 }
 
 .game-window {
@@ -37,7 +37,7 @@
 .button-play
 {
    -fx-background-color: black;
-     -fx-font-size: 12px;
+   -fx-font-size: 12px;
   -fx-text-fill: "#31ff0d";
   -fx-font-family: "Barcade Brawl";
 }
@@ -56,4 +56,16 @@
     -fx-font-size: 14px;
     -fx-text-fill: "#31ff0d";
     -fx-font-family: "Barcade Brawl";
+}
+
+.title{
+    -fx-font-size: 32px;
+  -fx-text-fill: "#31ff0d";
+  -fx-font-family: "Barcade Brawl";
+}
+
+.score{
+    -fx-font-size: 22px;
+  -fx-text-fill: "#31ff0d";
+  -fx-font-family: "Barcade Brawl";
 }
