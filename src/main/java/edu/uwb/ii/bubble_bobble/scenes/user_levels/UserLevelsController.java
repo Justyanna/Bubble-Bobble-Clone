@@ -45,7 +45,9 @@ public class UserLevelsController {
         empty = new Label();
         loadLanguageVersion();
         File mapDir = new File(MAPS_PATH);
-        listOfFiles = mapDir.listFiles();
+        listOfFiles = Arrays.stream(mapDir.listFiles())
+                .filter(x -> x.getName().substring(x.getName().lastIndexOf(".")).equals(".xml"))
+                .toArray(File[]::new);
         previous.setVisible(false);
 
         if (listOfFiles.length > 0) {
@@ -69,6 +71,7 @@ public class UserLevelsController {
         centerBox.getChildren().clear();
 
         for (File file : filesSlice) {
+
             String mapName = String.format("%12s", file.getName().replace(".xml", ""));
             Label mapname = new Label(mapName);
             mapname.getStyleClass().add("label");
