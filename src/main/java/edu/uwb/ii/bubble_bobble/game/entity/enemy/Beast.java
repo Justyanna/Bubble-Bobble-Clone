@@ -29,7 +29,11 @@ public class Beast extends Enemy
     @Override
     public void movementRules()
     {
-        if(_direction == 1 && _collider.right || _direction == -1 && _collider.left)
+        _velocity.x = _direction * _speed;
+
+        boolean wall_ahead = _grounded && _level.check(getFront() + _velocity.x, _position.y);
+
+        if(wall_ahead)
         {
             _direction *= -1;
         }
