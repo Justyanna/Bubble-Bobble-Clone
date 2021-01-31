@@ -55,6 +55,7 @@ public class GameSceneController {
     private LeaderboardFileManager fileManager;
     private Game _game;
     private int prevScore;
+    private int _bubbles;
 
     public void initialize() {
 
@@ -86,15 +87,23 @@ public class GameSceneController {
             @Override
             public void handle(long now) {
 
-                while (now - last_update > INTERVAL) {
+                while (now - last_update > INTERVAL)
+                {
                     gc.clearRect(0, 0, board.getWidth(), board.getHeight());
                     _game.update(gc, cellSize());
+                    if(_bubbles != _game.get_lives())
+                    {
+                        _bubbles = _game.get_lives();
+                        updateBubbles(_bubbles);
+                    }
                     last_update += INTERVAL;
-                    if (_game.get_score() != prevScore) {
+                    if(_game.get_score() != prevScore)
+                    {
                         prevScore = _game.get_score();
                         score.setText(String.valueOf(prevScore));
                     }
-                    if (_game.quit()) {
+                    if(_game.quit())
+                    {
                         timer.stop();
                         App.get_inputs().clear();
                         gc.clearRect(0, 0, gc.getCanvas().getWidth(), gc.getCanvas().getHeight());
@@ -111,6 +120,7 @@ public class GameSceneController {
 
             _game = Game.getInstance();
             _game.start();
+            _bubbles = _game.get_lives();
             _game.update(gc, cellSize());
 
             timer.start();

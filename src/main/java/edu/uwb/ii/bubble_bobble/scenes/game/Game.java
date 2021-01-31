@@ -21,9 +21,11 @@ public class Game
     public final static double FRAME_RATE = 60.0;
     public final static double GRAVITY = 10.0 / Game.FRAME_RATE;
     private static Game __instance__;
+    private int _countdown;
     private String _level_name;
     private Map _level;
     private int _score;
+    private int _lives;
     private Player _player;
     private ArrayList<Enemy> _enemies;
     private ArrayList<Projectile> _bubbles;
@@ -79,6 +81,8 @@ public class Game
         return _bubbles;
     }
 
+    public int get_lives() { return _lives; }
+
     public void start(String level, boolean isResource)
     {
         try
@@ -102,7 +106,6 @@ public class Game
 
             for(String enemy : _level.get_enemies())
             {
-
                 String[] enemy_data = enemy.split(" ");
 
                 x = Integer.parseInt(enemy_data[1]);
@@ -134,10 +137,12 @@ public class Game
     public void start()
     {
         _score = 0;
+        _lives = 6;
 
         _quit = false;
         _paused = false;
         _started = true;
+        _countdown = (int) Game.FRAME_RATE * 5;
 
         if(App.customMapName.isEmpty())
         {
@@ -156,15 +161,23 @@ public class Game
             return;
         }
 
-        if(!_paused)
+        if(!_paused && _countdown < 1)
         {
 //            -- collisions
+
             for(Enemy e : _enemies)
             {
-                if(e.collide(_player))
+                if(e.collide(_player) && !_player.isInvincible() && !_player.isMourning())
                 {
-                    _quit = true;
-                    return;
+                    if(--_lives > 0)
+                    {
+                        _player.die();
+                    }
+                    else
+                    {
+                        _quit = true;
+                        return;
+                    }
                 }
             }
 
@@ -244,6 +257,10 @@ public class Game
             {
                 p.move(_level);
             }
+        }
+        else if(_countdown > 0)
+        {
+            _countdown--;
         }
 
 //        -- drawing

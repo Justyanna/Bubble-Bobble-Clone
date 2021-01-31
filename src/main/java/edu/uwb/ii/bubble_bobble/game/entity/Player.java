@@ -7,6 +7,7 @@ import edu.uwb.ii.bubble_bobble.game.collider.CollisionMode;
 import edu.uwb.ii.bubble_bobble.game.entity.projectile.Bubble;
 import edu.uwb.ii.bubble_bobble.game.rendering.Animations;
 import edu.uwb.ii.bubble_bobble.game.rendering.ResourceManager;
+import edu.uwb.ii.bubble_bobble.game.utils.Vec2;
 import edu.uwb.ii.bubble_bobble.scenes.game.Game;
 
 import java.util.ArrayList;
@@ -16,6 +17,10 @@ public class Player extends Entity
 
     private final Inputs _controls;
     private boolean _moved;
+    private int _mourning;
+    private int _invincible;
+
+    private Vec2 _spawn_point;
 
     public Player(double x, double y, int direction, ArrayList<Projectile> projectile_output)
     {
@@ -23,6 +28,9 @@ public class Player extends Entity
 
         _controls = App.get_inputs();
         _projectiles = projectile_output;
+        _mourning = 0;
+        _invincible = 0;
+        _spawn_point = new Vec2(x, y);
 
         _speed = 7.0 / 60.0;
         _fire_rate = 1.5;
@@ -37,6 +45,10 @@ public class Player extends Entity
 
     public Inputs get_controls() { return _controls; }
 
+    public boolean isInvincible() { return _invincible > 0; }
+
+    public boolean isMourning() { return _mourning > 0; }
+
     public void jump()
     {
         _jump = 1.0;
@@ -45,6 +57,21 @@ public class Player extends Entity
     @Override
     public void movementRules()
     {
+        if(_mourning > 0)
+        {
+            if(--_mourning == 0)
+            {
+                spawn(_spawn_point.x, _spawn_point.y);
+                setAnimation(Animations.IDLE);
+                _invincible = (int) Game.FRAME_RATE * 3;
+            }
+            return;
+        }
+        else if(_invincible > 0)
+        {
+            _invincible--;
+        }
+
         _velocity.x = 0;
         _velocity.y = Game.GRAVITY;
 
@@ -90,5 +117,13 @@ public class Player extends Entity
             _projectiles.add(new Bubble(getFront() - _direction * 2.0, _position.y, _direction));
             _cooldown = 1.0;
         }
+    }
+
+    public void die()
+    {
+        setAnimation(Animations.DEAD);
+        _mourning = (int) Game.FRAME_RATE * 3;
+        _velocity.x = 0.0;
+        _velocity.y = Game.GRAVITY;
     }
 }
