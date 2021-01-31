@@ -52,7 +52,7 @@ public class LeaderboardFileManager {
             Files.createDirectories(Path.of(appPath));
             Files.createFile(Path.of(leaderboardPath));
         } catch (IOException e) {
-            LOGGER.info("Leaderboard directory already exist");
+           // LOGGER.info("Leaderboard directory already exist");
         }
         try {
             File file = new File(leaderboardPath);
