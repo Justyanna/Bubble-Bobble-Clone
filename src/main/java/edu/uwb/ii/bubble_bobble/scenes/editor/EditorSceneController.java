@@ -75,6 +75,7 @@ public class EditorSceneController {
     private GridPane grid;
     @FXML
     private ToggleGroup modes;
+    private String importName;
 
     public void initialize() {
         map = new Map();
@@ -137,6 +138,7 @@ public class EditorSceneController {
             toggleButton.setPrefWidth(100);
             int finalI = i;
             toggleButton.setOnAction(event -> handleIdToggleButtonClick(toggleButton, ids[finalI]));
+            toggleButton.setPrefWidth(150);
             if (i == 1) {
                 toggleButton.setSelected(true);
                 currentSelected = ids[1];
@@ -375,6 +377,8 @@ public class EditorSceneController {
 
     @FXML
     void resetBoard() {
+        mapName.clear();
+        importButton.setPromptText(importName);
         map.resetMap();
         grid.getChildren().forEach(cell -> {
             cell.getStyleClass().clear();
@@ -386,7 +390,6 @@ public class EditorSceneController {
         if (rightPanel.getChildren().stream().anyMatch(x -> x.getStyleClass().contains("red-frame"))) {
             for (javafx.scene.Node node : rightPanel.getChildren()) {
                 node.getStyleClass().clear();
-                node.getStyleClass().add("button");
             }
         }
         if (button.isSelected()) {
@@ -528,6 +531,7 @@ public class EditorSceneController {
                     saveButton.setText(text);
                 } else if ("importButton".equals(id)) {
                     importButton.setPromptText(text);
+                    importName = text;
                 } else if ("resetButton".equals(id)) {
                     resetButton.setText(text);
                 } else if ("goToMenu".equals(id)) {

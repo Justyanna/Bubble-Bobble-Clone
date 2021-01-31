@@ -1,13 +1,13 @@
 .root {
-    -fx-background-color: goldenrod;
+    -fx-background-color: "#111822";
 }
 
 .header{
-    -fx-background-color: "#754fd6";
+    -fx-background-color: black;
 }
 
 .board-window {
-    -fx-background-color: goldenrod;
+   -fx-background-color: goldenrod;
    -fx-padding: 0 0 0 50;
 }
 
@@ -22,9 +22,9 @@
 
 .grid-button-wall
 {
-    -fx-background-color: white;
+    -fx-background-color: "#3C696A";
     -fx-border-style: solid  solid  solid  solid;
-    -fx-border-color: white white white white;
+    -fx-border-color: black black black black;
     -fx-border-width: 1;
 }
 
@@ -84,18 +84,22 @@
 
 .map_name_blank
 {
-    -fx-border-style: solid  solid  solid  solid;
-    -fx-border-color: red red red red;
-    -fx-border-width: 3;
-    -fx-background-color: "#8cc9ff";
+  -fx-border-style: solid  solid  solid  solid;
+  -fx-border-color: red red red red;
+  -fx-border-width: 3;
+  -fx-background-color:"#1f1e1d";
+  -fx-font-size: 11px;
+  -fx-text-fill: "#ff00a2";
+  -fx-font-family: "Barcade Brawl";
 }
 
 .map_name
 {
-    -fx-border-style: solid  solid  solid  solid;
-    -fx-border-color: black black black black;
-    -fx-border-width: 1;
-    -fx-background-color: "#8cc9ff";
+  -fx-background-color: "#1f1e1d";
+  -fx-font-size: 11px;
+  -fx-text-fill: "#ff00a2";
+  -fx-font-family: "Barcade Brawl";
+
 }
 
 .red-frame{
@@ -103,3 +107,50 @@
   -fx-border-color: red red red red;
   -fx-border-width: 3;
 }
+
+.button
+{
+  -fx-background-color: black;
+  -fx-font-size: 12px;
+  -fx-text-fill: "#31ff0d";
+  -fx-font-family: "Barcade Brawl";
+}
+
+
+.button:hover{
+   -fx-font-size: 16px;
+}
+
+.combobox .list-cell {
+   -fx-background-color: black;
+   -fx-font-size: 12px;
+  -fx-text-fill: "#31ff0d";
+  -fx-font-family: "Barcade Brawl";
+  -fx-border-style: solid  solid  solid  solid;
+  -fx-border-color: "#111822" "#111822" "#111822" "#111822";
+  -fx-border-width: 1;
+}
+
+.combobox .arrow, .combo-box .arrow-button{
+    -fx-background-color: "#114508";
+}
+
+.combo-box-popup .list-view .list-cell:filled:hover{
+    -fx-background-color:"#31ff0d";
+    -fx-text-fill: black;
+}
+
+.toggle-button{
+  -fx-background-color: black;
+  -fx-font-size: 12px;
+  -fx-text-fill: "#31ff0d";
+  -fx-font-family: "Barcade Brawl";
+}
+
+.toggle-button:selected{
+  -fx-border-style: solid  solid  solid  solid;
+  -fx-border-color: "#ffd900" "#ffd900" "#ffd900" "#ffd900";
+  -fx-border-width: 1;
+  -fx-background-color:  "#202224";
+}
+

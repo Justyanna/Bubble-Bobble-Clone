@@ -3,7 +3,8 @@
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<BorderPane fx:id="root" styleClass="root" stylesheets="@./editor.css"  xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1"
+<BorderPane fx:id="root" styleClass="root" stylesheets="@./editor.css" xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="edu.uwb.ii.bubble_bobble.scenes.editor.EditorSceneController">
     <fx:define>
         <ToggleGroup fx:id="modes"/>
@@ -17,12 +18,12 @@
                 <VBox>
                     <HBox alignment="CENTER_LEFT" styleClass="header">
                         <children>
-                            <Button fx:id="saveButton" onAction="#saveMap" prefHeight="30" prefWidth="70"
+                            <Button fx:id="saveButton" onAction="#saveMap" prefHeight="30" prefWidth="150"
                                     styleClass="options__button" text="Save"/>
 
-                            <ComboBox fx:id="importButton" onAction="#importMap" prefHeight="30" prefWidth="120"
-                                    styleClass="options__button" />
-                            <Button fx:id="resetButton" onAction="#resetBoard" prefHeight="30" prefWidth="70"
+                            <ComboBox fx:id="importButton" onAction="#importMap" prefHeight="30" maxWidth="280"
+                                      styleClass="combobox"/>
+                            <Button fx:id="resetButton" onAction="#resetBoard" prefHeight="30" prefWidth="150"
                                     styleClass="options__button" text="Reset"/>
                         </children>
                         <padding>
@@ -34,7 +35,7 @@
                             <Label fx:id="mapNameLabel" prefHeight="30" prefWidth="100" styleClass="map_name_label">Map
                                 name:
                             </Label>
-                            <TextField fx:id="mapName" prefHeight="30" prefWidth="100" styleClass="map_name">
+                            <TextField fx:id="mapName" prefHeight="30" prefWidth="170" styleClass="map_name" >
                             </TextField>
                         </children>
                         <padding>
@@ -46,14 +47,14 @@
             <center>
                 <HBox alignment="CENTER" styleClass="header">
                     <children>
-                        <ToggleButton fx:id="fullFrame" onAction="#addFullFrame" prefHeight="30" prefWidth="120"
+                        <ToggleButton fx:id="fullFrame" onAction="#addFullFrame" prefHeight="30" prefWidth="210"
                                       styleClass="options__button" text="Full frame" toggleGroup="$frames">
                         </ToggleButton>
-                        <ToggleButton fx:id="oneGapFrame" onAction="#addOneGapFrame" prefHeight="30" prefWidth="120"
+                        <ToggleButton fx:id="oneGapFrame" onAction="#addOneGapFrame" prefHeight="30" maxWidth="260"
                                       styleClass="options__button" text="One gap frame" toggleGroup="$frames"/>
-                        <ToggleButton fx:id="twoGapFrame" onAction="#addTwoGapFrame" prefHeight="30" prefWidth="120"
+                        <ToggleButton fx:id="twoGapFrame" onAction="#addTwoGapFrame" prefHeight="30" maxWidth="280"
                                       styleClass="options__button" text="Two gaps center" toggleGroup="$frames"/>
-                        <ToggleButton fx:id="threeGapFrame" onAction="#addThreeGapFrame" prefHeight="30" prefWidth="120"
+                        <ToggleButton fx:id="threeGapFrame" onAction="#addThreeGapFrame" prefHeight="30" maxWidth="310"
                                       styleClass="options__button" text="Two gaps edges" toggleGroup="$frames"/>
                     </children>
                     <padding>
@@ -64,7 +65,7 @@
             <right>
                 <HBox alignment="CENTER_RIGHT" styleClass="header">
                     <children>
-                        <Button fx:id="goToMenu" onAction="#switchToOptions" prefHeight="30"
+                        <Button fx:id="goToMenu" onAction="#switchToOptions" prefHeight="30" prefWidth="100"
                                 styleClass="options__button" text="Go to options">
                             <HBox.margin>
                                 <Insets right="20.0"/>
