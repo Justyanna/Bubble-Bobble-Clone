@@ -28,7 +28,8 @@ import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
 
-public class GameSceneController {
+public class GameSceneController
+{
 
     //    -- utility
     private final static long INTERVAL = 1000000000L / 60;
@@ -57,7 +58,8 @@ public class GameSceneController {
     private int prevScore;
     private int _bubbles;
 
-    public void initialize() {
+    public void initialize()
+    {
 
         gc = board.getGraphicsContext2D();
         board.widthProperty().bind(gameWindow.widthProperty());
@@ -73,21 +75,13 @@ public class GameSceneController {
         Image bubble = new Image(BUBBLE_PATH);
         ImageView imageView;
 
-        for (int i = 0; i < 6; i++) {
-            imageView = new ImageView(bubble);
-            imageView.setFitWidth(40);
-            imageView.setFitHeight(40);
-            Rectangle2D imagePart =
-                    new Rectangle2D(0, 3.5 * bubble.getHeight() / 7, bubble.getWidth() / 8, bubble.getHeight() / 8);
-            imageView.setViewport(imagePart);
-            bubblesNumber.getChildren().add(imageView);
-        }
-
-        timer = new AnimationTimer() {
+        timer = new AnimationTimer()
+        {
             @Override
-            public void handle(long now) {
+            public void handle(long now)
+            {
 
-                while (now - last_update > INTERVAL)
+                while(now - last_update > INTERVAL)
                 {
                     gc.clearRect(0, 0, board.getWidth(), board.getHeight());
                     _game.update(gc, cellSize());
@@ -115,12 +109,11 @@ public class GameSceneController {
 
         //        -- waits for fxml elements to load properly
         Platform.runLater(() -> {
-
             board.requestFocus();
 
             _game = Game.getInstance();
             _game.start();
-            _bubbles = _game.get_lives();
+            _bubbles = 0;
             _game.update(gc, cellSize());
 
             timer.start();
@@ -128,12 +121,14 @@ public class GameSceneController {
         loadLanguageVersion();
     }
 
-    void updateBubbles(int number) {
+    void updateBubbles(int number)
+    {
         bubblesNumber.getChildren().clear();
         Image bubble = new Image(BUBBLE_PATH);
         ImageView imageView;
 
-        for (int i = 0; i < number; i++) {
+        for(int i = 0; i < number; i++)
+        {
             imageView = new ImageView(bubble);
             imageView.setFitWidth(40);
             imageView.setFitHeight(40);
@@ -144,9 +139,12 @@ public class GameSceneController {
         }
     }
 
-    private void handleQuit() {
-        if (App.customMapName.isEmpty()) {
-            if (!(gameWindow.getChildren().contains(saveScore) || gameWindow.getChildren().contains(menuAfterGame))) {
+    private void handleQuit()
+    {
+        if(App.customMapName.isEmpty())
+        {
+            if(!(gameWindow.getChildren().contains(saveScore) || gameWindow.getChildren().contains(menuAfterGame)))
+            {
 
                 int score = _game.get_score();
                 addStyleClasses();
@@ -155,26 +153,36 @@ public class GameSceneController {
                 Collection<LeaderBoardData> data = fileManager.getLeaderBoardData();
                 saveScore.setOnAction(event -> handleSave(score, data != null ? -data.size() : 0));
 
-                if (fileManager.isSavable(score, data)) {
+                if(fileManager.isSavable(score, data))
+                {
                     displayIfSavable(score, formatter, data);
-                } else {
+                }
+                else
+                {
 
                     displayIfNotSavable(score, formatter, data);
                 }
             }
-        } else {
-            try {
+        }
+        else
+        {
+            try
+            {
                 switchToUserLevel();
-            } catch (IOException e) {
+            }
+            catch(IOException e)
+            {
             }
         }
     }
 
-    private void switchToUserLevel() throws IOException {
+    private void switchToUserLevel() throws IOException
+    {
         App.setRoot("user_levels");
     }
 
-    private void handleSave(int score, int offset) {
+    private void handleSave(int score, int offset)
+    {
         name.getStyleClass().add("name-input");
         name.setText("Player 1");
         name.setMaxWidth(200);
@@ -186,14 +194,18 @@ public class GameSceneController {
             String input = name.getText().replaceAll(" ", "_");
 
             fileManager.saveScore(input, String.valueOf(score), formatter.format(new Date()));
-            try {
+            try
+            {
                 switchToPrimary();
-            } catch (IOException e) {
+            }
+            catch(IOException e)
+            {
                 e.printStackTrace();
             }
         });
 
-        if (!(gameWindow.getChildren().contains(name) || gameWindow.getChildren().contains(confirm))) {
+        if(!(gameWindow.getChildren().contains(name) || gameWindow.getChildren().contains(confirm)))
+        {
             gameWindow.getChildren().add(name);
             gameWindow.getChildren().add(confirm);
         }
@@ -201,7 +213,8 @@ public class GameSceneController {
         gameWindow.setMargin(confirm, new Insets(offset * 70 + current_i * 100, 0, 0, 260));
     }
 
-    private void displayIfNotSavable(int score, DateFormat formatter, Collection<LeaderBoardData> data) {
+    private void displayIfNotSavable(int score, DateFormat formatter, Collection<LeaderBoardData> data)
+    {
         int i = 1;
         i = fillWithScoresGraterThanYour(score, data, i);
         int offset = data != null ? -data.size() : 0;
@@ -211,7 +224,8 @@ public class GameSceneController {
         gameWindow.setMargin(menuAfterGame, new Insets(offset * 70 + (i + 1) * 100, 0, 0, 0));
     }
 
-    private void displayIfSavable(int score, DateFormat formatter, Collection<LeaderBoardData> data) {
+    private void displayIfSavable(int score, DateFormat formatter, Collection<LeaderBoardData> data)
+    {
         int i = 1;
 
         i = fillWithScoresGraterThanYour(score, data, i);
@@ -222,17 +236,22 @@ public class GameSceneController {
         addButtons(i, offset);
     }
 
-    private void addButtons(int i, int offset) {
+    private void addButtons(int i, int offset)
+    {
         gameWindow.getChildren().add(saveScore);
         gameWindow.getChildren().add(menuAfterGame);
         gameWindow.setMargin(saveScore, new Insets(offset * 70 + (i + 1) * 100, 200, 0, 0));
         gameWindow.setMargin(menuAfterGame, new Insets(offset * 70 + (i + 1) * 100, 0, 0, 200));
     }
 
-    private int fillWithScoreLessThanYou(int score, Collection<LeaderBoardData> data, int i) {
-        if (data != null) {
-            for (LeaderBoardData row : data) {
-                if (row.getScore() <= score) {
+    private int fillWithScoreLessThanYou(int score, Collection<LeaderBoardData> data, int i)
+    {
+        if(data != null)
+        {
+            for(LeaderBoardData row : data)
+            {
+                if(row.getScore() <= score)
+                {
                     i++;
                     Label rowLabel = new Label(i + ". " + row.getName() + " " + row.getScore() + " " + row.getDate());
                     gameWindow.getChildren().add(rowLabel);
@@ -244,10 +263,14 @@ public class GameSceneController {
         return i;
     }
 
-    private int fillWithScoresGraterThanYour(int score, Collection<LeaderBoardData> data, int i) {
-        if (data != null) {
-            for (LeaderBoardData row : data) {
-                if (row.getScore() > score) {
+    private int fillWithScoresGraterThanYour(int score, Collection<LeaderBoardData> data, int i)
+    {
+        if(data != null)
+        {
+            for(LeaderBoardData row : data)
+            {
+                if(row.getScore() > score)
+                {
                     Label rowLabel = new Label(i + ". " + row.getName() + " " + row.getScore() + " " + row.getDate());
                     gameWindow.getChildren().add(rowLabel);
                     rowLabel.getStyleClass().add("score-row");
@@ -259,57 +282,74 @@ public class GameSceneController {
         return i;
     }
 
-    private void displayYourScore(int score, DateFormat formatter, int i, int offset) {
+    private void displayYourScore(int score, DateFormat formatter, int i, int offset)
+    {
         Label yourScore = new Label(i + ". " + "You" + " " + score + " " + formatter.format(new Date()));
         yourScore.getStyleClass().add("score-row-you");
         gameWindow.getChildren().add(yourScore);
         gameWindow.setMargin(yourScore, new Insets(offset * 70 + (i - 1) * 100, 0, 0, 0));
     }
 
-    private void addMenuAfterGameOnAction() {
+    private void addMenuAfterGameOnAction()
+    {
         menuAfterGame.setOnAction(actionEvent -> {
-            try {
+            try
+            {
                 switchToPrimary();
-            } catch (IOException e) {
+            }
+            catch(IOException e)
+            {
                 e.printStackTrace();
             }
         });
     }
 
-    private void addStyleClasses() {
+    private void addStyleClasses()
+    {
         menuAfterGame.getStyleClass().add("button-menu");
         saveScore.getStyleClass().add("button-save");
     }
 
-    public int cellSize() {
+    public int cellSize()
+    {
         return (int) board.getHeight() / Map.ROWS;
     }
 
-    private void loadLanguageVersion() {
+    private void loadLanguageVersion()
+    {
         Document doc = CurrentLanguageVersionProvider.loadXml();
         processXml(doc);
     }
 
-    private void processXml(Document doc) {
-        if (doc != null) {
+    private void processXml(Document doc)
+    {
+        if(doc != null)
+        {
             doc.getDocumentElement().normalize();
             Node menu = doc.getElementsByTagName("Game").item(0);
 
-            for (int i = 0; i < menu.getChildNodes().getLength(); i++) {
+            for(int i = 0; i < menu.getChildNodes().getLength(); i++)
+            {
 
                 Node node = menu.getChildNodes().item(i);
                 String id = node.getNodeName();
                 var text = node.getTextContent();
 
-                if (id == null || text == null) {
+                if(id == null || text == null)
+                {
                     continue;
                 }
 
-                if ("goToMenu".equals(id)) {
+                if("goToMenu".equals(id))
+                {
                     goToMenu.setText(text);
-                } else if ("menuAfterGame".equals(id)) {
+                }
+                else if("menuAfterGame".equals(id))
+                {
                     menuAfterGame.setText(text);
-                } else if ("saveScore".equals(id)) {
+                }
+                else if("saveScore".equals(id))
+                {
                     saveScore.setText(text);
                 }
             }
@@ -319,7 +359,8 @@ public class GameSceneController {
     //    Actions
 
     @FXML
-    private void switchToPrimary() throws IOException {
+    private void switchToPrimary() throws IOException
+    {
 
         timer.stop();
         App.get_inputs().clear();

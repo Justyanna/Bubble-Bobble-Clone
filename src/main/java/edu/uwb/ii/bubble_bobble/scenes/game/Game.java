@@ -139,7 +139,7 @@ public class Game
     public void start()
     {
         _score = 0;
-        _lives = 6;
+        _lives = 3;
 
         _quit = false;
         _paused = false;
