@@ -16,7 +16,6 @@ public class Wisp extends Enemy
     {
         super(ResourceManager.get().wisp, 2, 2, 6.0, x, y, direction, CollisionMode.REGULAR);
         _level = level;
-        setAnimation(Animations.DESCEND);
     }
 
     @Override

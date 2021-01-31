@@ -11,7 +11,7 @@ abstract public class Enemy extends Entity
 
     public Enemy(SpriteSheet gfx, int w, int h, double speed, int x, int y, int direction, CollisionMode mode)
     {
-        super(gfx, Animations.WALK, w, h, mode);
+        super(gfx, Animations.IDLE, w, h, mode);
 
         _angry = false;
         _speed = speed / 60.0;

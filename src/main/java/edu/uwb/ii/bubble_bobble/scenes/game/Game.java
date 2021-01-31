@@ -4,7 +4,9 @@ import edu.uwb.ii.bubble_bobble.App;
 import edu.uwb.ii.bubble_bobble.game.entity.Enemy;
 import edu.uwb.ii.bubble_bobble.game.entity.Player;
 import edu.uwb.ii.bubble_bobble.game.entity.Projectile;
+import edu.uwb.ii.bubble_bobble.game.entity.enemy.Wisp;
 import edu.uwb.ii.bubble_bobble.game.entity.projectile.Bubble;
+import edu.uwb.ii.bubble_bobble.game.rendering.Animations;
 import edu.uwb.ii.bubble_bobble.game.rendering.ResourceManager;
 import edu.uwb.ii.bubble_bobble.game.utils.Vec2;
 import javafx.scene.canvas.GraphicsContext;
@@ -260,7 +262,13 @@ public class Game
         }
         else if(_countdown > 0)
         {
-            _countdown--;
+            if(--_countdown == 0)
+            {
+                for(Enemy e : _enemies)
+                {
+                    e.setAnimation(e instanceof Wisp ? Animations.DESCEND : Animations.WALK);
+                }
+            }
         }
 
 //        -- drawing
