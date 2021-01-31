@@ -1,6 +1,8 @@
 package edu.uwb.ii.bubble_bobble;
 
 import edu.uwb.ii.bubble_bobble.game.Inputs;
+import edu.uwb.ii.bubble_bobble.game.rendering.SpriteSheet;
+import edu.uwb.ii.bubble_bobble.utils.CurrentLanguageVersionProvider;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
@@ -13,6 +15,8 @@ import javafx.scene.text.Font;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.logging.Logger;
@@ -22,6 +26,8 @@ import java.util.logging.Logger;
  */
 public class App extends Application {
 
+    public static final String OPTIONS_FILE_PATH =
+            System.getProperty("user.home") + "/AppData/Local/Bubble Bobble Clone/config.txt";
     private static final Logger LOGGER = Logger.getLogger(App.class.getName());
     private static final String FONT_PATH = "fonts/Barcade Brawl.ttf";
     public static String customMapName = new String();
@@ -102,9 +108,41 @@ public class App extends Application {
         launch();
     }
 
+    private void loadOptions() {
+
+        try (BufferedReader br = new BufferedReader(new FileReader(OPTIONS_FILE_PATH))) {
+
+            String st;
+            while ((st = br.readLine()) != null) {
+                String[] temp = st.split(" ");
+                if (temp[0].equals("language:")) {
+                    String language;
+                    if (temp[1].equals("pl") || temp[1].equals("eng") || temp[1].equals("fr")) {
+                        language = "language_versions/" + temp[1] + ".xml";
+                        CurrentLanguageVersionProvider.currentLanguageVersion = language;
+                    } else {
+                        throw new UnsupportedOperationException("Bad config file structure");
+                    }
+                }
+                if (temp[0].equals("vfx:")) {
+                    String graphicVersion;
+                    if (temp[1].equals("beta") || temp[1].equals("legacy")) {
+                        graphicVersion = "file:src/main/resources/img/" + temp[1] + "/";
+                        SpriteSheet.imgPath = graphicVersion;
+                    } else {
+                        throw new UnsupportedOperationException("Bad config file structure");
+                    }
+                }
+            }
+        } catch (IOException | UnsupportedOperationException e) {
+            LOGGER.warning("Cant load options: " + e.getMessage());
+        }
+    }
+
     @Override
     public void start(Stage stage) throws IOException {
 
+        loadOptions();
         _inputs = new Inputs();
         _in_game = false;
 

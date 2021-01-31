@@ -18,12 +18,18 @@ import javafx.scene.layout.VBox;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.List;
 
 public class OptionsSceneController {
 
+    public static final String OPTIONS_FILE_PATH =
+            System.getProperty("user.home") + "/AppData/Local/Bubble Bobble Clone/config.txt";
     private static final ObservableList<String> languages = FXCollections.observableArrayList("ENG", "PL", "FR");
     private static final List<String> languagesArr = Arrays.asList("ENG", "PL", "FR");
     private static final String[] graphics = {"img/beta/errant.png", "img/legacy/player.png"};
@@ -165,6 +171,22 @@ public class OptionsSceneController {
 
     @FXML
     private void switchToMenu() throws IOException {
+        try {
+            Files.createFile(Path.of(OPTIONS_FILE_PATH));
+        } catch (IOException e) {
+        }
+
+        try {
+            File config = new File(OPTIONS_FILE_PATH);
+            FileWriter writer = new FileWriter(config);
+            String launguage = CurrentLanguageVersionProvider.currentLanguageVersion.substring(18).replace(".xml", "");
+            String graphic = SpriteSheet.imgPath.substring(28).replace("/", "");
+            writer.write("language: " + launguage + "\n");
+            writer.write("vfx: " + graphic + "\n");
+            writer.close();
+        } catch (IOException e) {
+        }
+
         App.setRoot("menu");
     }
 
