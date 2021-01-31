@@ -28,88 +28,120 @@
         <Wall x="0" y="24"/>
         <Wall x="0" y="25"/>
         <Wall x="1" y="0"/>
-        <Wall x="1" y="12"/>
+        <Wall x="1" y="5"/>
+        <Wall x="1" y="10"/>
+        <Wall x="1" y="15"/>
+        <Wall x="1" y="20"/>
         <Wall x="1" y="25"/>
         <Wall x="2" y="0"/>
-        <Wall x="2" y="12"/>
+        <Wall x="2" y="5"/>
+        <Wall x="2" y="10"/>
+        <Wall x="2" y="15"/>
+        <Wall x="2" y="20"/>
         <Wall x="2" y="25"/>
         <Wall x="3" y="0"/>
-        <Wall x="3" y="12"/>
+        <Wall x="3" y="5"/>
+        <Wall x="3" y="10"/>
+        <Wall x="3" y="15"/>
+        <Wall x="3" y="20"/>
         <Wall x="3" y="25"/>
         <Wall x="4" y="0"/>
-        <Wall x="4" y="12"/>
+        <Wall x="4" y="5"/>
+        <Wall x="4" y="10"/>
+        <Wall x="4" y="15"/>
+        <Wall x="4" y="20"/>
         <Wall x="4" y="25"/>
         <Wall x="5" y="0"/>
-        <Wall x="5" y="12"/>
+        <Wall x="5" y="5"/>
+        <Wall x="5" y="10"/>
+        <Wall x="5" y="15"/>
+        <Wall x="5" y="20"/>
         <Wall x="5" y="25"/>
         <Wall x="6" y="0"/>
-        <Wall x="6" y="12"/>
+        <Wall x="6" y="5"/>
+        <Wall x="6" y="10"/>
+        <Wall x="6" y="15"/>
+        <Wall x="6" y="20"/>
         <Wall x="6" y="25"/>
         <Wall x="7" y="0"/>
-        <Wall x="7" y="12"/>
+        <Wall x="7" y="4"/>
+        <Wall x="7" y="9"/>
+        <Wall x="7" y="14"/>
+        <Wall x="7" y="19"/>
         <Wall x="7" y="25"/>
         <Wall x="8" y="0"/>
-        <Wall x="8" y="12"/>
         <Wall x="8" y="25"/>
         <Wall x="9" y="0"/>
-        <Wall x="9" y="12"/>
         <Wall x="9" y="25"/>
         <Wall x="10" y="0"/>
-        <Wall x="10" y="12"/>
-        <Wall x="10" y="19"/>
         <Wall x="10" y="25"/>
-        <Wall x="11" y="5"/>
-        <Wall x="11" y="12"/>
-        <Wall x="11" y="19"/>
-        <Wall x="12" y="5"/>
-        <Wall x="12" y="19"/>
-        <Wall x="13" y="5"/>
-        <Wall x="13" y="19"/>
-        <Wall x="14" y="5"/>
-        <Wall x="14" y="19"/>
-        <Wall x="15" y="5"/>
-        <Wall x="15" y="19"/>
-        <Wall x="16" y="5"/>
-        <Wall x="16" y="19"/>
-        <Wall x="17" y="5"/>
-        <Wall x="17" y="19"/>
-        <Wall x="18" y="5"/>
-        <Wall x="18" y="19"/>
-        <Wall x="19" y="5"/>
-        <Wall x="19" y="19"/>
-        <Wall x="20" y="5"/>
-        <Wall x="20" y="12"/>
-        <Wall x="20" y="19"/>
+        <Wall x="11" y="0"/>
+        <Wall x="11" y="25"/>
+        <Wall x="12" y="0"/>
+        <Wall x="12" y="25"/>
+        <Wall x="13" y="0"/>
+        <Wall x="13" y="25"/>
+        <Wall x="14" y="0"/>
+        <Wall x="14" y="25"/>
+        <Wall x="15" y="0"/>
+        <Wall x="15" y="25"/>
+        <Wall x="16" y="0"/>
+        <Wall x="16" y="25"/>
+        <Wall x="17" y="0"/>
+        <Wall x="17" y="25"/>
+        <Wall x="18" y="0"/>
+        <Wall x="18" y="25"/>
+        <Wall x="19" y="0"/>
+        <Wall x="19" y="25"/>
+        <Wall x="20" y="0"/>
+        <Wall x="20" y="25"/>
         <Wall x="21" y="0"/>
-        <Wall x="21" y="12"/>
-        <Wall x="21" y="19"/>
         <Wall x="21" y="25"/>
         <Wall x="22" y="0"/>
-        <Wall x="22" y="12"/>
         <Wall x="22" y="25"/>
         <Wall x="23" y="0"/>
-        <Wall x="23" y="12"/>
         <Wall x="23" y="25"/>
         <Wall x="24" y="0"/>
-        <Wall x="24" y="12"/>
+        <Wall x="24" y="4"/>
+        <Wall x="24" y="9"/>
+        <Wall x="24" y="14"/>
+        <Wall x="24" y="19"/>
         <Wall x="24" y="25"/>
         <Wall x="25" y="0"/>
-        <Wall x="25" y="12"/>
+        <Wall x="25" y="5"/>
+        <Wall x="25" y="10"/>
+        <Wall x="25" y="15"/>
+        <Wall x="25" y="20"/>
         <Wall x="25" y="25"/>
         <Wall x="26" y="0"/>
-        <Wall x="26" y="12"/>
+        <Wall x="26" y="5"/>
+        <Wall x="26" y="10"/>
+        <Wall x="26" y="15"/>
+        <Wall x="26" y="20"/>
         <Wall x="26" y="25"/>
         <Wall x="27" y="0"/>
-        <Wall x="27" y="12"/>
+        <Wall x="27" y="5"/>
+        <Wall x="27" y="10"/>
+        <Wall x="27" y="15"/>
+        <Wall x="27" y="20"/>
         <Wall x="27" y="25"/>
         <Wall x="28" y="0"/>
-        <Wall x="28" y="12"/>
+        <Wall x="28" y="5"/>
+        <Wall x="28" y="10"/>
+        <Wall x="28" y="15"/>
+        <Wall x="28" y="20"/>
         <Wall x="28" y="25"/>
         <Wall x="29" y="0"/>
-        <Wall x="29" y="12"/>
+        <Wall x="29" y="5"/>
+        <Wall x="29" y="10"/>
+        <Wall x="29" y="15"/>
+        <Wall x="29" y="20"/>
         <Wall x="29" y="25"/>
         <Wall x="30" y="0"/>
-        <Wall x="30" y="12"/>
+        <Wall x="30" y="5"/>
+        <Wall x="30" y="10"/>
+        <Wall x="30" y="15"/>
+        <Wall x="30" y="20"/>
         <Wall x="30" y="25"/>
         <Wall x="31" y="0"/>
         <Wall x="31" y="1"/>
@@ -139,18 +171,22 @@
         <Wall x="31" y="25"/>
     </Walls>
     <Players>
-        <Player facing="1" x="1" y="24"/>
-        <Player facing="-1" x="30" y="24"/>
+        <Player facing="1" x="2" y="24"/>
+        <Player facing="-1" x="29" y="24"/>
     </Players>
     <Enemies>
-        <Wisp facing="1" x="1" y="11"/>
-        <Wisp facing="-1" x="10" y="11"/>
-        <Wisp facing="1" x="12" y="4"/>
-        <Wisp facing="1" x="13" y="18"/>
-        <Wisp facing="-1" x="18" y="18"/>
-        <Wisp facing="-1" x="19" y="4"/>
-        <Wisp facing="1" x="21" y="11"/>
-        <Wisp facing="-1" x="30" y="11"/>
+        <Warlock facing="1" x="1" y="4"/>
+        <Nimrod facing="1" x="1" y="9"/>
+        <Warlock facing="1" x="1" y="14"/>
+        <Nimrod facing="1" x="1" y="19"/>
+        <Imp facing="1" x="15" y="7"/>
+        <Imp facing="1" x="15" y="17"/>
+        <Imp facing="-1" x="16" y="2"/>
+        <Imp facing="-1" x="16" y="12"/>
+        <Nimrod facing="-1" x="30" y="4"/>
+        <Warlock facing="-1" x="30" y="9"/>
+        <Nimrod facing="-1" x="30" y="14"/>
+        <Warlock facing="-1" x="30" y="19"/>
     </Enemies>
     <Rules/>
 </Map>
