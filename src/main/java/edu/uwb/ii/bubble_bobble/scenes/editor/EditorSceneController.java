@@ -51,6 +51,8 @@ public class EditorSceneController {
     HBox mapNameHbox;
     @FXML
     BorderPane root;
+    int enemy_counter;
+    int player_counter;
     @FXML
     private ToggleButton threeGapFrame;
     @FXML
@@ -99,7 +101,9 @@ public class EditorSceneController {
         importButton.setPromptText("Import");
 
         for (File file : listOfFiles) {
-            importButton.getItems().add(file.getName().replace(".xml", ""));
+            if (file.getName().contains(".xml")) {
+                importButton.getItems().add(file.getName().replace(".xml", ""));
+            }
         }
     }
 
@@ -250,44 +254,77 @@ public class EditorSceneController {
         App.setRoot("options");
     }
 
+    boolean isEnemy() {
+        int counter = 0;
+        for (Cell[] rows : map.getBody()) {
+            for (Cell cell : rows) {
+                if (!cell.getId().equals("Player") && !cell.getId().equals("Wall") &&
+                        !cell.getId().equalsIgnoreCase("empty")) {
+                    counter++;
+                }
+            }
+        }
+
+        return counter != 0;
+    }
+
     @FXML
     void saveMap() throws IOException {
         tryCreateMapsDirectory();
-        if (!(mapName.getText().isEmpty() && importButton.getValue() == null)) {
-            if (!(mapName.getText().isBlank() ||
-                    Arrays.stream(listOfFiles).anyMatch(x -> x.getName().equals(mapName.getText() + ".xml")))) {
+        if (Arrays.stream(map.getBody())
+                .anyMatch(x -> Arrays.stream(x).anyMatch(y -> y.getId().equalsIgnoreCase("Player")))) {
+            if (isEnemy()) {
+                if (!(mapName.getText().isEmpty() && importButton.getValue() == null)) {
+                    if (!(mapName.getText().isBlank() ||
+                            Arrays.stream(listOfFiles).anyMatch(x -> x.getName().equals(mapName.getText() + ".xml")))) {
 
-                TransformerFactory transformerFactory = TransformerFactory.newInstance();
-                Transformer transformer;
-                try {
-                    File file = new File(MAPS_PATH + "/" + mapName.getText() + ".xml");
-                    transformer = transformerFactory.newTransformer();
-                    DOMSource domSource = new DOMSource(map.generateFxml());
-                    StreamResult streamResult = new StreamResult(file);
-                    transformer.transform(domSource, streamResult);
-                } catch (ParserConfigurationException | TransformerException | NullPointerException e) {
-                    e.printStackTrace();
-                }
-                switchToOptions();
-            }
-            try {
-                if (mapName.getText().equals(importButton.getValue().toString())) {
-                    TransformerFactory transformerFactory = TransformerFactory.newInstance();
-                    Transformer transformer;
-                    try {
-                        File file = new File(MAPS_PATH + "/" + mapName.getText() + ".xml");
-                        transformer = transformerFactory.newTransformer();
-                        DOMSource domSource = new DOMSource(map.generateFxml());
-                        StreamResult streamResult = new StreamResult(file);
-                        transformer.transform(domSource, streamResult);
-                    } catch (ParserConfigurationException | TransformerException | NullPointerException e) {
-                        e.printStackTrace();
+                        TransformerFactory transformerFactory = TransformerFactory.newInstance();
+                        Transformer transformer;
+                        try {
+                            File file = new File(MAPS_PATH + "/" + mapName.getText() + ".xml");
+                            transformer = transformerFactory.newTransformer();
+                            DOMSource domSource = new DOMSource(map.generateFxml());
+                            StreamResult streamResult = new StreamResult(file);
+                            transformer.transform(domSource, streamResult);
+                        } catch (ParserConfigurationException | TransformerException | NullPointerException e) {
+                            e.printStackTrace();
+                        }
+                        switchToOptions();
                     }
-                    switchToOptions();
-                }
-            } catch (Exception e) {
+                    try {
+                        if (mapName.getText().equals(importButton.getValue().toString())) {
+                            TransformerFactory transformerFactory = TransformerFactory.newInstance();
+                            Transformer transformer;
+                            try {
+                                File file = new File(MAPS_PATH + "/" + mapName.getText() + ".xml");
+                                transformer = transformerFactory.newTransformer();
+                                DOMSource domSource = new DOMSource(map.generateFxml());
+                                StreamResult streamResult = new StreamResult(file);
+                                transformer.transform(domSource, streamResult);
+                            } catch (ParserConfigurationException | TransformerException | NullPointerException e) {
+                                e.printStackTrace();
+                            }
+                            switchToOptions();
+                        }
+                    } catch (Exception e) {
 
+                    }
+                }
+            } else {
+                rightPanel.getChildren()
+                        .stream()
+                        .filter(x -> !((ToggleButton) x).getText().equals("Player") &&
+                                !((ToggleButton) x).getText().equals("Wall"))
+                        .forEach(x -> x.getStyleClass().add("red-frame"));
             }
+        } else {
+            rightPanel.getChildren()
+                    .stream()
+                    .filter(x -> ((ToggleButton) x).getText().equals("Player"))
+                    .findFirst()
+                    .get()
+                    .getStyleClass()
+                    .add("red-frame");
         }
     }
 
@@ -346,6 +383,12 @@ public class EditorSceneController {
     }
 
     private void handleIdToggleButtonClick(ToggleButton button, String id) {
+        if (rightPanel.getChildren().stream().anyMatch(x -> x.getStyleClass().contains("red-frame"))) {
+            for (javafx.scene.Node node : rightPanel.getChildren()) {
+                node.getStyleClass().clear();
+                node.getStyleClass().add("button");
+            }
+        }
         if (button.isSelected()) {
             currentSelected = id;
         }

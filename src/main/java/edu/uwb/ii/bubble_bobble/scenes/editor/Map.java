@@ -33,7 +33,7 @@ public class Map {
         return body;
     }
 
-    public  void resetMap()
+    public void resetMap()
     {
         for (int i = 0; i < 32; i++) {
             for (int j = 0; j < 26; j++) {
