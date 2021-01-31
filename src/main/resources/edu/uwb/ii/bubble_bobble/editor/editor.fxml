@@ -78,12 +78,6 @@
         </BorderPane>
     </top>
 
-
-    <center>
-        <StackPane fx:id="boardWindow" styleClass="board-window" BorderPane.alignment="CENTER_RIGHT">
-
-        </StackPane>
-    </center>
     <right>
         <VBox fx:id="rightPanel" prefHeight="500.0" prefWidth="200.0">
             <children>

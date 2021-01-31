@@ -7,9 +7,9 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.control.*;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Screen;
 import org.w3c.dom.Document;
@@ -50,6 +50,8 @@ public class EditorSceneController {
     @FXML
     HBox mapNameHbox;
     @FXML
+    BorderPane root;
+    @FXML
     private ToggleButton threeGapFrame;
     @FXML
     private Button saveButton;
@@ -67,8 +69,6 @@ public class EditorSceneController {
     private ToggleButton oneGapFrame;
     @FXML
     private ToggleButton twoGapFrame;
-    @FXML
-    private StackPane boardWindow;
     @FXML
     private GridPane grid;
     @FXML
@@ -144,9 +144,10 @@ public class EditorSceneController {
     }
 
     private void fillGridWithCells(Rectangle2D bounds) {
+        root.setCenter(null);
         grid = new GridPane();
-        grid.prefWidthProperty().bind(boardWindow.widthProperty());
-        grid.prefHeightProperty().bind(boardWindow.heightProperty());
+        grid.prefWidthProperty().bind(root.widthProperty());
+        grid.prefHeightProperty().bind(root.heightProperty());
         Platform.setImplicitExit(false);
         Platform.runLater(() -> {
             for (int r = 0; r < ROWS; r++) {
@@ -162,7 +163,7 @@ public class EditorSceneController {
             }
         });
 
-        boardWindow.getChildren().add(grid);
+        root.setCenter(grid);
     }
 
     private void handleToggleButtonClick(ToggleButton button) {
@@ -252,7 +253,7 @@ public class EditorSceneController {
     @FXML
     void saveMap() throws IOException {
         tryCreateMapsDirectory();
-        if (!mapName.getText().isEmpty()) {
+        if (!(mapName.getText().isEmpty() && importButton.getValue() == null)) {
             if (!(mapName.getText().isBlank() ||
                     Arrays.stream(listOfFiles).anyMatch(x -> x.getName().equals(mapName.getText() + ".xml")))) {
 
