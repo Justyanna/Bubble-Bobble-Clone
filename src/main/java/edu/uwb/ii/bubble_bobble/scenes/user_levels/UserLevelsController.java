@@ -123,7 +123,15 @@ public class UserLevelsController {
         String filename = label.getText().trim() + ".xml";
         File file = new File(MAPS_PATH + "/" + filename);
         file.delete();
-        initialize();
+        if (filesSlice.length > 1) {
+            initialize();
+        } else {
+            centerBox.getChildren().clear();
+            next.setVisible(false);
+            previous.setVisible(false);
+            empty.getStyleClass().add("label");
+            centerBox.getChildren().add(empty);
+        }
     }
 
     @FXML
