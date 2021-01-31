@@ -390,6 +390,7 @@ public class EditorSceneController {
         if (rightPanel.getChildren().stream().anyMatch(x -> x.getStyleClass().contains("red-frame"))) {
             for (javafx.scene.Node node : rightPanel.getChildren()) {
                 node.getStyleClass().clear();
+                node.getStyleClass().add("toggle-button");
             }
         }
         if (button.isSelected()) {
