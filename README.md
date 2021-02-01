@@ -6,7 +6,7 @@ Simple platformer based on arcade game called [*Bubble Bobble*](https://en.wikip
 
 ### Technologies
 
-The game is brought to life using Java 11 with JavaFX 11.
+The game is brought to life using Java 14 with JavaFX 11.
 
 ## Getting started
 
@@ -14,7 +14,7 @@ The game is brought to life using Java 11 with JavaFX 11.
 
 Compiling the source code requires following tools:
 
-1. **Java 11** compiler
+1. **Java 14** compiler
 2. **JavaFX 11**
 3. **Maven**
 
