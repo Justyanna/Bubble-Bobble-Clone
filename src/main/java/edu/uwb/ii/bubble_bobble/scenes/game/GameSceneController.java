@@ -25,6 +25,7 @@ import org.w3c.dom.Node;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
 
@@ -191,16 +192,27 @@ public class GameSceneController
         confirm.getStyleClass().add("button-save");
         confirm.setOnAction(actionEvent -> {
             DateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
-            String input = name.getText().replaceAll(" ", "_");
 
-            fileManager.saveScore(input, String.valueOf(score), formatter.format(new Date()));
-            try
+            String input = name.getText().trim().replaceAll(" +", " ").replaceAll(" ", "_");
+
+            if(input.matches("[0-9A-Za-zżźćńółęąśŻŹĆĄŚĘŁÓŃ_]+"))
             {
-                switchToPrimary();
+                fileManager.saveScore(input, String.valueOf(score), formatter.format(new Date()));
+                try
+                {
+                    switchToPrimary();
+                }
+                catch(IOException e)
+                {
+                    e.printStackTrace();
+                }
             }
-            catch(IOException e)
+            else
             {
-                e.printStackTrace();
+                input = String.join("", Arrays.stream(input.split(""))
+                                              .filter(c -> c.matches("[0-9A-Za-zżźćńółęąśŻŹĆĄŚĘŁÓŃ_]"))
+                                              .toArray(String[]::new));
+                name.setText(input.replace("_", " "));
             }
         });
 
