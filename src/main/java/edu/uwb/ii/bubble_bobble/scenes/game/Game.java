@@ -127,6 +127,7 @@ public class Game
                 }
             }
 
+            _countdown = (int) Game.FRAME_RATE * 5;
             _started = true;
         }
         catch(Exception e)
@@ -144,7 +145,6 @@ public class Game
         _quit = false;
         _paused = false;
         _started = true;
-        _countdown = (int) Game.FRAME_RATE * 5;
 
         if(App.customMapName.isEmpty())
         {
