@@ -39,3 +39,7 @@ git clone https://github.com/Justyanna/Bubble-Bobble-Clone
 ```
 java -jar "target/Bubble Bobble.jar"
 ```
+
+![image](https://user-images.githubusercontent.com/41270842/180446154-1acf9915-9490-40c3-beef-c4bbad143301.png)
+![image](https://user-images.githubusercontent.com/41270842/180446528-1b795f16-8b90-4b38-90d7-6d566e889c99.png)
+
